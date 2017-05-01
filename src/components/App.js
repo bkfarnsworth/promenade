@@ -6,7 +6,7 @@ import '../assets/stylesheets/base.scss';
 
 const App = ({ name }) => {
   return (
-    <h1>Hello, {name}!</h1>
+    <h1>Hello brian, {name}!</h1>
   );
 };
 
