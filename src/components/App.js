@@ -4,10 +4,26 @@ import PropTypes from 'prop-types';
 import '../assets/stylesheets/base.scss';
 
 
+const arr = [
+{name: 'Brian'},
+{name: 'Rose'},
+{name: 'Miles'},
+{name: 'Tam'},
+{name: 'Grace'},
+{name: 'Dad'},
+{name: 'Mom'},
+{name: 'Jimmy'},
+{name: 'Scotty'},
+{name: 'Ruby'},
+{name: 'Brian'}
+]
+
 const App = ({ name }) => {
   return (
-    <h1>Hello Team Farnsworth!</h1>
-  );
+   <div>
+      {arr.map(el => <div>{el.name}</div>)}
+   </div>
+   )
 };
 
 App.propTypes = {
