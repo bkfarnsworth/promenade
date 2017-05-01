@@ -1,33 +1,44 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Boggle from './Boggle';
+import _ from 'lodash';
 
 import '../assets/stylesheets/base.scss';
+import './App.scss';
 
 
-const arr = [
-{name: 'Brian'},
-{name: 'Rose'},
-{name: 'Miles'},
-{name: 'Tam'},
-{name: 'Grace'},
-{name: 'Dad'},
-{name: 'Mom'},
-{name: 'Jimmy'},
-{name: 'Scotty'},
-{name: 'Ruby'},
-{name: 'Brian'}
-]
+let alphabet = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
+let shuffledLetters = _.shuffle(alphabet);
 
-const App = ({ name }) => {
-  return (
-   <div>
-      {arr.map(el => <div>{el.name}</div>)}
-   </div>
-   )
+let boggle = {
+   rows: []
 };
 
-App.propTypes = {
-  name: PropTypes.string,
+//create boggle board
+var rows = boggle.rows;
+var currentLetterIndex = 0;
+while(rows.length < 4) {
+   var currentRow = {
+      cells: []
+   }
+   rows.push(currentRow);
+
+   while(currentRow.cells.length < 4) {
+      var letter = shuffledLetters[currentLetterIndex];
+      currentRow.cells.push({
+         text: letter
+      });
+      currentLetterIndex++;
+   }
+}
+
+
+const App = (props) => {
+   return (
+      <div className="page">
+         <Boggle boggle={boggle}/>
+      </div>
+   )
 };
 
 export default App;

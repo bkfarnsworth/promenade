@@ -1,0 +1,14 @@
+.boggle-board {
+}
+
+.boggle-row {
+   text-align: center;
+}
+
+.boggle-tile {
+   border: black solid 1px;
+   display: inline-block;
+   height: 30px;
+   line-height: 30px;
+   width: 30px;
+}
