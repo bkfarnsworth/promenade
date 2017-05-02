@@ -2,12 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Boggle from './Boggle';
 import _ from 'lodash';
+import IO from 'socket.io-client'
 
 import '../assets/stylesheets/base.scss';
 import './App.scss';
-
-
-
 
 
 class App extends React.Component  {
@@ -20,6 +18,22 @@ class App extends React.Component  {
       }
 
       this.createBoggleModel();
+   }
+
+   componentDidMount() {
+      this.socket = IO();
+      this.socket.on('guess', (guess) => {
+         this.addGuessToState(guess);
+      });
+
+   }
+
+   addGuessToState(guess) {
+      var guesses = this.state.guesses.slice();
+      guesses.push(guess);
+      this.setState({
+         guesses: guesses,
+      });
    }
 
    createBoggleModel() {
@@ -64,11 +78,8 @@ class App extends React.Component  {
          var guess = e.target.value;
 
          if(this.guessIsValid(guess)) {
-            var guesses = this.state.guesses.slice();
-            guesses.push(guess);
-            this.setState({
-               guesses: guesses,
-            })
+            this.addGuessToState(guess);
+            this.socket.emit('guess', guess);
          }
 
          this.setState({
