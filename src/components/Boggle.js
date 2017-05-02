@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import './boggle.scss';
+import './Boggle.css';
 
 
 const BoggleCell = (props) => {

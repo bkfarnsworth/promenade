@@ -4,8 +4,7 @@ import Boggle from './Boggle';
 import _ from 'lodash';
 import IO from 'socket.io-client'
 
-import '../assets/stylesheets/base.scss';
-import './App.scss';
+import './App.css';
 
 
 class App extends React.Component  {

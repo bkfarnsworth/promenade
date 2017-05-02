@@ -8,7 +8,7 @@
     "dev": "webpack-dev-server --hot --inline",
     "lint": "eslint src/**",
     "lint:watch": "esw -w src/**",
-    "start": "npm run build && npm rebuild node-sass && NODE_ENV=production node server.js",
+    "start": "npm run build && NODE_ENV=production node server.js",
     "test": "mocha --compilers js:babel-core/register ./test/**/*.spec.js --require ignore-styles"
   },
   "author": "",
@@ -24,7 +24,6 @@
     "express": "^4.15.2",
     "lodash": "^4.17.4",
     "mocha": "^3.2.0",
-    "node-sass": "^4.5.2",
     "prop-types": "^15.5.8",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
