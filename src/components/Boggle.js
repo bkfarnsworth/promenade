@@ -30,9 +30,4 @@ const Boggle = (props) => {
    );
 };
 
-
-// Boggle.propTypes = {
-
-// }
-
 export default Boggle;
