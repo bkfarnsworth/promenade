@@ -8,12 +8,7 @@ const GameTile = (props) => {
    return <button className="game-tile" onClick={props.onClick.bind(null, props.game.name)}>{props.game.name}</button>;
 };
 
-let gameMenuDefaultProps = {};
 const GameMenu = (props) => {
-
-   gameMenuDefaultProps = {
-      onTileClick: () => {}
-   }
 
    let games = props.games || [
       {name: 'Boggle'},
@@ -30,6 +25,8 @@ const GameMenu = (props) => {
       </div>
    );
 }
-GameMenu.defaultProps = gameMenuDefaultProps;
+GameMenu.defaultProps = {
+   onTileClick: () => {}
+};
 
 export default GameMenu;
