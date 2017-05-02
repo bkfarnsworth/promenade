@@ -4,8 +4,6 @@ import PropTypes from 'prop-types';
 import './boggle.scss';
 
 
-
-
 const BoggleCell = (props) => {
    let cell = props.cell;
    return <div className="boggle-tile">{cell.text}</div>;
