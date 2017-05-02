@@ -1,4 +1,18 @@
-.boggle-board {
+.page {
+   height: 600px;
+   width: 100%;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   flex-direction: row;
+}
+
+.boggle-input-area {
+   margin-right: 100px;
+}
+
+.boggle-input {
+   margin-top: 100px;
 }
 
 .boggle-row {

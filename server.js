@@ -19,8 +19,8 @@ const server = app.listen(PORT, error => {
 const io = socketIO(server);
 
 io.on('connection', (socket) => {
-
   console.log('Client connected');
+
 
   socket.on('guess', function(guess){
     console.log('message: ' + guess);
