@@ -4,44 +4,59 @@ import GameMenu from './GameMenu';
 import Boggle from './Boggle';
 import _ from 'lodash';
 import IO from 'socket.io-client'
+import { HashRouter, Switch, Route } from 'react-router-dom'
 
 import './App.css';
+
 
 class App extends React.Component  {
 
    constructor() {
       super();
-      this.state = {
-         currentGame: null
-      }
    }
 
-   onTileClick(tileName) {
-      this.setState({
-         currentGame: tileName
-      });
+   get games() {
+      return [
+         {
+            name: 'Boggle',
+            getComponent: () => <Boggle/>
+         },
+         {
+            name: 'Pong',
+            getComponent: () => <ComingSoon/>
+         },
+         {
+            name: 'Trivia',
+            getComponent: () => <ComingSoon/>
+         },
+         {
+            name: 'Hungry Hungry Hippos',
+            getComponent: () => <ComingSoon/>
+         }
+      ];
    }
 
-   getGameComponent(name) {
-      switch (name) {
-         case 'Boggle':
-            return <Boggle/>
-         case 'Pong':
-         case 'Trivia':
-            return <div>Coming soon!</div>
-         default:
-            return <div>Coming soon!</div>
-      }
+   getGameMenu() {
+      return <GameMenu games={this.games} />;
    }
 
    render() {
-      if(this.state.currentGame) {
-         return this.getGameComponent(this.state.currentGame);
-      } else {
-         return <GameMenu onTileClick={this.onTileClick.bind(this)}/>
-      }
+      return (
+         <HashRouter>
+           <Switch>
+             <Route exact path='/' component={this.getGameMenu.bind(this)}/>
+             {this.games.map(game => {
+               return <Route key={game.name} path={'/' + game.name} component={game.getComponent} />
+             })}
+           </Switch>
+         </HashRouter>          
+      )
    }
 
+}
+
+const ComingSoon = () => {
+   return <div>Coming soon</div>;
 }
 
 export default App;

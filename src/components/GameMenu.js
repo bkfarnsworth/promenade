@@ -1,32 +1,31 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom'
 
 import './GameMenu.css';
 
 
 const GameTile = (props) => {
-   return <button className="game-tile" onClick={props.onClick.bind(null, props.game.name)}>{props.game.name}</button>;
+   return (
+      <div className="game-tile" >
+         <Link to={'/' + props.game.name}>{props.game.name}</Link>
+      </div>
+   );
 };
 
 const GameMenu = (props) => {
 
-   let games = props.games || [
-      {name: 'Boggle'},
-      {name: 'Pong'},
-      {name: 'Trivia'},
-      {name: 'Hungry Hungry Hippos'},
-   ];
+   let games = props.games;
 
    return (
       <div className="game-menu">
          {games.map(g => {
-            return <GameTile key={g.name} onClick={props.onTileClick} game={g}/>
+            return <GameTile key={g.name} game={g}/>
          })}
       </div>
    );
 }
-GameMenu.defaultProps = {
-   onTileClick: () => {}
-};
+
+GameMenu.defaultProps = {};
 
 export default GameMenu;
