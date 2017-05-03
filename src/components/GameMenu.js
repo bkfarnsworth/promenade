@@ -8,7 +8,7 @@ import './GameMenu.css';
 const GameTile = (props) => {
    return (
       <div className="game-tile" >
-         <Link to={'/' + props.game.name}>{props.game.name}</Link>
+         <Link to={'/' + props.game.initialState}>{props.game.name}</Link>
       </div>
    );
 };

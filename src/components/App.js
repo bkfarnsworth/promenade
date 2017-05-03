@@ -4,34 +4,39 @@ import GameMenu from './GameMenu';
 import Boggle from './Boggle';
 import _ from 'lodash';
 import IO from 'socket.io-client'
-import { HashRouter, Switch, Route } from 'react-router-dom'
+import { HashRouter, Switch, Route, Link } from 'react-router-dom'
 
 import './App.css';
 
 
-class App extends React.Component  {
+const Room = () => {
+   return <div>ROOM<Link to={'/waiting'}>Waiting</Link></div>;
+}
 
-   constructor() {
-      super();
-   }
+const Waiting = () => {
+   return <div>WAITING<Link to={'/boggle'}>Play Game</Link></div>;
+}
+
+class App extends React.Component  {
 
    get games() {
       return [
          {
             name: 'Boggle',
-            getComponent: () => <Boggle/>
+            getGameComponent: () => <Boggle/>,
+            initialState: 'room'
          },
          {
             name: 'Pong',
-            getComponent: () => <ComingSoon/>
+            getGameComponent: () => <ComingSoon/>
          },
          {
             name: 'Trivia',
-            getComponent: () => <ComingSoon/>
+            getGameComponent: () => <ComingSoon/>
          },
          {
             name: 'Hungry Hungry Hippos',
-            getComponent: () => <ComingSoon/>
+            getGameComponent: () => <ComingSoon/>
          }
       ];
    }
@@ -45,8 +50,10 @@ class App extends React.Component  {
          <HashRouter>
            <Switch>
              <Route exact path='/' component={this.getGameMenu.bind(this)}/>
+             <Route exact path='/room' component={Room} />
+             <Route exact path='/waiting' component={Waiting} />
              {this.games.map(game => {
-               return <Route key={game.name} path={'/' + game.name} component={game.getComponent} />
+               return <Route key={game.name} path={'/' + game.name} component={game.getGameComponent} />
              })}
            </Switch>
          </HashRouter>          
