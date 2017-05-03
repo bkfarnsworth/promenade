@@ -4,14 +4,13 @@ import GameMenu from './GameMenu';
 import Boggle from './Boggle';
 import _ from 'lodash';
 import IO from 'socket.io-client'
+import Room from './Room';
 import { HashRouter, Switch, Route, Link } from 'react-router-dom'
 
 import './App.css';
 
 
-const Room = () => {
-   return <div>ROOM<Link to={'/waiting'}>Waiting</Link></div>;
-}
+
 
 const Waiting = () => {
    return <div>WAITING<Link to={'/boggle'}>Play Game</Link></div>;
