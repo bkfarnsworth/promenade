@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 import './Room.css';
 
@@ -20,7 +21,7 @@ class Room extends React.Component {
             <div className="room-config-section host-config-section">
                <div className="bf-input-container">Name: <input className="bf-input" type="text"/></div>
                <div className="room-section-button-row">
-                  <button className="bf-button game-config-button-horizontal">Create Room</button>
+                  <Link to="/waiting" className="bf-button game-config-button-horizontal">Create Room</Link>
                   <button className="bf-button game-config-button-horizontal" onClick={() => {this.setState({roomOption: 'start'})}}>Back</button>
                </div>
             </div>
@@ -31,7 +32,7 @@ class Room extends React.Component {
                <div className="bf-input-container">Name: <input className="bf-input" type="text"/></div>
                <div className="bf-input-container">Code: <input className="bf-input" type="text"/></div>
                <div className="room-section-button-row">
-                  <button className="bf-button game-config-button-horizontal">Join</button>
+                  <Link to="/waiting" className="bf-button game-config-button-horizontal">Join</Link>
                   <button className="bf-button game-config-button-horizontal" onClick={() => {this.setState({roomOption: 'start'})}}>Back</button>
                </div>
             </div>

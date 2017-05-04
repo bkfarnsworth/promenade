@@ -30,6 +30,10 @@
    width: 111px;
 }
 
+a.game-config-button-horizontal {
+   line-height: 45px;
+}
+
 .host-config-section .bf-input-container {
    margin-bottom: 40px;
 }
