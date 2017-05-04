@@ -4,3 +4,12 @@ body {
    background-color: #79b3e6;
    font-family: 'Eczar', serif;
 }
+
+.bf-button {
+   text-align: center;
+   color: black;
+   text-decoration: none;
+   background-color: #ffffff;
+   /*none|h-shadow v-shadow blur spread color |inset|initial|inherit;*/
+   box-shadow: 1px 1px 12px #888888;
+}

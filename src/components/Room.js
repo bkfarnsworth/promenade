@@ -36,8 +36,11 @@ class Room extends React.Component {
       } else if(this.state.roomOption === 'start') {
          return (
             <div>
-               <button onClick={() => {this.setState({roomOption: 'host'})}}>Host Game</button>
-               <button onClick={() => {this.setState({roomOption: 'join'})}}>Join Game</button>
+               <div className="game-logo">Game Title</div>
+               <div className="game-config-section">
+                  <button className="game-config-button bf-button" onClick={() => {this.setState({roomOption: 'host'})}}>Host Game</button>
+                  <button className="game-config-button bf-button" onClick={() => {this.setState({roomOption: 'join'})}}>Join Game</button>
+               </div>
             </div>
          );
       }

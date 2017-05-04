@@ -8,14 +8,8 @@
 
 .game-tile {
    display: inline-block;
-   text-align: center;
    padding: 50px 0;
    width: 175px;
    margin: 50px;   
-   color: black;
-   text-decoration: none;
-   background-color: #ffffff;
    font-size: 23px;
-   /*none|h-shadow v-shadow blur spread color |inset|initial|inherit;*/
-   box-shadow: 1px 1px 12px #888888;
 }
