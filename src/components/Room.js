@@ -17,22 +17,30 @@ class Room extends React.Component {
 
    get configSection() {
       if(this.state.roomOption === 'host') {
+         let linkObj = {
+            pathname: '/waiting',
+            state: {playerType: 'host'}
+         };
          return (
             <div className="room-config-section host-config-section">
                <div className="bf-input-container">Name: <input className="bf-input" type="text"/></div>
                <div className="room-section-button-row">
-                  <Link to="/waiting" className="bf-button game-config-button-horizontal">Create Room</Link>
+                  <Link to={linkObj} className="bf-button game-config-button-horizontal">Create Room</Link>
                   <button className="bf-button game-config-button-horizontal" onClick={() => {this.setState({roomOption: 'start'})}}>Back</button>
                </div>
             </div>
          );
       } else if(this.state.roomOption === 'join') {
+         let linkObj = {
+            pathname: '/waiting',
+            state: {playerType: 'join'}
+         };
          return (
             <div className="room-config-section">
                <div className="bf-input-container">Name: <input className="bf-input" type="text"/></div>
                <div className="bf-input-container">Code: <input className="bf-input" type="text"/></div>
                <div className="room-section-button-row">
-                  <Link to="/waiting" className="bf-button game-config-button-horizontal">Join</Link>
+                  <Link to={linkObj} className="bf-button game-config-button-horizontal">Join</Link>
                   <button className="bf-button game-config-button-horizontal" onClick={() => {this.setState({roomOption: 'start'})}}>Back</button>
                </div>
             </div>
