@@ -5,14 +5,7 @@
    font-size: 20px;
 }
 
-.join-or-host-section {
-   display: flex;   
-   justify-content: center;
-   flex-direction: column;
-   align-items: center;
-}
-
-.host-section {
+.room-config-section {
    display: flex;
    justify-content: center;
    flex-direction: column;
@@ -25,18 +18,18 @@
    margin-bottom: 33px;
 }
 
-.host-section-button-row {
+.room-section-button-row {
    display: flex;
    justify-content: center;   
    width: 100%;
 }
 
 .game-config-button-horizontal {
-   margin: 0 15px;
+   margin: 0 27px;
    height: 42px;
    width: 111px;
 }
 
-.host-section-name-input {
-   margin-bottom: 37px;
+.host-config-section .bf-input-container {
+   margin-bottom: 40px;
 }
