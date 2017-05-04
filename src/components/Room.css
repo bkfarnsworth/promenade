@@ -1,20 +1,42 @@
 .game-logo {
    text-align: center;
    margin-top: 100px;
+   margin-bottom: 50px;
    font-size: 20px;
 }
 
-.game-config-section {
+.join-or-host-section {
    display: flex;   
    justify-content: center;
    flex-direction: column;
    align-items: center;
-   margin-top: 50px;
 }
 
-.game-config-button {
-   /*display: inline-block;*/
-   height: 50px;
-   width: 100px;
-   margin-bottom: 20px;
+.host-section {
+   display: flex;
+   justify-content: center;
+   flex-direction: column;
+   align-items: center;
+}
+
+.game-config-button-vertical {
+   height: 62px;
+   width: 215px;
+   margin-bottom: 33px;
+}
+
+.host-section-button-row {
+   display: flex;
+   justify-content: center;   
+   width: 100%;
+}
+
+.game-config-button-horizontal {
+   margin: 0 15px;
+   height: 42px;
+   width: 111px;
+}
+
+.host-section-name-input {
+   margin-bottom: 37px;
 }

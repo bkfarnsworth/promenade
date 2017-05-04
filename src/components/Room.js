@@ -14,14 +14,15 @@ class Room extends React.Component {
       }
    }
 
-   render() {
-
+   get configSection() {
       if(this.state.roomOption === 'host') {
          return (
-            <div>
-               name: <input type="text"/>
-               <button>Create Room</button>
-               <button onClick={() => {this.setState({roomOption: 'start'})}}>Back</button>
+            <div className="host-section">
+               <div className="host-section-name-input">Name: <input className="bf-input" type="text"/></div>
+               <div className="host-section-button-row">
+                  <button className="bf-button game-config-button-horizontal">Create Room</button>
+                  <button className="bf-button game-config-button-horizontal" onClick={() => {this.setState({roomOption: 'start'})}}>Back</button>
+               </div>
             </div>
          );
       } else if(this.state.roomOption === 'join') {
@@ -35,15 +36,24 @@ class Room extends React.Component {
          );
       } else if(this.state.roomOption === 'start') {
          return (
-            <div>
-               <div className="game-logo">Game Title</div>
-               <div className="game-config-section">
-                  <button className="game-config-button bf-button" onClick={() => {this.setState({roomOption: 'host'})}}>Host Game</button>
-                  <button className="game-config-button bf-button" onClick={() => {this.setState({roomOption: 'join'})}}>Join Game</button>
-               </div>
+            <div className="join-or-host-section">
+               <button className="game-config-button-vertical bf-button" onClick={() => {this.setState({roomOption: 'host'})}}>Host Game</button>
+               <button className="game-config-button-vertical bf-button" onClick={() => {this.setState({roomOption: 'join'})}}>Join Game</button>
             </div>
          );
       }
+   }
+
+   render() {
+
+      return (
+         <div>
+            <div className="game-logo">Game Title</div>
+            <div className="game-config-section">
+               {this.configSection}
+            </div>
+         </div>
+      );
    }
 
 }
