@@ -36,8 +36,7 @@ class Boggle extends React.Component  {
       super()
       this.state = {
          input: '',
-         guesses: [],
-         gameStarted: false
+         guesses: []
       }
 
       this.createBoggleModel();
@@ -119,24 +118,20 @@ class Boggle extends React.Component  {
    }
 
    render() {
-      if(this.state.gameStarted) {
-         return (
-            <div className="page">
-               <div className="boggle-input-area">
-                  <BoggleBoard boggle={this.boggle}/>
-                  <input className="boggle-input" type="text" value={this.state.input} onChange={this.onChange.bind(this)} onKeyDown={this.onKeyDown.bind(this)}/>
-               </div>
-               <div className="boggle-guess-list">
-                  <b>Guesses:</b>
-                  {this.state.guesses.map(g => {
-                     return <div key={g}>{g}</div>;
-                  })}
-               </div>
+      return (
+         <div className="page">
+            <div className="boggle-input-area">
+               <BoggleBoard boggle={this.boggle}/>
+               <input className="boggle-input" type="text" value={this.state.input} onChange={this.onChange.bind(this)} onKeyDown={this.onKeyDown.bind(this)}/>
             </div>
-         )
-      } else {
-         return <button onClick={() => {this.setState({gameStarted: true})}}>click to start</button>
-      }
+            <div className="boggle-guess-list">
+               <b>Guesses:</b>
+               {this.state.guesses.map(g => {
+                  return <div key={g}>{g}</div>;
+               })}
+            </div>
+         </div>
+      )
    }
 };
 

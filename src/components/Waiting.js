@@ -14,24 +14,38 @@ class Waiting extends React.Component {
       this.playerType = _.get(props, 'location.state.playerType');
    }
 
-   // get hostWaitingComponent() {
-   //    return (
-   //       <div>Code: 123456</div>
-   //       <Link to={'/boggle'}>Start Game</Link>
-   //    );
-   // }
+   get hostWaitingComponent() {
+      return (
+         <div className="room-config-section">
+            <div>Code: 123456</div>
+            <Link className="bf-button" to={'/boggle'}>Start Game</Link>
+         </div>
+      );
+   }
 
-   // get joinWaitingComponent() {
-   //    return (
-   //       <div>Waiting for host to start the game</div>
-   //    );
-   // }
+   get joinWaitingComponent() {
+      return (
+         <div>Waiting for host to start the game</div>
+      );
+   }
+
+   get playersComponent() {
+      return (
+         <div>
+            <div>Players:</div>
+            <div>Brian</div>
+            <div>Rose</div>
+            <div>Tamson</div>
+            <div>Miles</div>
+         </div>
+      )
+   }
 
    get waitingComponent() {
       if(this.playerType === 'host') {
-         return <div>host</div>
+         return <div>{this.hostWaitingComponent}</div>
       } else if(this.playerType === 'join') {
-         return <div>join</div>
+         return <div>{this.joinWaitingComponent}</div>
       } else {
          return <div>no player type</div>
       }
@@ -39,9 +53,10 @@ class Waiting extends React.Component {
 
    render() {
       return (
-         <div>
+         <div className="room-config-section">
             <div className="game-logo">Boggle</div>
             {this.waitingComponent}
+            {this.playersComponent}
          </div>
       );
    }
