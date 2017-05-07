@@ -6,11 +6,17 @@ import _ from 'lodash';
 import Room from './Room';
 import Waiting from './Waiting';
 import { HashRouter, Switch, Route, Link } from 'react-router-dom'
-
+import IO from 'socket.io-client'
+import AppConfig from './../AppConfig'
 import './App.css';
 
 
 class App extends React.Component  {
+
+   constructor(props) {
+      super(props);
+      AppConfig.socket = IO();
+   }
 
    get games() {
       return [

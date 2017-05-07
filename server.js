@@ -31,31 +31,21 @@ io.on('connection', (socket) => {
 
   socket.on('joinRoom', (roomName, userName, cb) => {
 
-    //get clients in room and check if this one is already there
-    io.in(roomName).clients((error, clients) => {
+    //join the room
+    socket.join(roomName);
 
-      //check if already there, and return if so
-      if(clients.indexOf(socket.id) !== -1) {
-        cb();
-        return;
-      }
+    //add the username to the map
+    socketUsernameMap[socket.id] = userName;
 
-      //join the room
-      socket.join(roomName);
+    //callback
+    cb()
 
-      //add the username to the map
-      socketUsernameMap[socket.id] = userName;
-
-      //callback
-      cb()
-
-      //emit to all members that there is a new member
-      getUsernamesForRoom(roomName, (names) => {
-        io.to(roomName).emit('newRoomMember', {
-          roomMembers: names
-        })
+    //emit to all members that there is a new member
+    getUsernamesForRoom(roomName, (names) => {
+      io.to(roomName).emit('newRoomMember', {
+        roomMembers: names
       })
-    });
+    })
   });
 
   socket.on('getRoomMembers', (roomName, cb) => {

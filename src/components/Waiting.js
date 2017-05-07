@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import AppConfig from './../AppConfig'
 import _ from 'lodash';
 
 import './Waiting.css';
@@ -13,10 +14,13 @@ class Waiting extends React.Component {
       super(props)
 
       this.playerType = _.get(props, 'location.state.playerType');
-      this.socket = _.get(props, 'location.state.socket');
       this.state = {
          players: []
       }
+   }
+
+   get socket() {
+      return AppConfig.socket;
    }
 
    componentDidMount() {

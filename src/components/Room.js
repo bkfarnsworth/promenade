@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import IO from 'socket.io-client'
+import AppConfig from './../AppConfig'
 
 import './Room.css';
 
@@ -18,9 +19,7 @@ class Room extends React.Component {
    }
 
    get socket() {
-      //TODO this should be global for the whole front end
-      this._socket = this._socket || IO();
-      return this._socket;
+      return AppConfig.socket;
    }
 
    onCreateRoomClick() {
@@ -30,7 +29,6 @@ class Room extends React.Component {
             pathname: '/waiting',
             state: {
                playerType: 'host',
-               socket: this.socket
             }
          });
       });
@@ -43,7 +41,6 @@ class Room extends React.Component {
             pathname: '/waiting',
             state: {
                playerType: 'join',
-               socket: this.socket
             }
          });
       });
