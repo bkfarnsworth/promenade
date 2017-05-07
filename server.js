@@ -26,6 +26,20 @@ var getUsernamesForRoom = (roomName, cb) => {
   });
 }
 
+var timeRemaining;
+const GAME_TIME = 20;
+var startTimer = (roomName) => {
+  timeRemaining = GAME_TIME;
+  var id = setInterval(() => {
+    io.to(roomName).emit('timeRemainingUpdate', timeRemaining);
+    if(timeRemaining === 0) {
+      clearInterval(id);      
+    } else {
+      timeRemaining--;
+    }
+  }, 1000);
+}
+
 io.on('connection', (socket) => {
   console.log('Client connected');
 
@@ -57,6 +71,9 @@ io.on('connection', (socket) => {
   });
 
   socket.on('startGame', (roomName) => {
+    //start timer
+    startTimer(roomName);
+
     io.to(roomName).emit('gameStarted');
   });
 
@@ -69,5 +86,4 @@ io.on('connection', (socket) => {
   socket.on('disconnect', () => console.log('Client disconnected'));
 });
 
-setInterval(() => io.emit('time', new Date().toTimeString()), 1000);
 

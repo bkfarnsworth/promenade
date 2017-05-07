@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import AppConfig from './../AppConfig';
 
 import './Boggle.css';
 
@@ -42,11 +43,16 @@ class Boggle extends React.Component  {
       this.createBoggleModel();
    }
 
+   get socket() {
+      return AppConfig.socket;
+   }
+
    componentDidMount() {
-      // this.socket = IO();
-      // this.socket.on('guess', (guess) => {
-      //    this.addGuessToState(guess);
-      // });
+      this.socket.on('timeRemainingUpdate', (timeRemaining) => {
+         this.setState({
+            timeRemaining
+         })
+      })
    }
 
    addGuessToState(guess) {
@@ -121,6 +127,7 @@ class Boggle extends React.Component  {
       return (
          <div className="page">
             <div className="boggle-input-area">
+               <div>Time Remaining: {this.state.timeRemaining}</div>
                <BoggleBoard boggle={this.boggle}/>
                <input className="boggle-input" type="text" value={this.state.input} onChange={this.onChange.bind(this)} onKeyDown={this.onKeyDown.bind(this)}/>
             </div>
