@@ -28,7 +28,7 @@ class Waiting extends React.Component {
    }
 
    componentDidMount() {
-      this.socket.emit('getRoomMembers', '1234', (data) => {
+      this.socket.emit('getRoomMembers', (data) => {
          this.updatePlayersList(data.roomMembers);
       });
 
@@ -46,7 +46,7 @@ class Waiting extends React.Component {
    }
 
    onStartGameClick() {
-      this.socket.emit('startGame', '1234');
+      this.socket.emit('startGame');
    }
 
    onGameStart(data) {
