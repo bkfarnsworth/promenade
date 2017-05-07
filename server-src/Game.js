@@ -40,7 +40,7 @@ class Game {
     });
 
     //calculate the solution right now while the game is going
-    var solution = boggle.solve(board);
+    this.solution = boggle.solve(board);
   }
 
   startTimer() {
@@ -54,6 +54,68 @@ class Game {
       }
     }, 1000);
   }
+
+  addResult(userName, words) {
+
+    this.playerResults = this.playerResults || [];
+
+    let playerResult = {
+      player: userName,
+      scoredWords: [],
+      sharedWords: [],
+      invalidWords: [],
+      score: 0
+    };
+
+    //uppercase all
+    playerResult.scoredWords = words.map(w => w.toUpperCase())
+
+    //dedup words
+    playerResult.scoredWords = _.uniq(playerResult.scoredWords);
+
+    //find invalid words
+    playerResult.scoredWords = playerResult.scoredWords.filter(w => {
+      return this.solution.find(validEntry => validEntry.word === w);
+    });
+
+    //go through other players and cancel out words
+    this.playerResults.forEach(otherPlayerResult => {
+      
+      let sharedWords = _.intersection(playerResult.scoredWords, otherPlayerResult.scoredWords);
+
+      //adjust list of the player we are adding right now
+      this.removeElements(playerResult.scoredWords, sharedWords);
+      playerResult.sharedWords.push(...sharedWords);
+      playerResult.sharedWords = _.uniq(playerResult.sharedWords);
+
+      //adjust list of the player we were checking against
+      this.removeElements(otherPlayerResult.scoredWords, sharedWords);
+      otherPlayerResult.sharedWords.push(...sharedWords);
+      otherPlayerResult.sharedWords = _.uniq(otherPlayerResult.sharedWords);
+    });
+
+    //add to results
+    this.playerResults.push(playerResult);
+
+    //update scores for all players
+    this.playerResults.forEach(pr => {
+      pr.score = 0;
+      pr.scoredWords.forEach(w => {
+        pr.score += boggle.points(w);
+      });
+    });
+  }
+
+  removeElements(arr, elsToRemove) {
+    elsToRemove.forEach(elToRemove => {
+      _.remove(arr, el => el === elToRemove);
+    });
+  }
+
+  getFinalResults() {
+    return this.playerResults;
+  }
+
 }
 
 module.exports = Game;

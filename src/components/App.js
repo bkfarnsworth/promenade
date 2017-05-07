@@ -5,6 +5,7 @@ import Boggle from './Boggle';
 import _ from 'lodash';
 import Room from './Room';
 import Waiting from './Waiting';
+import Results from './Results';
 import { HashRouter, Switch, Route, Link } from 'react-router-dom'
 import IO from 'socket.io-client'
 import AppConfig from './../AppConfig'
@@ -51,6 +52,7 @@ class App extends React.Component  {
              <Route exact path='/' component={this.getGameMenu.bind(this)}/>
              <Route exact path='/room' component={Room} />
              <Route exact path='/waiting' component={Waiting} />
+             <Route exact path='/results' component={Results} />
              {this.games.map(game => {
                return <Route key={game.name} path={'/' + game.name} component={game.getGameComponent} />
              })}

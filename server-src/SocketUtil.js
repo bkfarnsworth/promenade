@@ -17,6 +17,9 @@ class SocketUtil {
     //join the room
     this.socket.join(roomName);
 
+    //save the username
+    this.userName = userName;
+
     //get the game
     this.appConfig.gameMap[roomName] = this.appConfig.gameMap[roomName] || new Game(this.io, roomName);
     this.game = this.appConfig.gameMap[roomName]
@@ -29,9 +32,7 @@ class SocketUtil {
 
     //emit to all members that there is a new member
     this.getUsernamesForRoom((names) => {
-      this.io.to(this.roomName).emit('newRoomMember', {
-        roomMembers: names
-      })
+      this.emitToRoom('newRoomMember', {roomMembers: names})
     })
   }
 
@@ -49,8 +50,25 @@ class SocketUtil {
     });
   }
 
+  emitToRoom(name, data) {
+    this.io.in(this.roomName).emit(name, data);
+  }
+
   startGame() {
     this.game.start();
+  }
+
+  submitResults(data) {
+    this.game.addResult(this.userName, data.words);
+
+    let finalResults = this.game.getFinalResults();
+    this.getRoomMembers(data => {
+
+      let members = data.roomMembers;
+      if(finalResults.length === members.length) {
+        this.emitToRoom('finalResults', {finalResults})
+      }
+    });
   }
 
 }

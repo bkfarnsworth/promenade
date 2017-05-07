@@ -53,8 +53,24 @@ class Boggle extends React.Component  {
       this.socket.on('timeRemainingUpdate', (timeRemaining) => {
          this.setState({
             timeRemaining
-         })
+         });
+
+         if(timeRemaining === 0) {
+            this.socket.emit('submitResults', {
+               words: this.state.guesses
+            });
+         }
       })
+
+      this.socket.on('finalResults', (data) => {
+         this.props.history.push({
+            pathname: '/results',
+            state: {
+               finalResults: data.finalResults
+            }
+         });
+      });
+
    }
 
    addGuessToState(guess) {
