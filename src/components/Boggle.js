@@ -33,14 +33,17 @@ const BoggleBoard = (props) => {
 
 class Boggle extends React.Component  {
 
-   constructor() {
-      super()
+   constructor(props) {
+      super(props)
+      this.props = props;
       this.state = {
          input: '',
          guesses: []
       }
+   }
 
-      this.createBoggleModel();
+   get board() {
+      return _.get(this, 'props.location.state.board');
    }
 
    get socket() {
@@ -61,37 +64,6 @@ class Boggle extends React.Component  {
       this.setState({
          guesses: guesses,
       });
-   }
-
-   createBoggleModel() {
-      //this will be made on the server
-      let alphabet = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
-      let shuffledLetters = _.shuffle(alphabet);
-
-      let boggle = {
-         rows: [],
-         validWords: ['cat', 'bat', 'sat']
-      };
-
-      //create boggle board
-      var rows = boggle.rows;
-      var currentLetterIndex = 0;
-      while(rows.length < 4) {
-         var currentRow = {
-            cells: []
-         }
-         rows.push(currentRow);
-
-         while(currentRow.cells.length < 4) {
-            var letter = shuffledLetters[currentLetterIndex];
-            currentRow.cells.push({
-               text: letter
-            });
-            currentLetterIndex++;
-         }
-      }
-
-      this.boggle = boggle;
    }
 
    onChange(e) {
@@ -128,7 +100,7 @@ class Boggle extends React.Component  {
          <div className="page">
             <div className="boggle-input-area">
                <div>Time Remaining: {this.state.timeRemaining}</div>
-               <BoggleBoard boggle={this.boggle}/>
+               <BoggleBoard boggle={this.board}/>
                <input className="boggle-input" type="text" value={this.state.input} onChange={this.onChange.bind(this)} onKeyDown={this.onKeyDown.bind(this)}/>
             </div>
             <div className="boggle-guess-list">

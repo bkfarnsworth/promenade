@@ -3,6 +3,9 @@ const express = require('express');
 const app = express();
 const socketIO = require('socket.io');
 const PORT = process.env.PORT || 8080;
+const boggle = require('pf-boggle');
+const _ = require('lodash');
+
 
 app.use(express.static(path.join(__dirname, 'dist')));
 
@@ -73,9 +76,57 @@ io.on('connection', (socket) => {
   socket.on('startGame', (roomName) => {
     //start timer
     startTimer(roomName);
+    
+    var boardSize = 4;
+    var board = boggle.generate(boardSize);
 
-    io.to(roomName).emit('gameStarted');
+    //make the board to have rows and cells
+    var boardModel = {
+      rows: []
+    }
+
+    var chunked = _.chunk(board, boardSize);
+    chunked.forEach(chunk => {
+      boardModel.rows.push({
+        cells: chunk.map(letter => {return {text: letter}})
+      })
+    });
+
+    io.to(roomName).emit('gameStarted', {
+      board: boardModel
+    });
+
+    //calculate the solution right now while the game is going
+    var solution = boggle.solve(board);
+
   });
+
+  // socket.on('reportWords', (words) => {
+
+  //   //have a global game var
+
+  //   // add the player and words to game object
+
+  //   game.addPlayerResults(player, words);
+  //     //this will go through any player already reported, and cancel out words that are shared between players
+  //     //modify there scores
+
+  //   if(game.entries === numberOfPeopleInRoom) {
+        
+  //     //emit to the room the final scores
+
+  //     roomEtc.emit('gameResults', 
+  //       [ 
+  //         {
+  //           player: fdasfds,
+  //           words: [],
+  //           score: 123
+  //         }
+  //       ]
+  //     );
+  //   }
+  //   //get all the players and their scores
+  // });
 
 
   socket.on('guess', function(guess){

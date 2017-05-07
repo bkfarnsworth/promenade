@@ -49,9 +49,12 @@ class Waiting extends React.Component {
       this.socket.emit('startGame', '1234');
    }
 
-   onGameStart() {
+   onGameStart(data) {
       this.props.history.push({
-         pathname: '/boggle'
+         pathname: '/boggle',
+         state: {
+            board: data.board
+         }
       });
    }
 

@@ -22,20 +22,20 @@ class App extends React.Component  {
       return [
          {
             name: 'Boggle',
-            getGameComponent: () => <Boggle/>,
+            getGameComponent: (props) => <Boggle {...props}/>,
             initialState: 'room'
          },
          {
             name: 'Pong',
-            getGameComponent: () => <ComingSoon/>
+            getGameComponent: (props) => <ComingSoon {...props}/>
          },
          {
             name: 'Trivia',
-            getGameComponent: () => <ComingSoon/>
+            getGameComponent: (props) => <ComingSoon {...props}/>
          },
          {
             name: 'Hungry Hungry Hippos',
-            getGameComponent: () => <ComingSoon/>
+            getGameComponent: (props) => <ComingSoon {...props}/>
          }
       ];
    }
