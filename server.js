@@ -88,7 +88,13 @@ io.on('connection', (socket) => {
     var chunked = _.chunk(board, boardSize);
     chunked.forEach(chunk => {
       boardModel.rows.push({
-        cells: chunk.map(letter => {return {text: letter}})
+        id: _.uniqueId(),
+        cells: chunk.map(letter => {
+          return {
+            id: _.uniqueId(),
+            text: letter
+          }
+        })
       })
     });
 
