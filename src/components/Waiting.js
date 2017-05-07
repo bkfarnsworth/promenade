@@ -11,7 +11,28 @@ class Waiting extends React.Component {
 
    constructor(props) {
       super(props)
+
       this.playerType = _.get(props, 'location.state.playerType');
+      this.socket = _.get(props, 'location.state.socket');
+      this.state = {
+         players: []
+      }
+   }
+
+   componentDidMount() {
+      this.socket.emit('getRoomMembers', '1234', (data) => {
+         this.updatePlayersList(data.roomMembers);
+      });
+
+      this.socket.on('newRoomMember', (data) => {
+         this.updatePlayersList(data.roomMembers);
+      });
+   }
+
+   updatePlayersList(roomMembers) {
+      this.setState({
+         players: roomMembers
+      })
    }
 
    get hostWaitingComponent() {
@@ -33,10 +54,9 @@ class Waiting extends React.Component {
       return (
          <div>
             <div>Players:</div>
-            <div>Brian</div>
-            <div>Rose</div>
-            <div>Tamson</div>
-            <div>Miles</div>
+            {this.state.players.map(p => {
+               return <div>{p}</div>
+            })}
          </div>
       )
    }

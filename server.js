@@ -18,13 +18,52 @@ const server = app.listen(PORT, error => {
 
 const io = socketIO(server);
 
+var socketUsernameMap = {};
+
+var getUsernamesForRoom = (roomName, cb) => {
+  io.in(roomName).clients((error, clients) => {
+    cb(clients.map(c => socketUsernameMap[c]));
+  });
+}
+
 io.on('connection', (socket) => {
   console.log('Client connected');
 
-  socket.on('joinRoom', (room) => {
-    socket.join(room);
-    console.log('joined room!');
-    console.log('io.sockets.adapter.rooms: ', io.sockets.adapter.rooms);
+  socket.on('joinRoom', (roomName, userName, cb) => {
+
+    //get clients in room and check if this one is already there
+    io.in(roomName).clients((error, clients) => {
+
+      //check if already there, and return if so
+      if(clients.indexOf(socket.id) !== -1) {
+        cb();
+        return;
+      }
+
+      //join the room
+      socket.join(roomName);
+
+      //add the username to the map
+      socketUsernameMap[socket.id] = userName;
+
+      //callback
+      cb()
+
+      //emit to all members that there is a new member
+      getUsernamesForRoom(roomName, (names) => {
+        io.to(roomName).emit('newRoomMember', {
+          roomMembers: names
+        })
+      })
+    });
+  });
+
+  socket.on('getRoomMembers', (roomName, cb) => {
+    getUsernamesForRoom(roomName, (names) => {
+      cb({
+        roomMembers: names
+      })
+    });
   });
 
   socket.on('guess', function(guess){

@@ -18,24 +18,33 @@ class Room extends React.Component {
    }
 
    get socket() {
+      //TODO this should be global for the whole front end
       this._socket = this._socket || IO();
       return this._socket;
    }
 
    onCreateRoomClick() {
       let code = '1234'
-      this.socket.emit('joinRoom', code, () => {
-         this.props.history.push('/waiting', {
-            playerType: 'host'
+      this.socket.emit('joinRoom', code, 'HOSTNAME', () => {
+         this.props.history.push({
+            pathname: '/waiting',
+            state: {
+               playerType: 'host',
+               socket: this.socket
+            }
          });
       });
    }
 
    onJoinRoomClick() {
       let code = '1234'
-      this.socket.emit('joinRoom', code, () => {
-         this.props.history.push('/waiting', {
-            playerType: 'join'
+      this.socket.emit('joinRoom', code, 'Joiner NAME!!!', () => {
+         this.props.history.push({
+            pathname: '/waiting',
+            state: {
+               playerType: 'join',
+               socket: this.socket
+            }
          });
       });
    }
