@@ -12,8 +12,8 @@ class Waiting extends React.Component {
 
    constructor(props) {
       super(props)
+      this.props = props;
 
-      this.playerType = _.get(props, 'location.state.playerType');
       this.state = {
          players: []
       }
@@ -21,6 +21,10 @@ class Waiting extends React.Component {
 
    get socket() {
       return AppConfig.socket;
+   }
+
+   get playerType() {
+      return _.get(this, 'props.location.state.playerType');
    }
 
    componentDidMount() {
@@ -31,6 +35,8 @@ class Waiting extends React.Component {
       this.socket.on('newRoomMember', (data) => {
          this.updatePlayersList(data.roomMembers);
       });
+
+      this.socket.on('gameStarted', this.onGameStart.bind(this));
    }
 
    updatePlayersList(roomMembers) {
@@ -39,11 +45,21 @@ class Waiting extends React.Component {
       })
    }
 
+   onStartGameClick() {
+      this.socket.emit('startGame', '1234');
+   }
+
+   onGameStart() {
+      this.props.history.push({
+         pathname: '/boggle'
+      });
+   }
+
    get hostWaitingComponent() {
       return (
          <div className="room-config-section">
             <div>Code: 123456</div>
-            <Link className="bf-button" to={'/boggle'}>Start Game</Link>
+            <button className="bf-button" onClick={this.onStartGameClick.bind(this)}>Start Game</button>
          </div>
       );
    }

@@ -56,6 +56,11 @@ io.on('connection', (socket) => {
     });
   });
 
+  socket.on('startGame', (roomName) => {
+    io.to(roomName).emit('gameStarted');
+  });
+
+
   socket.on('guess', function(guess){
     console.log('message: ' + guess);
     io.emit('guess', guess);
