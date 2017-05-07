@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import GameMenu from './GameMenu';
 import Boggle from './Boggle';
 import _ from 'lodash';
-import IO from 'socket.io-client'
 import Room from './Room';
 import Waiting from './Waiting';
 import { HashRouter, Switch, Route, Link } from 'react-router-dom'

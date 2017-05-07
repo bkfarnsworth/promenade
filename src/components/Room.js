@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import IO from 'socket.io-client'
 
 import './Room.css';
 
@@ -8,39 +9,56 @@ import './Room.css';
 
 class Room extends React.Component {
 
-   constructor() {
-      super()
+   constructor(props) {
+      super(props)
+      this.props = props;
       this.state = {
          roomOption: 'start'
       }
    }
 
+   get socket() {
+      this._socket = this._socket || IO();
+      return this._socket;
+   }
+
+   onCreateRoomClick() {
+      let code = '1234'
+      this.socket.emit('joinRoom', code, () => {
+         this.props.history.push('/waiting', {
+            playerType: 'host'
+         });
+      });
+   }
+
+   onJoinRoomClick() {
+      let code = '1234'
+      this.socket.emit('joinRoom', code, () => {
+         this.props.history.push('/waiting', {
+            playerType: 'join'
+         });
+      });
+   }
+
    get configSection() {
       if(this.state.roomOption === 'host') {
-         let linkObj = {
-            pathname: '/waiting',
-            state: {playerType: 'host'}
-         };
          return (
             <div className="room-config-section host-config-section">
                <div className="bf-input-container">Name: <input className="bf-input" type="text"/></div>
                <div className="room-section-button-row">
-                  <Link to={linkObj} className="bf-button game-config-button-horizontal">Create Room</Link>
+                  <button className="bf-button game-config-button-horizontal" onClick={this.onCreateRoomClick.bind(this)}>Create Room</button>
                   <button className="bf-button game-config-button-horizontal" onClick={() => {this.setState({roomOption: 'start'})}}>Back</button>
                </div>
             </div>
          );
       } else if(this.state.roomOption === 'join') {
-         let linkObj = {
-            pathname: '/waiting',
-            state: {playerType: 'join'}
-         };
+
          return (
             <div className="room-config-section">
                <div className="bf-input-container">Name: <input className="bf-input" type="text"/></div>
                <div className="bf-input-container">Code: <input className="bf-input" type="text"/></div>
                <div className="room-section-button-row">
-                  <Link to={linkObj} className="bf-button game-config-button-horizontal">Join</Link>
+                  <button className="bf-button game-config-button-horizontal" onClick={this.onJoinRoomClick.bind(this)}>Join</button>
                   <button className="bf-button game-config-button-horizontal" onClick={() => {this.setState({roomOption: 'start'})}}>Back</button>
                </div>
             </div>

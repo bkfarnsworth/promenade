@@ -21,6 +21,11 @@ const io = socketIO(server);
 io.on('connection', (socket) => {
   console.log('Client connected');
 
+  socket.on('joinRoom', (room) => {
+    socket.join(room);
+    console.log('joined room!');
+    console.log('io.sockets.adapter.rooms: ', io.sockets.adapter.rooms);
+  });
 
   socket.on('guess', function(guess){
     console.log('message: ' + guess);
