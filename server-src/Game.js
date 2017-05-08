@@ -5,7 +5,7 @@ class Game {
 
   constructor(io, roomName) {
     this.timeRemaining = undefined;
-    this.GAME_TIME = 20;
+    this.GAME_TIME = 90;
     this.io = io;
     this.roomName = roomName;
     this.socketUsernameMap = {};
