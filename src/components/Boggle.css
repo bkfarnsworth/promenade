@@ -21,8 +21,16 @@
 
 .boggle-tile {
    border: black solid 1px;
+   background-color: white;
    display: inline-block;
-   height: 30px;
-   line-height: 30px;
-   width: 30px;
+   height: 57px;
+   line-height: 57px;
+   width: 57px;
+   border-radius: 4px;
+}
+
+.boggle-board {
+   border: 7px solid orange;
+   border-radius: 12px;
+   background-color: orange;
 }
