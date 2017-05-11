@@ -12,7 +12,12 @@ class Game {
   }
 
   start() {
+
     this.startTimer();
+
+    //clear out the playerResults if this game was used before
+    //TODO: it might be better to new up a new Game and have it not be tied to a room as much as it is right now
+    this.playerResults = [];
     
     var boardSize = 4;
     var board = boggle.generate(boardSize);
