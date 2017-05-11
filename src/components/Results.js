@@ -3,8 +3,11 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import AppConfig from './../AppConfig'
 import _ from 'lodash';
+import DebugHelper from './../DebugHelper';
 
 import './Results.css';
+
+const debugMode = false;
 
 class Results extends React.Component {
 
@@ -18,20 +21,50 @@ class Results extends React.Component {
    }
 
    get finalResults() {
-      return _.get(this, 'props.location.state.finalResults');
+      if(debugMode) {
+         return DebugHelper.finalResults;
+      } else {
+         return _.get(this, 'props.location.state.finalResults', []);
+      }
+   }
+
+   getFinalResultsSorted() {
+      return _.orderBy(this.finalResults, 'score', 'desc');
+   }
+
+   getCommaSeperatedList(words) {
+      return words.join(', ')
    }
 
    render() {
       return (
          <div className="room-config-section">
-            {this.finalResults.map(result => {
+            <div>Results</div>
+            {this.getFinalResultsSorted().map(result => {
                return (
                   <div>
                      {result.player} : {result.score}
-                     <div>words:</div>
-                     {result.scoredWords.map(w => {
-                        return <div>{w}</div>
-                     })}
+                  </div>
+               );
+            })}
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <div> boggle board</div>
+            <br/>
+            <br/>
+            <br/>
+            {this.getFinalResultsSorted().map(result => {
+               return (
+                  <div>
+                     <br/>
+                     <div>
+                        <b>{result.player}</b>
+                     </div>
+                     <div>
+                        {this.getCommaSeperatedList(result.scoredWords)}
+                     </div>
                   </div>
                );
             })}
