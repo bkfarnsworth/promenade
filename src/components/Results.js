@@ -68,6 +68,7 @@ class Results extends React.Component {
                   </div>
                );
             })}
+            <Link to="/room" className="bf-button game-config-button-vertical">Play Again</Link>
          </div>
       );
    }
