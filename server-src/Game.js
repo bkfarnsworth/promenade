@@ -6,10 +6,10 @@ const GAME_TIME = debugMode ? 20 : 120;
 
 class Game {
 
-  constructor(io, roomName) {
+  constructor(io, roomCode) {
     this.timeRemaining = undefined;
     this.io = io;
-    this.roomName = roomName;
+    this.roomCode = roomCode;
     this.socketUsernameMap = {};
   }
 
@@ -47,7 +47,7 @@ class Game {
       })
     });
 
-    this.io.to(this.roomName).emit('gameStarted', {
+    this.io.to(this.roomCode).emit('gameStarted', {
       board: boardModel
     });
 
@@ -58,7 +58,7 @@ class Game {
   startTimer() {
     this.timeRemaining = GAME_TIME;
     var id = setInterval(() => {
-      this.io.to(this.roomName).emit('timeRemainingUpdate', this.timeRemaining);
+      this.io.to(this.roomCode).emit('timeRemainingUpdate', this.timeRemaining);
       if(this.timeRemaining === 0) {
         clearInterval(id);      
       } else {

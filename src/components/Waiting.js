@@ -27,6 +27,10 @@ class Waiting extends React.Component {
       return _.get(this, 'props.location.state.playerType');
    }
 
+   get roomCode() {
+      return _.get(this, 'props.location.state.roomCode');
+   }
+
    componentDidMount() {
       this.socket.emit('getRoomMembers', (data) => {
          this.updatePlayersList(data.roomMembers);
@@ -61,7 +65,7 @@ class Waiting extends React.Component {
    get hostWaitingComponent() {
       return (
          <div className="room-config-section">
-            <div>Code: 123456</div>
+            <div>Code: {this.roomCode}</div>
             <button className="bf-button" onClick={this.onStartGameClick.bind(this)}>Start Game</button>
          </div>
       );

@@ -14,7 +14,9 @@ class Room extends React.Component {
       super(props)
       this.props = props;
       this.state = {
-         roomOption: 'start'
+         roomOption: 'start',
+         userName: '',
+         roomCode: ''
       }
    }
 
@@ -23,20 +25,21 @@ class Room extends React.Component {
    }
 
    onCreateRoomClick() {
-      let code = '1234'
-      this.socket.emit('joinRoom', code, 'HOSTNAME', () => {
+      let {userName} = this.state;
+      this.socket.emit('hostRoom', {userName}, (roomCode) => {
          this.props.history.push({
             pathname: '/waiting',
             state: {
                playerType: 'host',
+               roomCode: roomCode
             }
          });
       });
    }
 
    onJoinRoomClick() {
-      let code = '1234'
-      this.socket.emit('joinRoom', code, 'Joiner NAME!!!', () => {
+      let {userName, roomCode} = this.state;
+      this.socket.emit('joinRoom', {roomCode, userName}, () => {
          this.props.history.push({
             pathname: '/waiting',
             state: {
@@ -46,11 +49,17 @@ class Room extends React.Component {
       });
    }
 
+   onInputChange(key, e) {
+      this.setState({
+         [key]: e.target.value
+      });
+   }
+
    get configSection() {
       if(this.state.roomOption === 'host') {
          return (
             <div className="room-config-section host-config-section">
-               <div className="bf-input-container">Name: <input className="bf-input" type="text"/></div>
+               <div className="bf-input-container">Name: <input className="bf-input" value={this.state.userName} type="text" onChange={this.onInputChange.bind(this, 'userName')}/></div>
                <div className="room-section-button-row">
                   <button className="bf-button game-config-button-horizontal" onClick={this.onCreateRoomClick.bind(this)}>Create Room</button>
                   <button className="bf-button game-config-button-horizontal" onClick={() => {this.setState({roomOption: 'start'})}}>Back</button>
@@ -61,8 +70,8 @@ class Room extends React.Component {
 
          return (
             <div className="room-config-section">
-               <div className="bf-input-container">Name: <input className="bf-input" type="text"/></div>
-               <div className="bf-input-container">Code: <input className="bf-input" type="text"/></div>
+               <div className="bf-input-container">Name: <input className="bf-input" type="text" value={this.state.userName} onChange={this.onInputChange.bind(this, 'userName')}/></div>
+               <div className="bf-input-container">Code: <input className="bf-input" type="text" value={this.state.roomCode} onChange={this.onInputChange.bind(this, 'roomCode')}/></div>
                <div className="room-section-button-row">
                   <button className="bf-button game-config-button-horizontal" onClick={this.onJoinRoomClick.bind(this)}>Join</button>
                   <button className="bf-button game-config-button-horizontal" onClick={() => {this.setState({roomOption: 'start'})}}>Back</button>
@@ -80,6 +89,9 @@ class Room extends React.Component {
    }
 
    render() {
+
+
+
 
       return (
          <div>
