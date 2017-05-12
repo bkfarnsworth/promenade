@@ -57,7 +57,8 @@ class Waiting extends React.Component {
       this.props.history.push({
          pathname: '/boggle',
          state: {
-            board: data.board
+            board: data.board,
+            playerType: this.playerType
          }
       });
    }

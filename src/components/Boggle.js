@@ -63,6 +63,7 @@ class Boggle extends React.Component  {
       })
 
       this.socket.on('finalResults', (data) => {
+         console.log('data: ', data);
          this.props.history.push({
             pathname: '/results',
             state: {

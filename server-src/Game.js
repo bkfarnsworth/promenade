@@ -1,7 +1,7 @@
 const boggle = require('pf-boggle');
 const _ = require('lodash');
 
-const debugMode = true;
+const debugMode = false;
 const GAME_TIME = debugMode ? 20 : 120;
 
 class Game {

@@ -28,6 +28,10 @@ class Results extends React.Component {
       }
    }
 
+   get playerType() {
+      return _.get(this, 'props.location.state.playerType');
+   }
+
    getFinalResultsSorted() {
       return _.orderBy(this.finalResults, 'score', 'desc');
    }
@@ -68,7 +72,7 @@ class Results extends React.Component {
                   </div>
                );
             })}
-            <Link to="/room" className="bf-button game-config-button-vertical">Play Again</Link>
+            <Link to={{pathname: '/waiting', state: {playerType: this.state.playerType}}} className="bf-button game-config-button-vertical">Play Again</Link>
          </div>
       );
    }
