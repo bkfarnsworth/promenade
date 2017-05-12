@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import AppConfig from './../AppConfig';
+import SocketMixin from './SocketMixin';
 
 import './Boggle.css';
 
@@ -34,7 +35,7 @@ class Boggle extends React.Component  {
 
    constructor(props) {
       super(props)
-      this.props = props;
+      Object.assign(this, SocketMixin);
       this.state = {
          input: '',
          guesses: []
@@ -45,12 +46,12 @@ class Boggle extends React.Component  {
       return _.get(this, 'props.location.state.board');
    }
 
-   get socket() {
-      return AppConfig.socket;
+   get playerType() {
+      return _.get(this, 'props.location.state.playerType');
    }
 
    componentDidMount() {
-      this.socket.on('timeRemainingUpdate', (timeRemaining) => {
+      this.onSocketEvent('timeRemainingUpdate', (timeRemaining) => {
          this.setState({
             timeRemaining
          });
@@ -60,18 +61,22 @@ class Boggle extends React.Component  {
                words: this.state.guesses
             });
          }
-      })
+      });
 
-      this.socket.on('finalResults', (data) => {
+      this.onSocketEvent('finalResults', (data) => {
          console.log('data: ', data);
          this.props.history.push({
             pathname: '/results',
             state: {
-               finalResults: data.finalResults
+               finalResults: data.finalResults,
+               playerType: this.playerType
             }
          });
       });
+   }
 
+   componentWillUnmount() {
+      this.callOffFuncs();
    }
 
    addGuessToState(guess) {

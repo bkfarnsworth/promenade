@@ -9,6 +9,7 @@ import Results from './Results';
 import { HashRouter, Switch, Route, Link } from 'react-router-dom'
 import IO from 'socket.io-client'
 import AppConfig from './../AppConfig'
+import SocketMixin from './SocketMixin';
 import './App.css';
 
 
@@ -16,6 +17,7 @@ class App extends React.Component  {
 
    constructor(props) {
       super(props);
+      Object.assign(this, SocketMixin);
       AppConfig.socket = IO();
    }
 

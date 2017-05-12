@@ -2,7 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import IO from 'socket.io-client'
-import AppConfig from './../AppConfig'
+import AppConfig from './../AppConfig';
+import SocketMixin from './SocketMixin';
 
 import './Room.css';
 
@@ -12,16 +13,13 @@ class Room extends React.Component {
 
    constructor(props) {
       super(props)
-      this.props = props;
+      Object.assign(this, SocketMixin);
+      
       this.state = {
          roomOption: 'start',
          userName: '',
          roomCode: ''
       }
-   }
-
-   get socket() {
-      return AppConfig.socket;
    }
 
    onCreateRoomClick() {

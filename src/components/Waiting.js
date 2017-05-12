@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import AppConfig from './../AppConfig'
 import _ from 'lodash';
+import SocketMixin from './SocketMixin';
 
 import './Waiting.css';
 
@@ -13,14 +14,11 @@ class Waiting extends React.Component {
    constructor(props) {
       super(props)
       this.props = props;
+      Object.assign(this, SocketMixin);
 
       this.state = {
          players: []
       }
-   }
-
-   get socket() {
-      return AppConfig.socket;
    }
 
    get playerType() {
@@ -36,11 +34,15 @@ class Waiting extends React.Component {
          this.updatePlayersList(data.roomMembers);
       });
 
-      this.socket.on('newRoomMember', (data) => {
+      this.onSocketEvent('newRoomMember', (data) => {
          this.updatePlayersList(data.roomMembers);
       });
 
-      this.socket.on('gameStarted', this.onGameStart.bind(this));
+      this.onSocketEvent('gameStarted', this.onGameStart.bind(this));
+   }
+
+   componentWillUnmount() {
+      this.callOffFuncs();
    }
 
    updatePlayersList(roomMembers) {

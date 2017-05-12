@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import AppConfig from './../AppConfig'
 import _ from 'lodash';
 import DebugHelper from './../DebugHelper';
+import SocketMixin from './SocketMixin';
 
 import './Results.css';
 
@@ -12,12 +13,8 @@ const debugMode = false;
 class Results extends React.Component {
 
    constructor(props) {
-      super(props)
-      this.props = props;
-   }
-
-   get socket() {
-      return AppConfig.socket;
+      super(props);
+      Object.assign(this, SocketMixin);
    }
 
    get finalResults() {
@@ -72,7 +69,7 @@ class Results extends React.Component {
                   </div>
                );
             })}
-            <Link to={{pathname: '/waiting', state: {playerType: this.state.playerType}}} className="bf-button game-config-button-vertical">Play Again</Link>
+            <Link to={{pathname: '/waiting', state: {playerType: this.playerType}}} className="bf-button game-config-button-vertical">Play Again</Link>
          </div>
       );
    }

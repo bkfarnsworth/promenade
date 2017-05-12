@@ -2,7 +2,7 @@ const boggle = require('pf-boggle');
 const _ = require('lodash');
 
 const debugMode = false;
-const GAME_TIME = debugMode ? 20 : 120;
+const GAME_TIME = debugMode ? 20 : 40;
 
 class Game {
 
@@ -24,7 +24,7 @@ class Game {
 
     //clear out the playerResults if this game was used before
     //TODO: it might be better to new up a new Game and have it not be tied to a room as much as it is right now
-    this.playerResults = [];
+    this.playerResults = undefined;
     
     var boardSize = 4;
     var board = debugMode ? this.easyWordsBoard : boggle.generate(boardSize);
@@ -70,6 +70,12 @@ class Game {
   addResult(userName, words) {
 
     this.playerResults = this.playerResults || [];
+
+    console.log();
+    console.log('ADDING RESULT');
+    console.log('userName: ', userName);
+    console.log('words: ', words);
+    console.log('this.playerResults: ', this.playerResults);
 
     let playerResult = {
       player: userName,
