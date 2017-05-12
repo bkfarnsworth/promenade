@@ -1,14 +1,21 @@
 const boggle = require('pf-boggle');
 const _ = require('lodash');
 
+const debugMode = true;
+const GAME_TIME = debugMode ? 20 : 120;
+
 class Game {
 
   constructor(io, roomName) {
     this.timeRemaining = undefined;
-    this.GAME_TIME = 90;
     this.io = io;
     this.roomName = roomName;
     this.socketUsernameMap = {};
+  }
+
+  get easyWordsBoard() {
+    //elephant & splinter
+    return 'eleptnahspliretn'.toUpperCase().split('');
   }
 
   start() {
@@ -20,7 +27,7 @@ class Game {
     this.playerResults = [];
     
     var boardSize = 4;
-    var board = boggle.generate(boardSize);
+    var board = debugMode ? this.easyWordsBoard : boggle.generate(boardSize);
 
     //make the board to have rows and cells
     var boardModel = {
@@ -49,7 +56,7 @@ class Game {
   }
 
   startTimer() {
-    this.timeRemaining = this.GAME_TIME;
+    this.timeRemaining = GAME_TIME;
     var id = setInterval(() => {
       this.io.to(this.roomName).emit('timeRemainingUpdate', this.timeRemaining);
       if(this.timeRemaining === 0) {
