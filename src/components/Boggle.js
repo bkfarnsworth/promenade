@@ -50,6 +50,14 @@ class Boggle extends React.Component  {
       return _.get(this, 'props.location.state.playerType');
    }
 
+   get roomCode() {
+      return _.get(this, 'props.location.state.roomCode');
+   }
+
+   get userName() {
+      return _.get(this, 'props.location.state.userName');
+   }
+
    componentDidMount() {
       this.onSocketEvent('timeRemainingUpdate', (timeRemaining) => {
          this.setState({
@@ -69,7 +77,9 @@ class Boggle extends React.Component  {
             pathname: '/results',
             state: {
                finalResults: data.finalResults,
-               playerType: this.playerType
+               playerType: this.playerType,
+               userName: this.userName,
+               roomCode: this.roomCode
             }
          });
       });

@@ -29,7 +29,8 @@ class Room extends React.Component {
             pathname: '/waiting',
             state: {
                playerType: 'host',
-               roomCode: roomCode
+               roomCode: roomCode,
+               userName: userName
             }
          });
       });
@@ -42,6 +43,8 @@ class Room extends React.Component {
             pathname: '/waiting',
             state: {
                playerType: 'join',
+               userName: userName,
+               roomCode: roomCode
             }
          });
       });

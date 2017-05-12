@@ -17,6 +17,10 @@ class Results extends React.Component {
       Object.assign(this, SocketMixin);
    }
 
+   componentDidMount() {
+      this.socket.emit('leaveRoom');
+   }
+
    get finalResults() {
       if(debugMode) {
          return DebugHelper.finalResults;
@@ -29,12 +33,31 @@ class Results extends React.Component {
       return _.get(this, 'props.location.state.playerType');
    }
 
+   get roomCode() {
+      return _.get(this, 'props.location.state.roomCode');
+   }
+
+   get userName() {
+      return _.get(this, 'props.location.state.userName');
+   }
+
    getFinalResultsSorted() {
       return _.orderBy(this.finalResults, 'score', 'desc');
    }
 
    getCommaSeperatedList(words) {
       return words.join(', ')
+   }
+
+   onPlayAgainClick() {
+      let {userName, roomCode, playerType} = this;
+      let eventToEmit = playerType === 'host' ? 'hostRoom' : 'joinRoom';
+      this.socket.emit(eventToEmit, {roomCode, userName}, () => {
+         this.props.history.push({
+            pathname: '/waiting',
+            state: {playerType, roomCode, userName}
+         });
+      });
    }
 
    render() {
@@ -69,7 +92,7 @@ class Results extends React.Component {
                   </div>
                );
             })}
-            <Link to={{pathname: '/waiting', state: {playerType: this.playerType}}} className="bf-button game-config-button-vertical">Play Again</Link>
+            <button onClick={this.onPlayAgainClick.bind(this)} className="bf-button game-config-button-vertical">Play Again</button>
          </div>
       );
    }

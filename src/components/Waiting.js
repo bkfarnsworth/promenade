@@ -29,6 +29,10 @@ class Waiting extends React.Component {
       return _.get(this, 'props.location.state.roomCode');
    }
 
+   get userName() {
+      return _.get(this, 'props.location.state.userName');
+   }
+
    componentDidMount() {
       this.socket.emit('getRoomMembers', (data) => {
          this.updatePlayersList(data.roomMembers);
@@ -60,7 +64,9 @@ class Waiting extends React.Component {
          pathname: '/boggle',
          state: {
             board: data.board,
-            playerType: this.playerType
+            playerType: this.playerType,
+            roomCode: this.roomCode,
+            userName: this.userName
          }
       });
    }

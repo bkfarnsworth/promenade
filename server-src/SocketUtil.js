@@ -54,6 +54,10 @@ class SocketUtil {
     })
   }
 
+  leaveRoom() {
+    this.socket.leave(this.roomCode);
+  }
+
   getUsernamesForRoom(cb) {
     this.io.in(this.roomCode).clients((error, clients) => {
       cb(clients.map(c => this.game.socketUsernameMap[c]));

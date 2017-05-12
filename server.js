@@ -34,6 +34,7 @@ io.on('connection', (socket) => {
   let socketUtil = new SocketUtil(socket, io, appConfig);
   socket.on('joinRoom', socketUtil.joinRoom.bind(socketUtil));
   socket.on('hostRoom', socketUtil.hostRoom.bind(socketUtil));
+  socket.on('leaveRoom', socketUtil.leaveRoom.bind(socketUtil));
   socket.on('getRoomMembers', socketUtil.getRoomMembers.bind(socketUtil));
   socket.on('startGame', socketUtil.startGame.bind(socketUtil));
   socket.on('submitResults', socketUtil.submitResults.bind(socketUtil));
