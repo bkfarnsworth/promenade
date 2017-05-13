@@ -8,7 +8,6 @@
 
 .game-tile {
    display: inline-block;
-   margin: 16% 50px;   
 }
 
 /*mobile*/
@@ -17,6 +16,7 @@
       width: 55%;
       padding: 16% 0;
       font-size: 6vw;
+      margin: 16% 50px;   
    }
 }
 
@@ -24,7 +24,8 @@
 @media (min-width: 500px) {
    .bf-button.game-tile {
       width: 175px;
-      padding: 10% 0;
-      font-size: 23px;
+      padding: 9% 0;
+      font-size: 21px;
+      margin: 47px 50px;
    }
 }

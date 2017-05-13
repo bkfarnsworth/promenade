@@ -37,7 +37,7 @@ class App extends React.Component  {
             getGameComponent: (props) => <ComingSoon {...props}/>
          },
          {
-            name: 'Hungry Hungry Hippos',
+            name: 'Hippos',
             getGameComponent: (props) => <ComingSoon {...props}/>
          }
       ];
