@@ -5,6 +5,7 @@ import AppConfig from './../AppConfig'
 import _ from 'lodash';
 import DebugHelper from './../DebugHelper';
 import SocketMixin from './SocketMixin';
+import {BoggleBoard} from  './Boggle';
 
 import './Results.css';
 
@@ -45,6 +46,10 @@ class Results extends React.Component {
       return _.get(this, 'props.location.state.userName');
    }
 
+   get board() {
+      return _.get(this, 'props.location.state.board');
+   }
+
    getFinalResultsSorted() {
       return _.orderBy(this.finalResults, 'score', 'desc');
    }
@@ -81,7 +86,7 @@ class Results extends React.Component {
             <br/>
             <br/>
             <br/>
-            <div> boggle board</div>
+            <BoggleBoard boggle={this.board}/>
             <br/>
             <br/>
             <br/>

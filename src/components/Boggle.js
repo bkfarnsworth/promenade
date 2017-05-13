@@ -20,7 +20,7 @@ const BoggleRow = (props) => {
    )
 }
 
-const BoggleBoard = (props) => {
+export const BoggleBoard = (props) => {
    let boggle = props.boggle;
    return (
       <div className="boggle-board">
@@ -80,7 +80,8 @@ class Boggle extends React.Component  {
                solution: data.solution,
                playerType: this.playerType,
                userName: this.userName,
-               roomCode: this.roomCode
+               roomCode: this.roomCode,
+               board: this.board
             }
          });
       });
