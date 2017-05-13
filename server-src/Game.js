@@ -52,7 +52,10 @@ class Game {
     });
 
     //calculate the solution right now while the game is going (and filter to words greater than 2 words)
-    this.solution = boggle.solve(board).filter(entry => entry.word.length > 2);
+    var solution = boggle.solve(board);
+    var solutionWithoutTwoLetterWords =  solution.filter(entry => entry.word.length > 2);
+    var dedupedList = _.uniqBy(solutionWithoutTwoLetterWords, entry => entry.word);
+    this.solution = dedupedList;
   }
 
   startTimer() {
