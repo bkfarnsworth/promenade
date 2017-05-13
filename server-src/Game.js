@@ -92,8 +92,9 @@ class Game {
     playerResult.scoredWords = _.uniq(playerResult.scoredWords);
 
     //find invalid words
-    playerResult.scoredWords = playerResult.scoredWords.filter(w => {
-      return this.solution.find(validEntry => validEntry.word === w);
+    playerResult.invalidWords = _.remove(playerResult.scoredWords, w => {
+      let foundWord = this.solution.find(validEntry => validEntry.word === w);
+      return !foundWord;
     });
 
     //go through other players and cancel out words

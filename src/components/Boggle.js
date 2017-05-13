@@ -77,6 +77,7 @@ class Boggle extends React.Component  {
             pathname: '/results',
             state: {
                finalResults: data.finalResults,
+               solution: data.solution,
                playerType: this.playerType,
                userName: this.userName,
                roomCode: this.roomCode
@@ -109,7 +110,6 @@ class Boggle extends React.Component  {
 
          if(this.guessIsValid(guess)) {
             this.addGuessToState(guess);
-            // this.socket.emit('guess', guess);
          }
 
          this.setState({

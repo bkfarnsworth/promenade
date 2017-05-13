@@ -29,6 +29,10 @@ class Results extends React.Component {
       }
    }
 
+   get solution() {
+      return _.get(this, 'props.location.state.solution', []);
+   }
+
    get playerType() {
       return _.get(this, 'props.location.state.playerType');
    }
@@ -87,11 +91,20 @@ class Results extends React.Component {
                         <b>{result.player}</b>
                      </div>
                      <div>
-                        {this.getCommaSeperatedList(result.scoredWords)}
+                        Scored Words: {this.getCommaSeperatedList(result.scoredWords)}
+                     </div>
+                     <div>
+                        Shared Words: {this.getCommaSeperatedList(result.sharedWords)}
+                     </div>
+                     <div>
+                        Invalid Words: {this.getCommaSeperatedList(result.invalidWords)}
                      </div>
                   </div>
                );
             })}
+            <div>
+               All Words: {this.getCommaSeperatedList(this.solution.map(el => el.word))}
+            </div>
             <button onClick={this.onPlayAgainClick.bind(this)} className="bf-button game-config-button-vertical">Play Again</button>
          </div>
       );
