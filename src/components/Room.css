@@ -1,8 +1,12 @@
+@import url('https://fonts.googleapis.com/css?family=Russo+One');
+
 .game-logo {
    text-align: center;
-   margin-top: 100px;
    margin-bottom: 50px;
-   font-size: 20px;
+   font-size: 120px;
+   color: #ffba33;
+   font-family: 'Russo One', sans-serif;
+   text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
 }
 
 .room-config-section {

@@ -22,6 +22,10 @@ class Room extends React.Component {
       }
    }
 
+   get game() {
+      return _.get(this, 'props.location.state.game', 'Game Title');
+   }
+
    onCreateRoomClick() {
       let {userName} = this.state;
       this.socket.emit('hostRoom', {userName}, (roomCode) => {
@@ -91,12 +95,9 @@ class Room extends React.Component {
 
    render() {
 
-
-
-
       return (
          <div>
-            <div className="game-logo">Game Title</div>
+            <div className="game-logo">{this.game.name}</div>
             <div className="game-config-section">
                {this.configSection}
             </div>

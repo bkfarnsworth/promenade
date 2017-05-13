@@ -6,8 +6,16 @@ import './GameMenu.css';
 
 
 const GameTile = (props) => {
+
+   let to = {
+      pathname: '/' + props.game.initialState,
+      state: {
+         game: props.game
+      }
+   }
+
    return (
-      <Link to={'/' + props.game.initialState} className="game-tile bf-button">{props.game.name}</Link>
+      <Link to={to} className="game-tile bf-button">{props.game.name}</Link>
    );
 };
 
