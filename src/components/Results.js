@@ -77,6 +77,8 @@ class Results extends React.Component {
             })}
             <br/>
             <br/>
+            <button onClick={this.onPlayAgainClick.bind(this)} className="bf-button game-config-button-vertical">Play Again</button>
+            <br/>
             <br/>
             <br/>
             <div> boggle board</div>
@@ -102,10 +104,11 @@ class Results extends React.Component {
                   </div>
                );
             })}
-            <div>
-               All Words: {this.getCommaSeperatedList(this.solution.map(el => el.word))}
-            </div>
-            <button onClick={this.onPlayAgainClick.bind(this)} className="bf-button game-config-button-vertical">Play Again</button>
+            <br/>
+            <br/>
+            <br/>
+            <div>All Words:</div>
+            <div>{this.getCommaSeperatedList(this.solution.map(el => el.word))}</div>
          </div>
       );
    }

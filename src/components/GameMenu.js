@@ -24,10 +24,12 @@ const GameMenu = (props) => {
    let games = props.games;
 
    return (
-      <div className="game-menu">
-         {games.map(g => {
-            return <GameTile key={g.name} game={g}/>
-         })}
+      <div className="game-menu-container">
+         <div className="game-menu">
+            {games.map(g => {
+               return <GameTile key={g.name} game={g}/>
+            })}
+         </div>
       </div>
    );
 }

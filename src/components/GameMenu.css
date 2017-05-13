@@ -1,3 +1,9 @@
+.game-menu-container {
+   display: flex;
+   flex-direction: column;
+   height: 100vh;
+}
+
 .game-menu {
    max-width: 550px; /*kind of a hack to make 2 columns*/
    display: flex;
@@ -18,6 +24,10 @@
       font-size: 6vw;
       margin: 16% 50px;   
    }
+
+   .game-menu-container {
+      justify-content: flex-start;
+   }
 }
 
 /*desktop*/
@@ -27,5 +37,9 @@
       padding: 9% 0;
       font-size: 21px;
       margin: 47px 50px;
+   }
+
+   .game-menu-container {
+      justify-content: center;
    }
 }
