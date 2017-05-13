@@ -1,15 +1,30 @@
 .game-menu {
-   width: 70%;
+   max-width: 550px; /*kind of a hack to make 2 columns*/
    display: flex;
    justify-content: center;  
-   margin: 50px auto;
+   margin: 0 auto;
    flex-wrap: wrap;
 }
 
 .game-tile {
    display: inline-block;
-   padding: 50px 0;
-   width: 175px;
-   margin: 50px;   
-   font-size: 23px;
+   margin: 16% 50px;   
+}
+
+/*mobile*/
+@media (max-width: 500px) {
+   .bf-button.game-tile {
+      width: 55%;
+      padding: 16% 0;
+      font-size: 6vw;
+   }
+}
+
+/*desktop*/
+@media (min-width: 500px) {
+   .bf-button.game-tile {
+      width: 175px;
+      padding: 10% 0;
+      font-size: 23px;
+   }
 }

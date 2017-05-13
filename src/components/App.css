@@ -5,6 +5,12 @@ body {
    font-family: 'Eczar', serif;
 }
 
+#root {
+   display: flex;
+   flex-direction: column;
+   height: 100vh;
+}
+
 .bf-button {
    border: none;
    text-align: center;
@@ -33,4 +39,18 @@ body {
    justify-content: center;
    align-items: center;
    margin-bottom: 30px;
+}
+
+/*mobile*/
+@media (max-width: 500px) {
+   #root {
+      justify-content: flex-start;
+   }
+}
+
+/*desktop*/
+@media (min-width: 500px) {
+   #root {
+      justify-content: center;
+   }
 }
