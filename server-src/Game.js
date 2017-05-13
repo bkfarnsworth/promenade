@@ -51,8 +51,8 @@ class Game {
       board: boardModel
     });
 
-    //calculate the solution right now while the game is going
-    this.solution = boggle.solve(board);
+    //calculate the solution right now while the game is going (and filter to words greater than 2 words)
+    this.solution = boggle.solve(board).filter(entry => entry.word.length > 2);
   }
 
   startTimer() {
