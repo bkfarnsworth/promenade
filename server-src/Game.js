@@ -78,7 +78,7 @@ class Game {
     console.log('ADDING RESULT');
     console.log('userName: ', userName);
     console.log('words: ', words);
-    console.log('this.playerResults: ', this.playerResults);
+    console.log();
 
     let playerResult = {
       player: userName,
@@ -100,24 +100,21 @@ class Game {
       return !foundWord;
     });
 
-    //go through other players and cancel out words
-    this.playerResults.forEach(otherPlayerResult => {
-      
-      let sharedWords = _.intersection(playerResult.scoredWords, otherPlayerResult.scoredWords);
-
-      //adjust list of the player we are adding right now
-      this.removeElements(playerResult.scoredWords, sharedWords);
-      playerResult.sharedWords.push(...sharedWords);
-      playerResult.sharedWords = _.uniq(playerResult.sharedWords);
-
-      //adjust list of the player we were checking against
-      this.removeElements(otherPlayerResult.scoredWords, sharedWords);
-      otherPlayerResult.sharedWords.push(...sharedWords);
-      otherPlayerResult.sharedWords = _.uniq(otherPlayerResult.sharedWords);
-    });
-
     //add to results
     this.playerResults.push(playerResult);
+  }
+
+  calculateFinalResults() {
+    let allWordsFound = _.flatten(this.playerResults.map(pr => pr.scoredWords));
+    let wordCountMap = _.countBy(allWordsFound);
+    let dupedWordsOnly = _.pickBy(wordCountMap, val => val > 1);
+    let sharedWords = Object.keys(dupedWordsOnly);
+
+    this.playerResults.forEach(pr => {
+      pr.sharedWords = _.remove(pr.scoredWords, scoredWord => {
+        return _.includes(sharedWords, scoredWord);
+      });
+    });
 
     //update scores for all players
     this.playerResults.forEach(pr => {
@@ -126,15 +123,7 @@ class Game {
         pr.score += boggle.points(w);
       });
     });
-  }
 
-  removeElements(arr, elsToRemove) {
-    elsToRemove.forEach(elToRemove => {
-      _.remove(arr, el => el === elToRemove);
-    });
-  }
-
-  getFinalResults() {
     return this.playerResults;
   }
 

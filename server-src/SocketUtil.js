@@ -82,16 +82,13 @@ class SocketUtil {
 
   submitResults(data) {
     this.game.addResult(this.userName, data.words);
-
-    let finalResults = this.game.getFinalResults();
-    let solution = this.game.solution;
     this.getRoomMembers(data => {
-
       let members = data.roomMembers;
-      if(finalResults.length === members.length) {
+      if(this.game.playerResults.length === members.length) {
+        let finalResults = this.game.calculateFinalResults();
         this.emitToRoom('finalResults', {
           finalResults,
-          solution
+          solution: this.game.solution
         })
       }
     });
