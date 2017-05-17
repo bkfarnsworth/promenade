@@ -12,12 +12,20 @@ const debugOpts = {
 
 const BoggleCell = (props) => {
    let cell = props.cell;
+   // let style = {left: (props.cellNum * 25 + (props.cellNum/2)) + '%'}
    let style = {left: (props.cellNum * 25) + '%'}
-   return <div className="boggle-tile" style={style}>{cell.text}</div>;
+   return (
+      <div className="boggle-tile" style={style}>
+         <div className="boggle-letter">
+            {cell.text}
+         </div>
+      </div>
+   );
 }
 
 const BoggleRow = (props) => {
    let row = props.row;
+   // let style = {top: (props.rowNum * 25+ (props.rowNum/2)) + '%'}
    let style = {top: (props.rowNum * 25) + '%'}
    return (
       <div className="boggle-row" style={style}>

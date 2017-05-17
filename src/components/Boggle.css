@@ -2,21 +2,27 @@
    margin-top: 100px;
 }
 
-.boggle-row {
-   text-align: center;
-   height: 25%;
-   position: absolute;
-   width: 100%;
+.boggle-letter {
+   font-size: 5vw;
 }
 
 .boggle-tile {
    border: black solid 1px;
    background-color: white;
-   display: inline-block;
    height: 100%;
    width: 25%; 
-   border-radius: 4px;
+   border-radius: 9px;
    position: absolute;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+}
+
+.boggle-row {
+   text-align: center;
+   height: 25%;
+   position: absolute;
+   width: 100%;
 }
 
 .boggle-board {
