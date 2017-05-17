@@ -1,36 +1,41 @@
-.page {
-   height: 600px;
-   width: 100%;
-   display: flex;
-   justify-content: center;
-   align-items: center;
-   flex-direction: row;
-}
-
-.boggle-input-area {
-   margin-right: 100px;
-}
-
 .boggle-input {
    margin-top: 100px;
 }
 
 .boggle-row {
    text-align: center;
+   height: 25%;
+   position: absolute;
+   width: 100%;
 }
 
 .boggle-tile {
    border: black solid 1px;
    background-color: white;
    display: inline-block;
-   height: 57px;
-   line-height: 57px;
-   width: 57px;
+   height: 100%;
+   width: 25%; 
    border-radius: 4px;
+   position: absolute;
 }
 
 .boggle-board {
    border: 7px solid orange;
    border-radius: 12px;
    background-color: orange;
+   max-width: 500px;
+   width: 55%;
+   display: inline-block;
+   padding: 23% 0;
+   position: absolute;
+}
+
+.flex-parent {
+   display: flex;
+   flex-direction: row;
+   flex-wrap: wrap;
+}
+
+.boggle-guess-list {
+   display: inline-block;
 }
