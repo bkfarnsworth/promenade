@@ -161,6 +161,22 @@ class Boggle extends React.Component  {
       }
    }
 
+   deviceIsMobile() {
+      if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+         return true;         
+      } else {
+         return false;
+      }
+   }
+
+   renderInputIfMobile() {
+      if(this.deviceIsMobile()) {
+         return <input className="boggle-input" type="text" value={this.state.input} onChange={this.onChange.bind(this)} onKeyDown={this.onKeyDown.bind(this)}/>
+      } else {
+         return null;
+      }
+   }
+
    render() {
       return (
          <div>
@@ -169,7 +185,7 @@ class Boggle extends React.Component  {
                <BoggleBoard boggle={this.board}/>
                {/* <Guesses guesses={this.state.guesses}/>*/}
             </div>
-            <input className="boggle-input" type="text" value={this.state.input} onChange={this.onChange.bind(this)} onKeyDown={this.onKeyDown.bind(this)}/>
+            {this.renderInputIfMobile()}
          </div>
       )
    }
