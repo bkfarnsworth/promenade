@@ -13,11 +13,15 @@ const debugOpts = {
 
 const BoggleCell = (props) => {
    let cell = props.cell;
-   // let style = {left: (props.cellNum * 25 + (props.cellNum/2)) + '%'}
-   let style = {left: (props.cellNum * 25) + '%'}
+   let style = { left: (props.cellNum * 25) + '%' }
+
+   if(props.isSelected) {
+      style.backgroundColor = 'blue';
+   }
+
    return (
       <div className="boggle-tile" style={style}>
-         <div className="boggle-letter">
+         <div className="boggle-letter" data-cell-id={cell.id} data-cell-num={props.cellNum} data-row-num={props.rowNum}>
             {cell.text}
          </div>
       </div>
@@ -26,12 +30,12 @@ const BoggleCell = (props) => {
 
 const BoggleRow = (props) => {
    let row = props.row;
-   // let style = {top: (props.rowNum * 25+ (props.rowNum/2)) + '%'}
    let style = {top: (props.rowNum * 25) + '%'}
    return (
       <div className="boggle-row" style={style}>
          {row.cells.map((cell, cellNum) => {
-            return <BoggleCell key={cell.id} cell={cell} cellNum={cellNum}/>
+            var isSelected = Boolean(props.selectedCells.find(c => c.cellId === cell.id));
+            return <BoggleCell key={cell.id} cell={cell} cellNum={cellNum} rowNum={props.rowNum} isSelected={isSelected}/>
          })}
       </div>
    )
@@ -40,9 +44,9 @@ const BoggleRow = (props) => {
 export const BoggleBoard = (props) => {
    let boggle = props.boggle;
    return (
-      <div className="boggle-board">
+      <div className="boggle-board" onTouchMove={props.onMobileTouchMove} onTouchEnd={props.onMobileTouchEnd}>
          {boggle.rows.map((row, index) => {
-            return <BoggleRow key={row.id} row={row} rowNum={index}/>
+            return <BoggleRow key={row.id} row={row} rowNum={index} selectedCells={props.selectedCells}/>
          })}
       </div>
    );
@@ -68,6 +72,7 @@ class Boggle extends React.Component  {
       Object.assign(this, SocketMixin);
       this.state = {
          input: '',
+         selectedCells: [],
          guesses: [
             'cat', 'rat', 'nat',
             'aat', 'bat', 'dat',
@@ -131,10 +136,76 @@ class Boggle extends React.Component  {
    }
 
    addGuessToState(guess) {
-      var guesses = this.state.guesses.slice();
-      guesses.push(guess);
+      if(this.guessIsValid(guess)) {
+         var guesses = this.state.guesses.slice();
+         guesses.push(guess);
+         this.setState({
+            guesses: guesses,
+         });
+      }
+   }  
+
+
+   //TODO: Next steps:
+   // Figure out why it's actually not working - slow? logic issue?
+   // should I use jQuery?
+   // I could change it from being on drag to just being on tap - that would probably make it a lot simpler
+   // make the hitzones smaller for each tile
+
+
+   //last = 2,2
+   // 1,1 2,1 3,1
+   // 1,2 xxx 3,2
+   // 1,3 2,3 3,3
+   //both nums have to be within 1 of the last selection
+   targetIsAdjacentToLastSelection(cellNum, rowNum) {
+
+      //get coords of last selection
+      var lastSelection = _.last(this.state.selectedCells);
+      if(!lastSelection) { return true; } //if nothing has been selected, it's always valid
+      var lastCellNum = lastSelection.cellNum;
+      var lastRowNum = lastSelection.rowNum;
+
+      //calc diff
+      var cellDiff = lastCellNum - cellNum;
+      var rowDiff = lastRowNum - rowNum;
+
+      //return true if both numbers are within 1
+      return Math.abs(cellDiff) <= 1 && Math.abs(rowDiff) <= 1;
+   }
+
+   //I should debounce right?   
+   onMobileTouchMove(e){
+      var myLocation = e.changedTouches[0];
+      var realTarget = document.elementFromPoint(myLocation.clientX, myLocation.clientY);
+      var cellId = realTarget.getAttribute('data-cell-id');
+      var cellNum = realTarget.getAttribute('data-cell-num');
+      var rowNum = realTarget.getAttribute('data-row-num');
+
+      //TODO: this won't work with QU
+      var letter = realTarget.innerText[0];
+      var cellAlreadyUsed = Boolean(_.find(this.state.selectedCells, cell => cell.cellId === cellId));
+      var selectionIsAdjacent = this.targetIsAdjacentToLastSelection(cellNum, rowNum);
+      var isValidSelection = cellId && !cellAlreadyUsed && selectionIsAdjacent;
+
+      if(isValidSelection) {
+         var selectedCells = this.state.selectedCells.slice();
+         this.setState({
+            selectedCells: selectedCells.concat({
+               cellId: cellId,
+               cellNum: cellNum,
+               rowNum: rowNum,
+               letter: letter
+            })
+         });
+      }
+   }
+
+   onMobileTouchEnd() {
+      var guess = this.state.selectedCells.map(cell => cell.letter).join('');
+      this.addGuessToState(guess);
       this.setState({
-         guesses: guesses,
+         selectedCells: []
       });
    }
 
@@ -147,11 +218,7 @@ class Boggle extends React.Component  {
    onKeyDown(e) {
       if(e.key === 'Enter') {
          var guess = e.target.value;
-
-         if(this.guessIsValid(guess)) {
-            this.addGuessToState(guess);
-         }
-
+         this.addGuessToState(guess);
          this.setState({
             input: ''
          });
@@ -175,7 +242,7 @@ class Boggle extends React.Component  {
    }
 
    renderInputIfMobile() {
-      if(this.deviceIsMobile()) {
+      if(!this.deviceIsMobile()) {
          return <input className="boggle-input" type="text" value={this.state.input} onChange={this.onChange.bind(this)} onKeyDown={this.onKeyDown.bind(this)}/>
       } else {
          return null;
@@ -187,7 +254,7 @@ class Boggle extends React.Component  {
          <div>
             <div className="time-remaining">Time Remaining: {this.state.timeRemaining}</div>
                <Guesses guesses={this.state.guesses}/>
-               <BoggleBoard boggle={this.board}/>
+               <BoggleBoard boggle={this.board} onMobileTouchMove={this.onMobileTouchMove.bind(this)} onMobileTouchEnd={this.onMobileTouchEnd.bind(this)} selectedCells={this.state.selectedCells}/>
             {this.renderInputIfMobile()}
          </div>
       )
