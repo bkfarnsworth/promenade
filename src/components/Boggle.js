@@ -4,6 +4,7 @@ import AppConfig from './../AppConfig';
 import SocketMixin from './SocketMixin';
 import DebugHelper from './../DebugHelper';
 import './Boggle.css';
+import _ from 'lodash';
 
 const debugOpts = {
    board: true
@@ -49,11 +50,13 @@ export const BoggleBoard = (props) => {
 
 const Guesses = (props) => {
    return (
-      <div className="boggle-guess-list">
-         <b>Guesses:</b>
-         {props.guesses.map(g => {
-            return <div key={g}>{g}</div>;
-         })}
+      <div>
+         <b>Words:</b>
+         <div className="boggle-guess-list">
+            {props.guesses.map(g => {
+               return <div className="boggle-guess" key={g}>{g}</div>;
+            })}
+         </div>
       </div>
    )
 }
@@ -66,8 +69,10 @@ class Boggle extends React.Component  {
       this.state = {
          input: '',
          guesses: [
-            'cat', 'rat', 'nat'
-
+            'cat', 'rat', 'nat',
+            'aat', 'bat', 'dat',
+            'eat', 'fat', 'gat',
+            'hat', 'zat', 'yat',
          ]
       }
    }
@@ -180,11 +185,9 @@ class Boggle extends React.Component  {
    render() {
       return (
          <div>
-            <div>Time Remaining: {this.state.timeRemaining}</div>
-            <div className="flex-parent">
+            <div className="time-remaining">Time Remaining: {this.state.timeRemaining}</div>
+               <Guesses guesses={this.state.guesses}/>
                <BoggleBoard boggle={this.board}/>
-               {/* <Guesses guesses={this.state.guesses}/>*/}
-            </div>
             {this.renderInputIfMobile()}
          </div>
       )

@@ -30,10 +30,18 @@
    border-radius: 12px;
    background-color: orange;
    max-width: 500px;
-   width: 55%;
-   display: inline-block;
-   padding: 23% 0;
+   width: 80%;
+   padding: 40% 0; /*should be .5 the width*/
    position: absolute;
+   left: 0;
+   right: 0;
+   margin: 0px auto;
+}
+
+.time-remaining {
+   margin-top: 34px;
+   text-align: center;
+   margin-bottom: 10px;
 }
 
 .flex-parent {
@@ -43,5 +51,14 @@
 }
 
 .boggle-guess-list {
+   height: 100px;
+   display: flex;
+   flex-direction: column;
+   flex-wrap: wrap;
+   align-content: flex-start;
+}
+
+.boggle-guess {
    display: inline-block;
+   padding: 0px 6px;
 }
