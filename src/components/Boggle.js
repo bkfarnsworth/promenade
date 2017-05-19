@@ -22,8 +22,10 @@ const BoggleCell = (props) => {
 
    return (
       <div className="boggle-tile" style={style} data-cell-id={cell.id} data-cell-num={props.cellNum} data-row-num={props.rowNum} data-letter={cell.text}>
-         <div className="boggle-letter">
-            {cell.text}
+         <div className="boggle-hit-zone">
+            <div className="boggle-letter">
+               {cell.text}
+            </div>
          </div>
       </div>
    );
@@ -177,8 +179,16 @@ class Boggle extends React.Component  {
 
    //I should debounce right?   
    onMobileTouchMove(e){
+
+      //get the target the user is touching
       var myLocation = e.changedTouches[0];
       var realTarget = document.elementFromPoint(myLocation.clientX, myLocation.clientY);
+
+      //check if they are over a hitzone
+      var $hitZone = $(realTarget).closest('.boggle-hit-zone');
+      if(!$hitZone.length) { return; }
+
+      //get the tile info of the tile they are over
       var $boggleTile = $(realTarget).closest('.boggle-tile');
       var cellId = $boggleTile.attr('data-cell-id');
       var cellNum = $boggleTile.attr('data-cell-num');
@@ -251,8 +261,8 @@ class Boggle extends React.Component  {
          <div>
             <div className="time-remaining">Time Remaining: {this.state.timeRemaining}</div>
                <Guesses guesses={this.state.guesses}/>
+               {this.renderInputIfMobile()}
                <BoggleBoard boggle={this.board} onMobileTouchMove={this.onMobileTouchMove.bind(this)} onMobileTouchEnd={this.onMobileTouchEnd.bind(this)} selectedCells={this.selectedCells}/>
-            {this.renderInputIfMobile()}
          </div>
       )
    }

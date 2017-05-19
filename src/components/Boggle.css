@@ -6,6 +6,14 @@
    font-size: 5vw;
 }
 
+.boggle-hit-zone {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   width: 60%;
+   height: 60%;
+}
+
 .boggle-tile {
    border: black solid 1px;
    background-color: white;
