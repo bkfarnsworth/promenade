@@ -165,9 +165,9 @@ class Boggle extends React.Component  {
       return Math.abs(cellDiff) <= 1 && Math.abs(rowDiff) <= 1;
    }
 
-   //I should debounce right?   
    onMobileTouchMove(e){
-
+      e.preventDefault();
+      
       //get the target the user is touching
       var myLocation = e.changedTouches[0];
       var realTarget = document.elementFromPoint(myLocation.clientX, myLocation.clientY);
@@ -197,7 +197,8 @@ class Boggle extends React.Component  {
       }
    }
 
-   onMobileTouchEnd() {
+   onMobileTouchEnd(e) {
+      e.preventDefault();
       var guess = this.selectedCells.map(cell => cell.letter).join('');
       this.addGuessToState(guess);
       $('.boggle-tile').css('backgroundColor', 'white');
