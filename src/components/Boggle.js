@@ -16,11 +16,6 @@ const debugOpts = {
 const BoggleCell = (props) => {
    let cell = props.cell;
    let style = { left: (props.cellNum * 25) + '%' }
-
-   if(props.isSelected) {
-      // style.backgroundColor = 'blue';
-   }
-
    return (
       <div className="boggle-tile" style={style} data-cell-id={cell.id} data-cell-num={props.cellNum} data-row-num={props.rowNum} data-letter={cell.text}>
          <div className="boggle-hit-zone">
@@ -38,8 +33,7 @@ const BoggleRow = (props) => {
    return (
       <div className="boggle-row" style={style}>
          {row.cells.map((cell, cellNum) => {
-            var isSelected = true//Boolean(props.selectedCells.find(c => c.cellId === cell.id));
-            return <BoggleCell key={cell.id} cell={cell} cellNum={cellNum} rowNum={props.rowNum} isSelected={isSelected}/>
+            return <BoggleCell key={cell.id} cell={cell} cellNum={cellNum} rowNum={props.rowNum}/>
          })}
       </div>
    )
@@ -51,7 +45,7 @@ export const BoggleBoard = (props) => {
       <div className="boggle-board-container">
          <div className="boggle-board" onTouchMove={props.onMobileTouchMove} onTouchEnd={props.onMobileTouchEnd}>
             {boggle.rows.map((row, index) => {
-               return <BoggleRow key={row.id} row={row} rowNum={index} selectedCells={props.selectedCells}/>
+               return <BoggleRow key={row.id} row={row} rowNum={index}/>
             })}
          </div>
       </div>
@@ -149,14 +143,6 @@ class Boggle extends React.Component  {
          });
       }
    }  
-
-
-   //TODO: Next steps:
-   // Figure out why it's actually not working - slow? logic issue?
-   // should I use jQuery?
-   // I could change it from being on drag to just being on tap - that would probably make it a lot simpler
-   // make the hitzones smaller for each tile
-
 
    //last = 2,2
    // 1,1 2,1 3,1
