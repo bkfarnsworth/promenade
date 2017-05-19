@@ -5,7 +5,7 @@ import SocketMixin from './SocketMixin';
 import DebugHelper from './../DebugHelper';
 import './Boggle.css';
 import _ from 'lodash';
-import $ from 'jQuery';
+import $ from 'jquery';
 
 const debugOpts = {
    board: false,
