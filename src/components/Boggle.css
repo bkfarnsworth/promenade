@@ -1,5 +1,6 @@
 .boggle-input {
-   margin-top: 100px;
+   margin: 23px auto;
+   display: block;
 }
 
 .boggle-letter {
