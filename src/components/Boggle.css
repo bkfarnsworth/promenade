@@ -47,6 +47,11 @@
    margin: 0px auto;
 }
 
+.boggle-board-container {
+   width: 80%;
+   padding-bottom: 89%;
+}
+
 .time-remaining {
    margin-top: 34px;
    text-align: center;

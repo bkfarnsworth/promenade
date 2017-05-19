@@ -8,7 +8,8 @@ import _ from 'lodash';
 import $ from 'jQuery';
 
 const debugOpts = {
-   board: true
+   board: true,
+   endGameButton: true
 }
 
 
@@ -37,7 +38,7 @@ const BoggleRow = (props) => {
    return (
       <div className="boggle-row" style={style}>
          {row.cells.map((cell, cellNum) => {
-            var isSelected = Boolean(props.selectedCells.find(c => c.cellId === cell.id));
+            var isSelected = true//Boolean(props.selectedCells.find(c => c.cellId === cell.id));
             return <BoggleCell key={cell.id} cell={cell} cellNum={cellNum} rowNum={props.rowNum} isSelected={isSelected}/>
          })}
       </div>
@@ -47,10 +48,12 @@ const BoggleRow = (props) => {
 export const BoggleBoard = (props) => {
    let boggle = props.boggle;
    return (
-      <div className="boggle-board" onTouchMove={props.onMobileTouchMove} onTouchEnd={props.onMobileTouchEnd}>
-         {boggle.rows.map((row, index) => {
-            return <BoggleRow key={row.id} row={row} rowNum={index} selectedCells={props.selectedCells}/>
-         })}
+      <div className="boggle-board-container">
+         <div className="boggle-board" onTouchMove={props.onMobileTouchMove} onTouchEnd={props.onMobileTouchEnd}>
+            {boggle.rows.map((row, index) => {
+               return <BoggleRow key={row.id} row={row} rowNum={index} selectedCells={props.selectedCells}/>
+            })}
+         </div>
       </div>
    );
 };
@@ -105,6 +108,12 @@ class Boggle extends React.Component  {
       return _.get(this, 'props.location.state.userName');
    }
 
+   submitResults() {
+      this.socket.emit('submitResults', {
+         words: this.state.guesses
+      });
+   }
+
    componentDidMount() {
       this.onSocketEvent('timeRemainingUpdate', (timeRemaining) => {
          this.setState({
@@ -112,9 +121,7 @@ class Boggle extends React.Component  {
          });
 
          if(timeRemaining === 0) {
-            this.socket.emit('submitResults', {
-               words: this.state.guesses
-            });
+            this.submitResults();
          }
       });
 
@@ -256,13 +263,22 @@ class Boggle extends React.Component  {
       }
    }
 
+   renderEndGameButtonIfDebugMode() {
+      if(debugOpts.endGameButton) {
+         return <button onClick={this.submitResults.bind(this)}>End Game</button>;
+      } else {
+         return null;
+      }
+   }
+
    render() {
       return (
          <div>
             <div className="time-remaining">Time Remaining: {this.state.timeRemaining}</div>
                <Guesses guesses={this.state.guesses}/>
-               {this.renderInputIfMobile()}
                <BoggleBoard boggle={this.board} onMobileTouchMove={this.onMobileTouchMove.bind(this)} onMobileTouchEnd={this.onMobileTouchEnd.bind(this)} selectedCells={this.selectedCells}/>
+               {this.renderInputIfMobile()}
+               {this.renderEndGameButtonIfDebugMode()}
          </div>
       )
    }
