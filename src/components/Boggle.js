@@ -8,8 +8,8 @@ import _ from 'lodash';
 import $ from 'jQuery';
 
 const debugOpts = {
-   board: true,
-   endGameButton: true
+   board: false,
+   endGameButton: false
 }
 
 
@@ -79,12 +79,7 @@ class Boggle extends React.Component  {
       this.selectedCells = [];
       this.state = {
          input: '',
-         guesses: [
-            'cat', 'rat', 'nat',
-            'aat', 'bat', 'dat',
-            'eat', 'fat', 'gat',
-            'hat', 'zat', 'yat',
-         ]
+         guesses: []
       }
    }
 
