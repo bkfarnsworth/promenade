@@ -257,7 +257,7 @@ class Boggle extends React.Component  {
 
    renderInputIfMobile() {
       if(!this.deviceIsMobile()) {
-         return <input className="boggle-input" type="text" value={this.state.input} onChange={this.onChange.bind(this)} onKeyDown={this.onKeyDown.bind(this)}/>
+         return <input className="boggle-input bf-input" type="text" value={this.state.input} onChange={this.onChange.bind(this)} onKeyDown={this.onKeyDown.bind(this)}/>
       } else {
          return null;
       }
