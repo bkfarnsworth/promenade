@@ -5,6 +5,7 @@ import SocketMixin from './SocketMixin';
 import DebugHelper from './../DebugHelper';
 import './Boggle.css';
 import _ from 'lodash';
+import $ from 'jQuery';
 
 const debugOpts = {
    board: true
@@ -16,12 +17,12 @@ const BoggleCell = (props) => {
    let style = { left: (props.cellNum * 25) + '%' }
 
    if(props.isSelected) {
-      style.backgroundColor = 'blue';
+      // style.backgroundColor = 'blue';
    }
 
    return (
-      <div className="boggle-tile" style={style}>
-         <div className="boggle-letter" data-cell-id={cell.id} data-cell-num={props.cellNum} data-row-num={props.rowNum}>
+      <div className="boggle-tile" style={style} data-cell-id={cell.id} data-cell-num={props.cellNum} data-row-num={props.rowNum} data-letter={cell.text}>
+         <div className="boggle-letter">
             {cell.text}
          </div>
       </div>
@@ -70,9 +71,9 @@ class Boggle extends React.Component  {
    constructor(props) {
       super(props)
       Object.assign(this, SocketMixin);
+      this.selectedCells = [];
       this.state = {
          input: '',
-         selectedCells: [],
          guesses: [
             'cat', 'rat', 'nat',
             'aat', 'bat', 'dat',
@@ -161,7 +162,7 @@ class Boggle extends React.Component  {
    targetIsAdjacentToLastSelection(cellNum, rowNum) {
 
       //get coords of last selection
-      var lastSelection = _.last(this.state.selectedCells);
+      var lastSelection = _.last(this.selectedCells);
       if(!lastSelection) { return true; } //if nothing has been selected, it's always valid
       var lastCellNum = lastSelection.cellNum;
       var lastRowNum = lastSelection.rowNum;
@@ -178,35 +179,31 @@ class Boggle extends React.Component  {
    onMobileTouchMove(e){
       var myLocation = e.changedTouches[0];
       var realTarget = document.elementFromPoint(myLocation.clientX, myLocation.clientY);
-      var cellId = realTarget.getAttribute('data-cell-id');
-      var cellNum = realTarget.getAttribute('data-cell-num');
-      var rowNum = realTarget.getAttribute('data-row-num');
-
-      //TODO: this won't work with QU
-      var letter = realTarget.innerText[0];
-      var cellAlreadyUsed = Boolean(_.find(this.state.selectedCells, cell => cell.cellId === cellId));
+      var $boggleTile = $(realTarget).closest('.boggle-tile');
+      var cellId = $boggleTile.attr('data-cell-id');
+      var cellNum = $boggleTile.attr('data-cell-num');
+      var rowNum = $boggleTile.attr('data-row-num');
+      var letter = $boggleTile.attr('data-letter');
+      var cellAlreadyUsed = Boolean(_.find(this.selectedCells, cell => cell.cellId === cellId));
       var selectionIsAdjacent = this.targetIsAdjacentToLastSelection(cellNum, rowNum);
       var isValidSelection = cellId && !cellAlreadyUsed && selectionIsAdjacent;
 
       if(isValidSelection) {
-         var selectedCells = this.state.selectedCells.slice();
-         this.setState({
-            selectedCells: selectedCells.concat({
-               cellId: cellId,
-               cellNum: cellNum,
-               rowNum: rowNum,
-               letter: letter
-            })
-         });
+         $boggleTile.css('backgroundColor', 'blue');
+         this.selectedCells.push({
+            cellId: cellId,
+            cellNum: cellNum,
+            rowNum: rowNum,
+            letter: letter
+         })
       }
    }
 
    onMobileTouchEnd() {
-      var guess = this.state.selectedCells.map(cell => cell.letter).join('');
+      var guess = this.selectedCells.map(cell => cell.letter).join('');
       this.addGuessToState(guess);
-      this.setState({
-         selectedCells: []
-      });
+      $('.boggle-tile').css('backgroundColor', 'white');
+      this.selectedCells = [];
    }
 
    onChange(e) {
@@ -254,7 +251,7 @@ class Boggle extends React.Component  {
          <div>
             <div className="time-remaining">Time Remaining: {this.state.timeRemaining}</div>
                <Guesses guesses={this.state.guesses}/>
-               <BoggleBoard boggle={this.board} onMobileTouchMove={this.onMobileTouchMove.bind(this)} onMobileTouchEnd={this.onMobileTouchEnd.bind(this)} selectedCells={this.state.selectedCells}/>
+               <BoggleBoard boggle={this.board} onMobileTouchMove={this.onMobileTouchMove.bind(this)} onMobileTouchEnd={this.onMobileTouchEnd.bind(this)} selectedCells={this.selectedCells}/>
             {this.renderInputIfMobile()}
          </div>
       )
