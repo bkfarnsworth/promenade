@@ -122,7 +122,7 @@ class Results extends React.Component {
 
                return (
                   <span>
-                     <span className={className}>{word}</span>
+                     <span className={className}>{word.toLowerCase()}</span>
                      <span>{punctuation}</span>
                   </span>
                );
@@ -179,9 +179,9 @@ class Results extends React.Component {
                         </div>
                      );
                   })}
-                  <BoggleBoard boggle={this.board}/>
-                  <div>All Words:</div>
+                  <h3 className="boggle-player-name-header"><b>All Words:</b></h3>
                   <div>{this.getCommaSeperatedList(this.solution.map(el => el.word))}</div>
+                  <BoggleBoard boggle={this.board}/>
                </div>
             </div>
          </div>
