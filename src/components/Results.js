@@ -11,6 +11,27 @@ import './Results.css';
 
 const debugMode = false;
 
+const Table = (props) => {
+   //expects object like {rows:[cells:[{content:''}]]}
+   let table = props.table;
+   return (
+      <table className={'bf-table ' + props.className}>
+         <tbody>
+               {table.rows.map((row, ri) => {
+                  return (
+                     <tr key={ri}>
+                        {row.cells.map((cell, ci) => {
+                           return <td key={ci}>{cell.content}</td>;
+                        })}
+                     </tr>
+                  );
+               })}
+         </tbody>
+      </table>
+   )
+}
+
+
 class Results extends React.Component {
 
    constructor(props) {
@@ -31,7 +52,11 @@ class Results extends React.Component {
    }
 
    get solution() {
-      return _.get(this, 'props.location.state.solution', []);
+      if(debugMode) {
+         return DebugHelper.solutionToBoard1;
+      } else {
+         return _.get(this, 'props.location.state.solution', []);
+      }
    }
 
    get playerType() {
@@ -47,15 +72,63 @@ class Results extends React.Component {
    }
 
    get board() {
-      return _.get(this, 'props.location.state.board');
+      if(debugMode) {
+         return DebugHelper.board1;
+      } else {
+         return _.get(this, 'props.location.state.board');
+      }
    }
 
    getFinalResultsSorted() {
       return _.orderBy(this.finalResults, 'score', 'desc');
    }
 
-   getCommaSeperatedList(words) {
-      return words.join(', ')
+   getFinalResultsTable() {
+      let table = {rows:[]}
+
+      table.rows = this.getFinalResultsSorted().map((result, index) => {
+         return {
+            cells: [
+               {content: (index + 1) + ''},
+               {content: result.player},
+               {content: result.score}
+            ]
+         }
+      });
+
+      //add a header row
+      table.rows.unshift({
+         cells: [
+            {content: ''},
+            {content: 'Name'},
+            {content: 'Score'},
+         ]
+      })
+
+      return table;
+   }
+
+   getCommaSeperatedList(words, className, omitFinalPunctuation=true) {
+      return (
+         <span>
+            {words.map((word, wi) => {
+
+               let punctuation = '';
+               if(omitFinalPunctuation) {
+                  punctuation = wi < words.length - 1 ? ', ' : '';
+               } else {
+                  punctuation = ', ';
+               }
+
+               return (
+                  <span>
+                     <span className={className}>{word}</span>
+                     <span>{punctuation}</span>
+                  </span>
+               );
+            })}   
+         </span>
+      );
    }
 
    onPlayAgainClick() {
@@ -69,51 +142,37 @@ class Results extends React.Component {
       });
    }
 
+   getWinner() {
+      return this.getFinalResultsSorted()[0]
+   }
+
    render() {
       return (
-         <div className="room-config-section">
-            <div>Results</div>
-            {this.getFinalResultsSorted().map(result => {
-               return (
-                  <div>
-                     {result.player} : {result.score}
-                  </div>
-               );
-            })}
-            <br/>
-            <br/>
-            <button onClick={this.onPlayAgainClick.bind(this)} className="bf-button game-config-button-vertical">Play Again</button>
-            <br/>
-            <br/>
-            <br/>
-            <BoggleBoard boggle={this.board}/>
-            <br/>
-            <br/>
-            <br/>
-            {this.getFinalResultsSorted().map(result => {
-               return (
-                  <div>
-                     <br/>
-                     <div>
-                        <b>{result.player}</b>
-                     </div>
-                     <div>
-                        Scored Words: {this.getCommaSeperatedList(result.scoredWords)}
-                     </div>
-                     <div>
-                        Shared Words: {this.getCommaSeperatedList(result.sharedWords)}
-                     </div>
-                     <div>
-                        Invalid Words: {this.getCommaSeperatedList(result.invalidWords)}
-                     </div>
-                  </div>
-               );
-            })}
-            <br/>
-            <br/>
-            <br/>
-            <div>All Words:</div>
-            <div>{this.getCommaSeperatedList(this.solution.map(el => el.word))}</div>
+         <div>
+            <div className="results-container"> 
+               <div className="room-config-section">
+                  <h1>Winner: {this.getWinner().player}</h1>
+                  <Table className="boggle-results-table" table={this.getFinalResultsTable()}/>
+                  <button onClick={this.onPlayAgainClick.bind(this)} className="bf-button game-config-button-vertical boggle-play-again-button">Play Again</button>
+                  {this.getFinalResultsSorted().map((result, ri) => {
+                     return (
+                        <div key={ri}>
+                           <h3 className="boggle-player-name-header"><b>{result.player}</b></h3>
+                           <div><b>Longest Word:</b> Coming Soon</div>
+                           <div><b>Percent:</b> Coming Soon</div>
+                           <div>
+                              <span><b>All Words: </b></span>
+                              {this.getCommaSeperatedList(result.scoredWords, '', false)}
+                              {this.getCommaSeperatedList(result.sharedWords, 'shared-word')}
+                           </div>
+                        </div>
+                     );
+                  })}
+                  <BoggleBoard boggle={this.board}/>
+                  <div>All Words:</div>
+                  <div>{this.getCommaSeperatedList(this.solution.map(el => el.word))}</div>
+               </div>
+            </div>
          </div>
       );
    }

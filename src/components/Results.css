@@ -1,0 +1,45 @@
+.results-container {
+   background-color: white;
+   box-shadow: 1px 1px 12px #888888;
+   border-radius: 2px;
+   padding: 33px 37px; 
+}
+
+.boggle-results-table td {
+   padding: 0 14px;
+   text-align: center;
+}
+
+.boggle-results-table tr:first-child {
+   font-weight: bold;
+}
+
+.boggle-results-table td:first-child {
+   text-align: right;
+   padding: 0;
+}
+
+.bf-table  {
+   margin-bottom: 74px;
+}
+
+.bf-button.boggle-play-again-button {
+   background-color: #cfe8ff;
+   color: #29363c;
+   border-radius: 4px;
+   box-shadow: 0px 0px 3px #888888;
+   margin-bottom: 68px;
+}
+
+.boggle-player-name-header {
+   text-align: center;
+   margin-bottom: 0;
+}
+
+.shared-word {
+   text-decoration: line-through;
+}
+
+.results-container .boggle-board-container {
+   margin-top: 50px;
+}

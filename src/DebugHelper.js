@@ -11,25 +11,29 @@ class DebugHelper {
             player: 'Rose',
             score: 500,
             scoredWords: this.getArrayOfWords(),
-            sharedWords: this.getArrayOfWords()
+            sharedWords: this.getArrayOfWords(),
+            invalidWords: this.getArrayOfWords()
          },
          {
             player: 'Miles',
             score: 400,
             scoredWords: this.getArrayOfWords(),
-            sharedWords: this.getArrayOfWords()
+            sharedWords: this.getArrayOfWords(),
+            invalidWords: this.getArrayOfWords()
          },
          {
             player: 'Tam',
             score: 300,
             scoredWords: this.getArrayOfWords(),
-            sharedWords: this.getArrayOfWords()
+            sharedWords: this.getArrayOfWords(),
+            invalidWords: this.getArrayOfWords()
          },
          {
             player: 'Brian',
             score: 200,
             scoredWords: this.getArrayOfWords(),
-            sharedWords: this.getArrayOfWords()
+            sharedWords: this.getArrayOfWords(),
+            invalidWords: this.getArrayOfWords()
          }
       ]
    }
