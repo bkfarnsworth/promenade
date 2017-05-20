@@ -148,7 +148,7 @@ class Results extends React.Component {
 
    getLongestWord(result) {
       let allWords = result.scoredWords.concat(result.sharedWords);
-      let longestWord = _.max(allWords, 'length');
+      let longestWord = _.maxBy(allWords, 'length');
       return longestWord;
    }
 
