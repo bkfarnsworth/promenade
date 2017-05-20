@@ -153,7 +153,8 @@ class Results extends React.Component {
    }
 
    getPercentFound(result) {
-      return _.round((result.scoredWords.length / this.solution.length) * 100) + '%';
+      let allWords = result.scoredWords.concat(result.sharedWords);
+      return _.round((allWords.length / this.solution.length) * 100) + '%';
    }
 
    render() {
