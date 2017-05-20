@@ -146,6 +146,16 @@ class Results extends React.Component {
       return this.getFinalResultsSorted()[0]
    }
 
+   getLongestWord(result) {
+      let allWords = result.scoredWords.concat(result.sharedWords);
+      let longestWord = _.max(allWords, 'length');
+      return longestWord;
+   }
+
+   getPercentFound(result) {
+      return _.round((result.scoredWords.length / this.solution.length) * 100) + '%';
+   }
+
    render() {
       return (
          <div>
@@ -158,8 +168,8 @@ class Results extends React.Component {
                      return (
                         <div key={ri}>
                            <h3 className="boggle-player-name-header"><b>{result.player}</b></h3>
-                           <div><b>Longest Word:</b> Coming Soon</div>
-                           <div><b>Percent:</b> Coming Soon</div>
+                           <div><b>Longest Word: </b>{this.getLongestWord(result)}</div>
+                           <div><b>Percent Found: </b>{this.getPercentFound(result)}</div>
                            <div>
                               <span><b>All Words: </b></span>
                               {this.getCommaSeperatedList(result.scoredWords, '', false)}
