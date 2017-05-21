@@ -14,6 +14,21 @@ class SocketUtil {
     return _.get(this, 'game.roomCode');
   }
 
+  removeNonAlphanumericChars(str) {
+    return str.replace(/[^a-z0-9]/g, '');
+  }
+
+  //make case-insensitive
+  //remove any non-alphanumeric chars (espcially spaces and -'s)
+  //since our codes are like nice-giraffe-89, I want people to be able to type in:
+  //nice-giraffe-89, nicegiraffe89, nice giraffe 89, or NiceGiraffe89
+  processRoomCode(code) {
+    let processedStr = code;
+    processedStr = processedStr.toLowerCase();
+    processedStr = this.removeNonAlphanumericChars(processedStr);
+    return processedStr;
+  }
+
   hostRoom(opts={}, cb) {
 
     _.defaults(opts, {
@@ -32,6 +47,10 @@ class SocketUtil {
     });
     let {roomCode, userName} = opts;
 
+    //process the roomCode (handle case sensitivity etc)
+    let originalRoomCode = roomCode;
+    roomCode = this.processRoomCode(roomCode);
+
     //join the room
     this.socket.join(roomCode);
 
@@ -45,8 +64,8 @@ class SocketUtil {
     //add the username to the map
     this.game.socketUsernameMap[this.socket.id] = userName;
 
-    //callback
-    cb(roomCode);
+    //callback - send the original name so we can display the dasherized room name
+    cb(originalRoomCode);
 
     //emit to all members that there is a new member
     this.getUsernamesForRoom((names) => {
