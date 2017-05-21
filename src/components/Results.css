@@ -33,9 +33,10 @@
    text-shadow: -0.5px 0 black, 0 0.5px black, 0.5px 0 black, 0 -0.5px black;
 }
 
-.boggle-player-name-header {
-   text-align: center;
-   margin-bottom: 0;
+.single-result-header {
+   text-align: left;
+   margin-top: 27px;
+   margin-bottom: 0px;
 }
 
 .shared-word {
@@ -44,4 +45,8 @@
 
 .results-container .boggle-board-container {
    margin-top: 50px;
+}
+
+.single-result-container {
+   width: 76%;
 }

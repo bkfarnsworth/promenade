@@ -167,20 +167,22 @@ class Results extends React.Component {
                   <button onClick={this.onPlayAgainClick.bind(this)} className="bf-button game-config-button-vertical boggle-play-again-button">Play Again</button>
                   {this.getFinalResultsSorted().map((result, ri) => {
                      return (
-                        <div key={ri}>
-                           <h3 className="boggle-player-name-header"><b>{result.player}</b></h3>
+                        <div className="single-result-container" key={ri}>
+                           <h3 className="single-result-header"><b>{result.player}</b></h3>
                            <div><b>Longest Word: </b>{this.getLongestWord(result)}</div>
                            <div><b>Percent Found: </b>{this.getPercentFound(result)}</div>
                            <div>
-                              <span><b>All Words: </b></span>
+                              <span><b>Words: </b></span>
                               {this.getCommaSeperatedList(result.scoredWords, '', false)}
                               {this.getCommaSeperatedList(result.sharedWords, 'shared-word')}
                            </div>
                         </div>
                      );
                   })}
-                  <h3 className="boggle-player-name-header"><b>All Words:</b></h3>
-                  <div>{this.getCommaSeperatedList(this.solution.map(el => el.word))}</div>
+                  <div className="single-result-container">
+                     <h3 className="single-result-header"><b>All Words:</b></h3>
+                     {this.getCommaSeperatedList(this.solution.map(el => el.word))}
+                  </div>
                   <BoggleBoard boggle={this.board}/>
                </div>
             </div>
