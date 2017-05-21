@@ -1,13 +1,13 @@
 
 class AppConfig {
 
-   get socket() {
-      return _.get(window, 'bfAppConfig.socket');
-   }
+	get socket() {
+		return _.get(window, 'bfAppConfig.socket');
+	}
 
-   set socket(val) {
-      _.set(window, 'bfAppConfig.socket', val);
-   }
+	set socket(val) {
+		_.set(window, 'bfAppConfig.socket', val);
+	}
 
 }
 

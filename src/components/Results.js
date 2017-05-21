@@ -12,183 +12,183 @@ import './Results.css';
 const debugMode = false;
 
 const Table = (props) => {
-   //expects object like {rows:[cells:[{content:''}]]}
-   let table = props.table;
-   return (
-      <table className={'bf-table ' + props.className}>
-         <tbody>
-               {table.rows.map((row, ri) => {
-                  return (
-                     <tr key={ri}>
-                        {row.cells.map((cell, ci) => {
-                           return <td key={ci}>{cell.content}</td>;
-                        })}
-                     </tr>
-                  );
-               })}
-         </tbody>
-      </table>
-   )
+	//expects object like {rows:[cells:[{content:''}]]}
+	let table = props.table;
+	return (
+		<table className={'bf-table ' + props.className}>
+			<tbody>
+					{table.rows.map((row, ri) => {
+						return (
+							<tr key={ri}>
+								{row.cells.map((cell, ci) => {
+									return <td key={ci}>{cell.content}</td>;
+								})}
+							</tr>
+						);
+					})}
+			</tbody>
+		</table>
+	)
 }
 
 
 class Results extends React.Component {
 
-   constructor(props) {
-      super(props);
-      Object.assign(this, SocketMixin);
-   }
+	constructor(props) {
+		super(props);
+		Object.assign(this, SocketMixin);
+	}
 
-   componentDidMount() {
-      this.socket.emit('leaveRoom');
-   }
+	componentDidMount() {
+		this.socket.emit('leaveRoom');
+	}
 
-   get finalResults() {
-      if(debugMode) {
-         return DebugHelper.finalResults;
-      } else {
-         return _.get(this, 'props.location.state.finalResults', []);
-      }
-   }
+	get finalResults() {
+		if(debugMode) {
+			return DebugHelper.finalResults;
+		} else {
+			return _.get(this, 'props.location.state.finalResults', []);
+		}
+	}
 
-   get solution() {
-      if(debugMode) {
-         return DebugHelper.solutionToBoard1;
-      } else {
-         return _.get(this, 'props.location.state.solution', []);
-      }
-   }
+	get solution() {
+		if(debugMode) {
+			return DebugHelper.solutionToBoard1;
+		} else {
+			return _.get(this, 'props.location.state.solution', []);
+		}
+	}
 
-   get playerType() {
-      return _.get(this, 'props.location.state.playerType');
-   }
+	get playerType() {
+		return _.get(this, 'props.location.state.playerType');
+	}
 
-   get roomCode() {
-      return _.get(this, 'props.location.state.roomCode');
-   }
+	get roomCode() {
+		return _.get(this, 'props.location.state.roomCode');
+	}
 
-   get userName() {
-      return _.get(this, 'props.location.state.userName');
-   }
+	get userName() {
+		return _.get(this, 'props.location.state.userName');
+	}
 
-   get board() {
-      if(debugMode) {
-         return DebugHelper.board1;
-      } else {
-         return _.get(this, 'props.location.state.board');
-      }
-   }
+	get board() {
+		if(debugMode) {
+			return DebugHelper.board1;
+		} else {
+			return _.get(this, 'props.location.state.board');
+		}
+	}
 
-   getFinalResultsSorted() {
-      return _.orderBy(this.finalResults, 'score', 'desc');
-   }
+	getFinalResultsSorted() {
+		return _.orderBy(this.finalResults, 'score', 'desc');
+	}
 
-   getFinalResultsTable() {
-      let table = {rows:[]}
+	getFinalResultsTable() {
+		let table = {rows:[]}
 
-      table.rows = this.getFinalResultsSorted().map((result, index) => {
-         return {
-            cells: [
-               {content: (index + 1) + ''},
-               {content: result.player},
-               {content: result.score}
-            ]
-         }
-      });
+		table.rows = this.getFinalResultsSorted().map((result, index) => {
+			return {
+				cells: [
+					{content: (index + 1) + ''},
+					{content: result.player},
+					{content: result.score}
+				]
+			}
+		});
 
-      //add a header row
-      table.rows.unshift({
-         cells: [
-            {content: ''},
-            {content: 'Name'},
-            {content: 'Score'},
-         ]
-      })
+		//add a header row
+		table.rows.unshift({
+			cells: [
+				{content: ''},
+				{content: 'Name'},
+				{content: 'Score'},
+			]
+		})
 
-      return table;
-   }
+		return table;
+	}
 
-   getCommaSeperatedList(words, className, omitFinalPunctuation=true) {
-      return (
-         <span>
-            {words.map((word, wi) => {
+	getCommaSeperatedList(words, className, omitFinalPunctuation=true) {
+		return (
+			<span>
+				{words.map((word, wi) => {
 
-               let punctuation = '';
-               if(omitFinalPunctuation) {
-                  punctuation = wi < words.length - 1 ? ', ' : '';
-               } else {
-                  punctuation = ', ';
-               }
+					let punctuation = '';
+					if(omitFinalPunctuation) {
+						punctuation = wi < words.length - 1 ? ', ' : '';
+					} else {
+						punctuation = ', ';
+					}
 
-               return (
-                  <span>
-                     <span className={className}>{word.toLowerCase()}</span>
-                     <span>{punctuation}</span>
-                  </span>
-               );
-            })}   
-         </span>
-      );
-   }
+					return (
+						<span>
+							<span className={className}>{word.toLowerCase()}</span>
+							<span>{punctuation}</span>
+						</span>
+					);
+				})}   
+			</span>
+		);
+	}
 
-   onPlayAgainClick() {
-      let {userName, roomCode, playerType} = this;
-      let eventToEmit = playerType === 'host' ? 'hostRoom' : 'joinRoom';
-      this.socket.emit(eventToEmit, {roomCode, userName}, () => {
-         this.props.history.push({
-            pathname: '/waiting',
-            state: {playerType, roomCode, userName}
-         });
-      });
-   }
+	onPlayAgainClick() {
+		let {userName, roomCode, playerType} = this;
+		let eventToEmit = playerType === 'host' ? 'hostRoom' : 'joinRoom';
+		this.socket.emit(eventToEmit, {roomCode, userName}, () => {
+			this.props.history.push({
+				pathname: '/waiting',
+				state: {playerType, roomCode, userName}
+			});
+		});
+	}
 
-   getWinner() {
-      return this.getFinalResultsSorted()[0]
-   }
+	getWinner() {
+		return this.getFinalResultsSorted()[0]
+	}
 
-   getLongestWord(result) {
-      let allWords = result.scoredWords.concat(result.sharedWords);
-      let longestWord = _.maxBy(allWords, 'length');
-      return longestWord;
-   }
+	getLongestWord(result) {
+		let allWords = result.scoredWords.concat(result.sharedWords);
+		let longestWord = _.maxBy(allWords, 'length');
+		return longestWord;
+	}
 
-   getPercentFound(result) {
-      let allWords = result.scoredWords.concat(result.sharedWords);
-      return _.round((allWords.length / this.solution.length) * 100) + '%';
-   }
+	getPercentFound(result) {
+		let allWords = result.scoredWords.concat(result.sharedWords);
+		return _.round((allWords.length / this.solution.length) * 100) + '%';
+	}
 
-   render() {
-      return (
-         <div>
-            <div className="results-container"> 
-               <div className="room-config-section">
-                  <h1>Winner: {this.getWinner().player}</h1>
-                  <Table className="boggle-results-table" table={this.getFinalResultsTable()}/>
-                  <button onClick={this.onPlayAgainClick.bind(this)} className="bf-button game-config-button-vertical boggle-play-again-button">Play Again</button>
-                  {this.getFinalResultsSorted().map((result, ri) => {
-                     return (
-                        <div className="single-result-container" key={ri}>
-                           <h3 className="single-result-header"><b>{result.player}</b></h3>
-                           <div><b>Longest Word: </b>{this.getLongestWord(result)}</div>
-                           <div><b>Percent Found: </b>{this.getPercentFound(result)}</div>
-                           <div>
-                              <span><b>Words: </b></span>
-                              {this.getCommaSeperatedList(result.scoredWords, '', false)}
-                              {this.getCommaSeperatedList(result.sharedWords, 'shared-word')}
-                           </div>
-                        </div>
-                     );
-                  })}
-                  <div className="single-result-container">
-                     <h3 className="single-result-header"><b>All Words:</b></h3>
-                     {this.getCommaSeperatedList(this.solution.map(el => el.word))}
-                  </div>
-                  <BoggleBoard boggle={this.board}/>
-               </div>
-            </div>
-         </div>
-      );
-   }
+	render() {
+		return (
+			<div>
+				<div className="results-container"> 
+					<div className="room-config-section">
+						<h1>Winner: {this.getWinner().player}</h1>
+						<Table className="boggle-results-table" table={this.getFinalResultsTable()}/>
+						<button onClick={this.onPlayAgainClick.bind(this)} className="bf-button game-config-button-vertical boggle-play-again-button">Play Again</button>
+						{this.getFinalResultsSorted().map((result, ri) => {
+							return (
+								<div className="single-result-container" key={ri}>
+									<h3 className="single-result-header"><b>{result.player}</b></h3>
+									<div><b>Longest Word: </b>{this.getLongestWord(result)}</div>
+									<div><b>Percent Found: </b>{this.getPercentFound(result)}</div>
+									<div>
+										<span><b>Words: </b></span>
+										{this.getCommaSeperatedList(result.scoredWords, '', false)}
+										{this.getCommaSeperatedList(result.sharedWords, 'shared-word')}
+									</div>
+								</div>
+							);
+						})}
+						<div className="single-result-container">
+							<h3 className="single-result-header"><b>All Words:</b></h3>
+							{this.getCommaSeperatedList(this.solution.map(el => el.word))}
+						</div>
+						<BoggleBoard boggle={this.board}/>
+					</div>
+				</div>
+			</div>
+		);
+	}
 
 }
 

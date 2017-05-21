@@ -1,81 +1,81 @@
 .boggle-input.bf-input {
-   margin: 0 auto;
-   display: block;
+	margin: 0 auto;
+	display: block;
 }
 
 .boggle-letter {
-   font-size: 5vw;
+	font-size: 5vw;
 }
 
 .boggle-hit-zone {
-   display: flex;
-   justify-content: center;
-   align-items: center;
-   width: 60%;
-   height: 60%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 60%;
+	height: 60%;
 }
 
 .boggle-tile {
-   border: black solid 1px;
-   background-color: white;
-   height: 100%;
-   width: 25%; 
-   border-radius: 9px;
-   position: absolute;
-   display: flex;
-   justify-content: center;
-   align-items: center;
+	border: black solid 1px;
+	background-color: white;
+	height: 100%;
+	width: 25%; 
+	border-radius: 9px;
+	position: absolute;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
 .boggle-row {
-   text-align: center;
-   height: 25%;
-   position: absolute;
-   width: 100%;
+	text-align: center;
+	height: 25%;
+	position: absolute;
+	width: 100%;
 }
 
 .boggle-board {
-   border: 7px solid orange;
-   border-radius: 12px;
-   background-color: orange;
-   max-width: 500px;
-   width: 80%;
-   padding: 40% 0; /*should be .5 the width*/
-   position: absolute;
-   left: 0;
-   right: 0;
-   margin: 0px auto;
+	border: 7px solid orange;
+	border-radius: 12px;
+	background-color: orange;
+	max-width: 500px;
+	width: 80%;
+	padding: 40% 0; /*should be .5 the width*/
+	position: absolute;
+	left: 0;
+	right: 0;
+	margin: 0px auto;
 }
 
 .boggle-board-container {
-   width: 80%;
-   padding-bottom: 89%;
-   margin-bottom: 50px;
+	width: 80%;
+	padding-bottom: 89%;
+	margin-bottom: 50px;
 }
 
 .time-remaining {
-   margin-top: 34px;
-   text-align: center;
-   margin-bottom: 10px;
+	margin-top: 34px;
+	text-align: center;
+	margin-bottom: 10px;
 }
 
 .flex-parent {
-   display: flex;
-   flex-direction: row;
-   flex-wrap: wrap;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
 }
 
 .boggle-guess-list {
-   height: 100px;
-   display: flex;
-   flex-direction: column;
-   flex-wrap: wrap;
-   align-content: flex-start;
+	height: 100px;
+	display: flex;
+	flex-direction: column;
+	flex-wrap: wrap;
+	align-content: flex-start;
 }
 
 .boggle-guess {
-   display: inline-block;
-   padding: 0px 6px;
+	display: inline-block;
+	padding: 0px 6px;
 }
 
 /*mobile*/
@@ -84,16 +84,15 @@
 
 /*desktop*/
 @media (min-width: 500px) {
-   .boggle-board {
-      height: 300px;
-      width: 300px;
-      padding: 0;
-   }
+	.boggle-board {
+		height: 300px;
+		width: 300px;
+		padding: 0;
+	}
 
-   .boggle-board-container {
-      width: 300px;
-      height: 300px;
-      padding: 0;
-   }
+	.boggle-board-container {
+		width: 300px;
+		height: 300px;
+		padding: 0;
+	}
 }
-

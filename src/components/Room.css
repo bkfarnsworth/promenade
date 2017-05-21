@@ -1,42 +1,42 @@
 
 .game-logo {
-   text-align: center;
-   margin-bottom: 50px;
-   font-size: 120px;
-   color: #ffba33;
-   font-family: 'Russo One', sans-serif;
-   text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+	text-align: center;
+	margin-bottom: 50px;
+	font-size: 120px;
+	color: #ffba33;
+	font-family: 'Russo One', sans-serif;
+	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
 }
 
 .room-config-section {
-   display: flex;
-   justify-content: center;
-   flex-direction: column;
-   align-items: center;
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	align-items: center;
 }
 
 .game-config-button-vertical {
-   height: 62px;
-   width: 215px;
-   margin-bottom: 33px;
+	height: 62px;
+	width: 215px;
+	margin-bottom: 33px;
 }
 
 .room-section-button-row {
-   display: flex;
-   justify-content: center;   
-   width: 100%;
+	display: flex;
+	justify-content: center;   
+	width: 100%;
 }
 
 .game-config-button-horizontal {
-   margin: 0 27px;
-   height: 42px;
-   width: 111px;
+	margin: 0 27px;
+	height: 42px;
+	width: 111px;
 }
 
 a.game-config-button-horizontal {
-   line-height: 45px;
+	line-height: 45px;
 }
 
 .host-config-section .bf-input-container {
-   margin-bottom: 40px;
+	margin-bottom: 40px;
 }

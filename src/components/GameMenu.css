@@ -1,45 +1,45 @@
 .game-menu-container {
-   display: flex;
-   flex-direction: column;
-   height: 100vh;
+	display: flex;
+	flex-direction: column;
+	height: 100vh;
 }
 
 .game-menu {
-   max-width: 550px; /*kind of a hack to make 2 columns*/
-   display: flex;
-   justify-content: center;  
-   margin: 0 auto;
-   flex-wrap: wrap;
+	max-width: 550px; /*kind of a hack to make 2 columns*/
+	display: flex;
+	justify-content: center;  
+	margin: 0 auto;
+	flex-wrap: wrap;
 }
 
 .game-tile {
-   display: inline-block;
+	display: inline-block;
 }
 
 /*mobile*/
 @media (max-width: 500px) {
-   .bf-button.game-tile {
-      width: 55%;
-      padding: 16% 0;
-      font-size: 6vw;
-      margin: 16% 50px;   
-   }
+	.bf-button.game-tile {
+		width: 55%;
+		padding: 16% 0;
+		font-size: 6vw;
+		margin: 16% 50px;   
+	}
 
-   .game-menu-container {
-      justify-content: flex-start;
-   }
+	.game-menu-container {
+		justify-content: flex-start;
+	}
 }
 
 /*desktop*/
 @media (min-width: 500px) {
-   .bf-button.game-tile {
-      width: 175px;
-      padding: 9% 0;
-      font-size: 21px;
-      margin: 47px 50px;
-   }
+	.bf-button.game-tile {
+		width: 175px;
+		padding: 9% 0;
+		font-size: 21px;
+		margin: 47px 50px;
+	}
 
-   .game-menu-container {
-      justify-content: center;
-   }
+	.game-menu-container {
+		justify-content: center;
+	}
 }

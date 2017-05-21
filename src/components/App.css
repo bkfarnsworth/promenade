@@ -2,37 +2,36 @@
 @import url('https://fonts.googleapis.com/css?family=Russo+One');
 
 body {
-   background-color: #79b3e6;
-   font-family: 'Eczar', serif;
+	background-color: #79b3e6;
+	font-family: 'Eczar', serif;
 }
 
 .bf-button {
-   border: none;
-   text-align: center;
-   color: #2d3335;
-   text-decoration: none;
-   background-color: #ffffff;
-   /*none|h-shadow v-shadow blur spread color |inset|initial|inherit;*/
-   box-shadow: 1px 1px 12px #888888;
-   font: inherit;
-   cursor: pointer;
+	border: none;
+	text-align: center;
+	color: #2d3335;
+	text-decoration: none;
+	background-color: #ffffff;
+	/*none|h-shadow v-shadow blur spread color |inset|initial|inherit;*/
+	box-shadow: 1px 1px 12px #888888;
+	font: inherit;
+	cursor: pointer;
 }
 
 .bf-input {
-   font-size: 18px;
-   font-family: 'Eczar', serif;
-   padding-top: 4px;
-   margin-left: 10px;
+	font-size: 18px;
+	font-family: 'Eczar', serif;
+	padding-top: 4px;
+	margin-left: 10px;
 }
 
 .bf-input:focus {   
-   outline: 0 none;
+	outline: 0 none;
 }
 
 .bf-input-container {
-   display: flex;
-   justify-content: center;
-   align-items: center;
-   margin-bottom: 30px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-bottom: 30px;
 }
-

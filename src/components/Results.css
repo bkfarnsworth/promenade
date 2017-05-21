@@ -1,52 +1,52 @@
 .results-container {
-   background-color: white;
-   box-shadow: 1px 1px 12px #888888;
-   border-radius: 2px;
-   padding: 33px 37px; 
+	background-color: white;
+	box-shadow: 1px 1px 12px #888888;
+	border-radius: 2px;
+	padding: 33px 37px; 
 }
 
 .boggle-results-table td {
-   padding: 0 14px;
-   text-align: center;
+	padding: 0 14px;
+	text-align: center;
 }
 
 .boggle-results-table tr:first-child {
-   font-weight: bold;
+	font-weight: bold;
 }
 
 .boggle-results-table td:first-child {
-   text-align: right;
-   padding: 0;
+	text-align: right;
+	padding: 0;
 }
 
 .bf-table  {
-   margin-bottom: 74px;
+	margin-bottom: 74px;
 }
 
 .bf-button.boggle-play-again-button {
-   background-color: #3889d0;
-   color: #ffffff;
-   border-radius: 4px;
-   font-size: 21px;
-   box-shadow: 1px 1px 1px #888888;
-   margin-bottom: 68px;
-   text-shadow: -0.5px 0 black, 0 0.5px black, 0.5px 0 black, 0 -0.5px black;
+	background-color: #3889d0;
+	color: #ffffff;
+	border-radius: 4px;
+	font-size: 21px;
+	box-shadow: 1px 1px 1px #888888;
+	margin-bottom: 68px;
+	text-shadow: -0.5px 0 black, 0 0.5px black, 0.5px 0 black, 0 -0.5px black;
 }
 
 .single-result-header {
-   text-align: left;
-   margin-top: 27px;
-   margin-bottom: 0px;
+	text-align: left;
+	margin-top: 27px;
+	margin-bottom: 0px;
 }
 
 .shared-word {
-   text-decoration: line-through;
+	text-decoration: line-through;
 }
 
 .results-container .boggle-board-container {
-   margin-top: 50px;
+	margin-top: 50px;
 }
 
 .single-result-container {
-   width: 76%;
+	width: 76%;
 }
