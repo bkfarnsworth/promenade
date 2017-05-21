@@ -1,15 +1,22 @@
 import React from 'react';
 import $ from 'jquery';
 import KeyCodes from './../KeyCodes'
+import SocketMixin from './SocketMixin';
+
 
 
 class Pong extends React.Component  {
+
+   constructor(props) {
+      super(props)
+      Object.assign(this, SocketMixin);
+   }
 
    componentDidMount() {
 
       $(window).on('keydown', (e) => {
 
-         let $div = $('#pong-current-player')
+         let $div = $('#pong-player-1')
 
          if(KeyCodes.fromEvent(e) === 'UP_ARROW') {
             $div.css('top', (i, v) => {
@@ -30,16 +37,26 @@ class Pong extends React.Component  {
          }
 
          //emit an update to the room
+         this.emitPositionUpdate({
+            top: $div.css('top'),
+            left: $div.css('left')
+         })
 
       });
 
-      //socket.on update
-         //move the other player
-
-
+      this.onSocketEvent('positionUpdate', (data) => {
+         let $div = $('#pong-player-2');
+         $div.css(data)
+      });
    }
 
+   emitPositionUpdate(data) {
+      this.socket.emit('positionUpdate', data);
+   }
 
+   componentWillUnmount() {
+      this.callOffFuncs();
+   }
 
 	render() {
 
@@ -55,7 +72,7 @@ class Pong extends React.Component  {
 
 		return (
          <div>
-			<div id="pong-current-player" style={p1Styles}>
+			<div id="pong-player-1" style={p1Styles}>
 				Me
 			</div>
          <div id="pong-player-2" style={p2Styles}>

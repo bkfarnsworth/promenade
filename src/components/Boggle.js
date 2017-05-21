@@ -81,7 +81,7 @@ class Boggle extends React.Component  {
 		if(debugOpts.board) {
 			return DebugHelper.board1;
 		} else {
-			return _.get(this, 'props.location.state.board');
+			return _.get(this, 'props.location.state.gameProps.board');
 		}
 	}
 

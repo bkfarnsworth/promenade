@@ -38,5 +38,6 @@ io.on('connection', (socket) => {
   socket.on('getRoomMembers', socketUtil.getRoomMembers.bind(socketUtil));
   socket.on('startGame', socketUtil.startGame.bind(socketUtil));
   socket.on('submitResults', socketUtil.submitResults.bind(socketUtil));
+  socket.on('positionUpdate', socketUtil.positionUpdate.bind(socketUtil));
   socket.on('disconnect', () => console.log('Client disconnected'));
 });

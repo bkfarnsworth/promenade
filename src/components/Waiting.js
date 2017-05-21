@@ -67,7 +67,7 @@ class Waiting extends React.Component {
 		this.props.history.push({
 			pathname: this.game.getPath(),
 			state: {
-				board: data.board,
+				gameProps: data,
 				playerType: this.playerType,
 				roomCode: this.roomCode,
 				userName: this.userName

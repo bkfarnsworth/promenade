@@ -91,12 +91,16 @@ class SocketUtil {
 		});
 	}
 
-	emitToRoom(name, data) {
-		this.io.in(this.roomCode).emit(name, data);
+	emitToRoom(eventName, data) {
+		this.io.in(this.roomCode).emit(eventName, data);
 	}
 
 	startGame() {
 		this.game.start();
+	}
+
+	positionUpdate(data) {
+		this.emitToRoom('positionUpdate', data);
 	}
 
 	submitResults(data) {
