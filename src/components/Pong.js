@@ -60,9 +60,61 @@ class Pong extends React.Component  {
       this.callOffFuncs();
    }
 
+   onUpClick() {
+      var $div = $(`div[data-player-id="${this.userName}"]`)
+      $div.css('top', (i, v) => {
+         return (parseFloat(v) - 10) + 'px';
+      })
+      //emit an update to the room
+      this.emitPositionUpdate({
+         top: $div.css('top'),
+         left: $div.css('left')
+      })
+   }
+
+   onDownClick() {
+      var $div = $(`div[data-player-id="${this.userName}"]`)
+      $div.css('top', (i, v) => {
+         return (parseFloat(v) + 10) + 'px';
+      })
+      //emit an update to the room
+      this.emitPositionUpdate({
+         top: $div.css('top'),
+         left: $div.css('left')
+      })
+   }
+
+   onRightClick() {
+      var $div = $(`div[data-player-id="${this.userName}"]`)
+      $div.css('left', (i, v) => {
+         return (parseFloat(v) + 10) + 'px';
+      })
+      //emit an update to the room
+      this.emitPositionUpdate({
+         top: $div.css('top'),
+         left: $div.css('left')
+      })
+   }
+
+   onLeftClick() {
+      var $div = $(`div[data-player-id="${this.userName}"]`)
+      $div.css('left', (i, v) => {
+         return (parseFloat(v) - 10) + 'px';
+      })
+      //emit an update to the room
+      this.emitPositionUpdate({
+         top: $div.css('top'),
+         left: $div.css('left')
+      })
+   }
+
 	render() {
 		return (
          <div>
+            <div onClick={this.onUpClick.bind(this)}>UP</div>
+            <div onClick={this.onDownClick.bind(this)}>DOWN</div>
+            <div onClick={this.onRightClick.bind(this)}>RIGHT</div>
+            <div onClick={this.onLeftClick.bind(this)}>LEFT</div>
             {this.players.map((p, pi) => {
                let style = {position: 'absolute', top: pi*20};
                return <div data-player-id={p} style={style}>{p}</div>               
