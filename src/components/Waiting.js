@@ -70,7 +70,8 @@ class Waiting extends React.Component {
 				gameProps: data,
 				playerType: this.playerType,
 				roomCode: this.roomCode,
-				userName: this.userName
+				userName: this.userName,
+				players: this.state.players
 			}
 		});
 	}

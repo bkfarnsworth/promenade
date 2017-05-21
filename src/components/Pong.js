@@ -10,13 +10,15 @@ class Pong extends React.Component  {
    constructor(props) {
       super(props)
       Object.assign(this, SocketMixin);
+      Object.assign(this, props);
+      Object.assign(this, _.get(props, 'location.state', {}));
    }
 
    componentDidMount() {
 
       $(window).on('keydown', (e) => {
 
-         let $div = $('#pong-player-1')
+         var $div = $(`div[data-player-id="${this.userName}"]`)
 
          if(KeyCodes.fromEvent(e) === 'UP_ARROW') {
             $div.css('top', (i, v) => {
@@ -45,7 +47,7 @@ class Pong extends React.Component  {
       });
 
       this.onSocketEvent('positionUpdate', (data) => {
-         let $div = $('#pong-player-2');
+         var $div = $(`div[data-player-id="${data.playerId}"]`)
          $div.css(data)
       });
    }
@@ -59,25 +61,12 @@ class Pong extends React.Component  {
    }
 
 	render() {
-
-      let p1Styles = {
-         position: 'absolute',
-         top: 0
-      }
-
-      let p2Styles = {
-         position: 'absolute',
-         top: '20px'
-      }
-
 		return (
          <div>
-			<div id="pong-player-1" style={p1Styles}>
-				Me
-			</div>
-         <div id="pong-player-2" style={p2Styles}>
-            Other Player
-         </div>
+            {this.players.map((p, pi) => {
+               let style = {position: 'absolute', top: pi*20};
+               return <div data-player-id={p} style={style}>{p}</div>               
+            })}
          </div>
 		)
 	}

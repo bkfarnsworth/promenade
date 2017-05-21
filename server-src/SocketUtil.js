@@ -100,6 +100,7 @@ class SocketUtil {
 	}
 
 	positionUpdate(data) {
+		data.playerId = this.userName;
 		this.emitToRoom('positionUpdate', data);
 	}
 
