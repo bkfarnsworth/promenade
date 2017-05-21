@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import GameMenu from './GameMenu';
 import Boggle from './Boggle';
+import Pong from './Pong';
 import _ from 'lodash';
 import Room from './Room';
 import Waiting from './Waiting';
@@ -12,6 +13,25 @@ import AppConfig from './../AppConfig'
 import SocketMixin from './SocketMixin';
 import './App.css';
 
+class Game {
+
+  constructor(opts={}) {
+
+    _.defaults(opts, {
+      name: 'Game Name',
+      getGameComponent: () => <div>Game Component</div>,
+      initialState: 'room'
+    });
+
+    this.name = opts.name;
+    this.getGameComponent = opts.getGameComponent;
+    this.initialState = opts.initialState;
+  }
+
+  getPath() {
+    return '/' + this.name;
+  }
+}
 
 class App extends React.Component  {
 
@@ -23,23 +43,24 @@ class App extends React.Component  {
 
    get games() {
       return [
-         {
-            name: 'Boggle',
-            getGameComponent: (props) => <Boggle {...props}/>,
-            initialState: 'room'
-         },
-         {
-            name: 'Pong',
-            getGameComponent: (props) => <ComingSoon {...props}/>
-         },
-         {
-            name: 'Trivia',
-            getGameComponent: (props) => <ComingSoon {...props}/>
-         },
-         {
-            name: 'Hippos',
-            getGameComponent: (props) => <ComingSoon {...props}/>
-         }
+        new Game({
+          name: 'Boggle',
+          getGameComponent: (props) => <Boggle {...props}/>,
+          initialState: 'room'
+        }),
+        new Game({
+          name: 'Pong',
+          getGameComponent: (props) => <Pong {...props}/>,
+          initialState: 'room'
+        }),
+        new Game({
+          name: 'Trivia',
+          getPath: function() { return '/' + this.name; },
+        }),
+        new Game({
+          name: 'Hippos',
+          getPath: function() { return '/' + this.name; },
+        })
       ];
    }
 
@@ -56,7 +77,7 @@ class App extends React.Component  {
              <Route exact path='/waiting' component={Waiting} />
              <Route exact path='/results' component={Results} />
              {this.games.map(game => {
-               return <Route key={game.name} path={'/' + game.name} component={game.getGameComponent} />
+               return <Route key={game.name} path={game.getPath()} component={game.getGameComponent} />
              })}
            </Switch>
          </HashRouter>          

@@ -23,7 +23,7 @@ class Room extends React.Component {
    }
 
    get game() {
-      return _.get(this, 'props.location.state.game', 'Game Title');
+      return _.get(this, 'props.location.state.game');
    }
 
    onCreateRoomClick() {
@@ -34,7 +34,8 @@ class Room extends React.Component {
             state: {
                playerType: 'host',
                roomCode: roomCode,
-               userName: userName
+               userName: userName,
+               game: this.game
             }
          });
       });
@@ -48,7 +49,8 @@ class Room extends React.Component {
             state: {
                playerType: 'join',
                userName: userName,
-               roomCode: roomCode
+               roomCode: roomCode,
+               game: this.game
             }
          });
       });

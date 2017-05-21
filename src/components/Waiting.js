@@ -33,6 +33,10 @@ class Waiting extends React.Component {
       return _.get(this, 'props.location.state.userName');
    }
 
+   get game() {
+      return _.get(this, 'props.location.state.game');
+   }
+
    componentDidMount() {
       this.socket.emit('getRoomMembers', (data) => {
          this.updatePlayersList(data.roomMembers);
@@ -61,7 +65,7 @@ class Waiting extends React.Component {
 
    onGameStart(data) {
       this.props.history.push({
-         pathname: '/boggle',
+         pathname: this.game.getPath(),
          state: {
             board: data.board,
             playerType: this.playerType,
@@ -110,7 +114,7 @@ class Waiting extends React.Component {
    render() {
       return (
          <div className="room-config-section">
-            <div className="game-logo">Boggle</div>
+            <div className="game-logo">{this.game.name}</div>
             {this.waitingComponent}
             {this.playersComponent}
          </div>
