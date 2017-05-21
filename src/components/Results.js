@@ -37,50 +37,40 @@ class Results extends React.Component {
 	constructor(props) {
 		super(props);
 		Object.assign(this, SocketMixin);
+		Object.assign(this, props);
+		Object.assign(this, _.get(props, 'location.state', {}));
 	}
 
 	componentDidMount() {
 		this.socket.emit('leaveRoom');
 	}
 
-	get finalResults() {
+	getFinalResults() {
 		if(debugMode) {
 			return DebugHelper.finalResults;
 		} else {
-			return _.get(this, 'props.location.state.finalResults', []);
+			return this.finalResults;
 		}
 	}
 
-	get solution() {
+	getSolution() {
 		if(debugMode) {
 			return DebugHelper.solutionToBoard1;
 		} else {
-			return _.get(this, 'props.location.state.solution', []);
+			return this.solution;
 		}
 	}
 
-	get playerType() {
-		return _.get(this, 'props.location.state.playerType');
-	}
-
-	get roomCode() {
-		return _.get(this, 'props.location.state.roomCode');
-	}
-
-	get userName() {
-		return _.get(this, 'props.location.state.userName');
-	}
-
-	get board() {
+	getBoard() {
 		if(debugMode) {
 			return DebugHelper.board1;
 		} else {
-			return _.get(this, 'props.location.state.board');
+			return this.board;
 		}
 	}
 
 	getFinalResultsSorted() {
-		return _.orderBy(this.finalResults, 'score', 'desc');
+		return _.orderBy(this.getFinalResults(), 'score', 'desc');
 	}
 
 	getFinalResultsTable() {
@@ -132,12 +122,12 @@ class Results extends React.Component {
 	}
 
 	onPlayAgainClick() {
-		let {userName, roomCode, playerType} = this;
+		let {userName, roomCode, playerType, game} = this;
 		let eventToEmit = playerType === 'host' ? 'hostRoom' : 'joinRoom';
 		this.socket.emit(eventToEmit, {roomCode, userName}, () => {
 			this.props.history.push({
 				pathname: '/waiting',
-				state: {playerType, roomCode, userName}
+				state: {playerType, roomCode, userName, game}
 			});
 		});
 	}
@@ -154,7 +144,7 @@ class Results extends React.Component {
 
 	getPercentFound(result) {
 		let allWords = result.scoredWords.concat(result.sharedWords);
-		return _.round((allWords.length / this.solution.length) * 100) + '%';
+		return _.round((allWords.length / this.getSolution().length) * 100) + '%';
 	}
 
 	render() {
@@ -181,9 +171,9 @@ class Results extends React.Component {
 						})}
 						<div className="single-result-container">
 							<h3 className="single-result-header"><b>All Words:</b></h3>
-							{this.getCommaSeperatedList(this.solution.map(el => el.word))}
+							{this.getCommaSeperatedList(this.getSolution().map(el => el.word))}
 						</div>
-						<BoggleBoard boggle={this.board}/>
+						<BoggleBoard boggle={this.getBoard()}/>
 					</div>
 				</div>
 			</div>

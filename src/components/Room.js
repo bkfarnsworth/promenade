@@ -14,16 +14,14 @@ class Room extends React.Component {
 	constructor(props) {
 		super(props)
 		Object.assign(this, SocketMixin);
+		Object.assign(this, props);
+		Object.assign(this, _.get(props, 'location.state', {}));
 		
 		this.state = {
 			roomOption: 'start',
 			userName: '',
 			roomCode: ''
 		}
-	}
-
-	get game() {
-		return _.get(this, 'props.location.state.game');
 	}
 
 	onCreateRoomClick() {
@@ -96,7 +94,6 @@ class Room extends React.Component {
 	}
 
 	render() {
-
 		return (
 			<div>
 				<div className="game-logo">{this.game.name}</div>

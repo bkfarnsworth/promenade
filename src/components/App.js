@@ -38,6 +38,8 @@ class App extends React.Component  {
 	constructor(props) {
 		super(props);
 		Object.assign(this, SocketMixin);
+		Object.assign(this, props);
+		Object.assign(this, _.get(props, 'location.state', {}));
 		AppConfig.socket = IO();
 	}
 

@@ -15,26 +15,11 @@ class Waiting extends React.Component {
 		super(props)
 		this.props = props;
 		Object.assign(this, SocketMixin);
-
+		Object.assign(this, props);
+		Object.assign(this, _.get(props, 'location.state', {}));
 		this.state = {
 			players: []
 		}
-	}
-
-	get playerType() {
-		return _.get(this, 'props.location.state.playerType');
-	}
-
-	get roomCode() {
-		return _.get(this, 'props.location.state.roomCode');
-	}
-
-	get userName() {
-		return _.get(this, 'props.location.state.userName');
-	}
-
-	get game() {
-		return _.get(this, 'props.location.state.game');
 	}
 
 	componentDidMount() {
@@ -71,7 +56,8 @@ class Waiting extends React.Component {
 				playerType: this.playerType,
 				roomCode: this.roomCode,
 				userName: this.userName,
-				players: this.state.players
+				players: this.state.players,
+				game: this.game
 			}
 		});
 	}

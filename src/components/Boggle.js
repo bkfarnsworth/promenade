@@ -70,6 +70,9 @@ class Boggle extends React.Component  {
 	constructor(props) {
 		super(props)
 		Object.assign(this, SocketMixin);
+		Object.assign(this, props);
+		Object.assign(this, _.get(props, 'location.state', {}));
+		Object.assign(this, _.get(props, 'location.state.gameProps', {}));
 		this.selectedCells = [];
 		this.state = {
 			input: '',
@@ -77,24 +80,12 @@ class Boggle extends React.Component  {
 		}
 	}
 
-	get board() {
+	getBoard() {
 		if(debugOpts.board) {
 			return DebugHelper.board1;
 		} else {
-			return _.get(this, 'props.location.state.gameProps.board');
+			return this.board;
 		}
-	}
-
-	get playerType() {
-		return _.get(this, 'props.location.state.playerType');
-	}
-
-	get roomCode() {
-		return _.get(this, 'props.location.state.roomCode');
-	}
-
-	get userName() {
-		return _.get(this, 'props.location.state.userName');
 	}
 
 	submitResults() {
@@ -124,13 +115,17 @@ class Boggle extends React.Component  {
 					playerType: this.playerType,
 					userName: this.userName,
 					roomCode: this.roomCode,
-					board: this.board
+					game: this.game,
+					board: this.getBoard()
 				}
 			});
 		});
+
+		window.endGameEarly = this.submitResults.bind(this)
 	}
 
 	componentWillUnmount() {
+		delete window.endGameEarly;
 		this.callOffFuncs();
 	}
 
@@ -258,7 +253,7 @@ class Boggle extends React.Component  {
 			<div>
 				<div className="time-remaining">Time Remaining: {this.state.timeRemaining}</div>
 					<Guesses guesses={this.state.guesses}/>
-					<BoggleBoard boggle={this.board} onMobileTouchMove={this.onMobileTouchMove.bind(this)} onMobileTouchEnd={this.onMobileTouchEnd.bind(this)} selectedCells={this.selectedCells}/>
+					<BoggleBoard boggle={this.getBoard()} onMobileTouchMove={this.onMobileTouchMove.bind(this)} onMobileTouchEnd={this.onMobileTouchEnd.bind(this)} selectedCells={this.selectedCells}/>
 					{this.renderInputIfMobile()}
 					{this.renderEndGameButtonIfDebugMode()}
 			</div>
