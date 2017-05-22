@@ -1,21 +1,21 @@
-function PhaserPong() {
+import PIXI from 'pixi';
+import p2 from 'p2';
+import Phaser from 'phaser';
+    
+function PhaserPong(socket) {
     var self = this;
-    var socket = io();
     socket.on('disconnect', function(data) {
         var msg = 'Connection loss :\\';
         console.error(msg+"\n"+data);
         window.alert(msg+"\n"+data);
-        location.href = location.href.replace(location.hash,"");
     });
     socket.on('error', function(data) {
         console.error(data);
         window.alert(data);
-        location.href = location.href.replace(location.hash,"");
     });
     socket.on('errorMsg', function(data) {
         console.error("[Error:"+data.num+"] "+data.msg);
         window.alert("Error "+data.num+"\n"+data.msg);
-        location.href = location.href.replace(location.hash,"");
     });
 
     var pingTime;
@@ -484,10 +484,6 @@ function PhaserPong() {
             socket.removeAllListeners('disconnect');
             socket.removeAllListeners('errorMsg');
             socket.removeAllListeners('error');
-
-            $("#connect tr").addClass("hide");
-            $("#endContainer").removeClass("hide");
-            $("#connect").removeClass("hide").css("background-color", "transparent");
 
             setTimeout(function() {
                 socket.disconnect();

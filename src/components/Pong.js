@@ -2,7 +2,6 @@ import React from 'react';
 import $ from 'jquery';
 import KeyCodes from './../KeyCodes'
 import SocketMixin from './SocketMixin';
-import Phaser from 'phaser';
 import PhaserPong from './PhaserPong';
 
 
@@ -16,8 +15,11 @@ class Pong extends React.Component  {
    }
 
    componentDidMount() {
-   	let pong = new PhaserPong();
-
+   	let pong = new PhaserPong(this.socket);
+   	pong.sync({
+   		hosting: this.playerType === 'host', 
+   		playersCount: this.players.length
+   	});
    	console.log('pong: ', pong);
    }
 
@@ -27,7 +29,9 @@ class Pong extends React.Component  {
 
 	render() {
 		return (
-			<div id="gameDiv">
+			<div id="container">
+				<div id="gameDiv">
+				</div>
 			</div>
 		)
 	}
