@@ -7,11 +7,9 @@ function PhaserPong(socket) {
     socket.on('disconnect', function(data) {
         var msg = 'Connection loss :\\';
         console.error(msg+"\n"+data);
-        window.alert(msg+"\n"+data);
     });
     socket.on('error', function(data) {
         console.error(data);
-        window.alert(data);
     });
     socket.on('errorMsg', function(data) {
         console.error("[Error:"+data.num+"] "+data.msg);
