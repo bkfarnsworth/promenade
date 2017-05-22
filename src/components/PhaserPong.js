@@ -383,26 +383,7 @@ function PhaserPong(socket, syncData) {
                         p.position.y += moveFactor;
                     break;
                 }
-            } else {
-                switch (currentPlayer) {
-                    case 0: case 2:
-                        if (game.input.activePointer.x >= paddles[currentPlayer].position.x + moveFactor) {
-                            p.position.x += moveFactor;
-                        }
-                        else if (game.input.activePointer.x <= paddles[currentPlayer].position.x - moveFactor) {
-                            p.position.x -= moveFactor;
-                        }
-                    break;
-                    case 1: case 3:
-                        if (game.input.activePointer.y >= paddles[currentPlayer].position.y + moveFactor) {
-                            p.position.y += moveFactor;
-                        }
-                        else if (game.input.activePointer.y <= paddles[currentPlayer].position.y - moveFactor) {
-                            p.position.y -= moveFactor;
-                        }
-                    break;
-                }
-            }
+            } 
 
             var pH2 = p.body.height/2;
             var pW2 = p.body.width/2;
