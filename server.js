@@ -37,7 +37,15 @@ io.on('connection', (socket) => {
   socket.on('leaveRoom', socketUtil.leaveRoom.bind(socketUtil));
   socket.on('getRoomMembers', socketUtil.getRoomMembers.bind(socketUtil));
   socket.on('startGame', socketUtil.startGame.bind(socketUtil));
-  socket.on('submitResults', socketUtil.submitResults.bind(socketUtil));
-  socket.on('positionUpdate', socketUtil.positionUpdate.bind(socketUtil));
   socket.on('disconnect', () => console.log('Client disconnected'));
+
+  //boggle
+  socket.on('submitResults', socketUtil.submitResults.bind(socketUtil));
+
+  //pong
+  socket.on('gameUpdate', socketUtil.gameUpdate.bind(socketUtil));
+  socket.on('gameScores', socketUtil.gameScores.bind(socketUtil));
+  socket.on('gameBall', socketUtil.gameBall.bind(socketUtil));
+  
+
 });

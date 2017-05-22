@@ -2,7 +2,7 @@ import PIXI from 'pixi';
 import p2 from 'p2';
 import Phaser from 'phaser';
     
-function PhaserPong(socket) {
+function PhaserPong(socket, syncData) {
     var self = this;
     socket.on('disconnect', function(data) {
         var msg = 'Connection loss :\\';
@@ -41,6 +41,7 @@ function PhaserPong(socket) {
     var game = new Phaser.Game(gameWidth, gameHeight, debug ? Phaser.CANVAS : Phaser.AUTO, gameDiv, null, false, false);
 
     var host = false;
+    var hostPlayer;
     var paddles = [];
     var sprites;
     var ball;
@@ -166,6 +167,11 @@ function PhaserPong(socket) {
             });
 
             demoMovements();
+
+            //just show the demo for a few seconds before starting
+            setTimeout(() => {
+                game.state.start("sync", false, false, syncData);
+            }, 2000);
         }
     };
 
@@ -175,28 +181,12 @@ function PhaserPong(socket) {
         countdown: false,
         init: function (data) {
             game.stage.disableVisibilityChange = true;
-
-            var self = this;
-
-            self.players = parseInt(data.playersCount);
+            this.players = parseInt(data.playersCount);
+            this.p = data.playerNum;
             if (data.hosting) {
-                self.p = 0;
                 host = true;
-                socket.emit('startCounting', socket.id);
-            }
-            else {
-                self.p = data.playersCount -1;
-                socket.on('joined', function (data) {
-                    self.players = parseInt(data.playersCount);
-                });
-                socket.on('playerLeft', function (data) {
-                    self.players = parseInt(data.playersCount);
-                });
-            }
-            socket.on('timeOut', function(data, ack) {
-                self.countdown = parseInt(data.times);
-                ack(socket.id);
-            });
+                hostPlayer = this.p;
+            } 
         },
         preload: function () {
             cursors = game.input.keyboard.createCursorKeys();
@@ -211,22 +201,9 @@ function PhaserPong(socket) {
                 ball.tint = player.tint;
             });
 
-            if (this.countdown === false) {
-                demoMovements();
-            }
-            else {
-                this.initGame(this.countdown);
-            }
-
-            if (this.countdown !== false) {
-                this.text.text = "Ready to start...";
-            }
-            else if (host || this.players == 4) {
-                this.text.text = "Waiting for sync...";
-            }
-            else {
-                this.text.text = "Awaiting other players (" + this.players + "/4)";
-            }
+            this.initGame(1);
+            this.initGame(2);
+            this.initGame(3);
         },
         initGame: function(phase) {
             switch(phase) {
@@ -242,11 +219,11 @@ function PhaserPong(socket) {
                     }
                     this.text.text = "GO!";
                 case 3:
-                    socket.removeAllListeners('joined');
-                    socket.removeAllListeners('timeOut');
-                    socket.removeAllListeners('playerLeft');
                     this.text.destroy();
-                    game.state.start("game", false, false, { player: this.p });
+                    game.state.start("game", false, false, { 
+                        player: this.p,
+                        players: this.players
+                    });
                 break;
             }
         }
@@ -260,11 +237,14 @@ function PhaserPong(socket) {
 
             var self = this;
             currentPlayer = data.player;
-            master = data.player == 0;
+            master = data.player == hostPlayer;
 
-            socket.on('playerLeft', function (data) {
-                self.inactivePlayers[parseInt(data.playerLeft)] = true;
+            //if there are less than 4, set the rest of the players to computer players
+            Object.keys(this.inactivePlayers).forEach((key, ki) => {
+                var hasPlayer = ki < data.players;
+                this.inactivePlayers[ki] = hasPlayer;
             });
+
             socket.on('clientUpdate', function(data) {
                 self.updateClient(data);
             });
@@ -274,18 +254,12 @@ function PhaserPong(socket) {
             socket.on('clientUpdateBall', function (data) {
                 self.updateClientBall(data);
             });
-            socket.on('becomeHost', function (data) {
-                master = true;
-                ball.body.velocity.x = ball.currentSpeedX;
-                ball.body.velocity.y = ball.currentSpeedY;
-            });
         },
         create: function () {
             if (!master) {
                 ball.body.velocity.x = 0;
                 ball.body.velocity.y = 0;
-            }
-            else {
+            } else {
                 var sign = game.rnd.integerInRange(0,1) == 0 ? 1 : -1;
                 ball.body.velocity.x = game.rnd.integerInRange(100, 250) * sign;
                 ball.body.velocity.y = game.rnd.integerInRange(100, 250) * sign;
@@ -340,35 +314,28 @@ function PhaserPong(socket) {
                     if (ball.player == -1 || ball.player == 0) {
                         paddles[0].scoreLabel.text--;
                         scored = true;
-                    }
-                    else {
+                    } else {
                         paddles[ball.player].scoreLabel.text++;
                     }
-                }
-                else if (ball.body.y > game.world.height + ball.body.height) {
+                } else if (ball.body.y > game.world.height + ball.body.height) {
                     scored = true;
                     if (ball.player == -1 || ball.player == 2) {
                         paddles[2].scoreLabel.text--;
-                    }
-                    else {
+                    } else {
                         paddles[ball.player].scoreLabel.text++;
                     }
-                }
-                else if (ball.body.x < -ball.body.width) {
+                } else if (ball.body.x < -ball.body.width) {
                     scored = true;
                     if (ball.player == -1 || ball.player == 1) {
                         paddles[1].scoreLabel.text--;
-                    }
-                    else {
+                    } else {
                         paddles[ball.player].scoreLabel.text++;
                     }
-                }
-                else if (ball.body.x > game.world.width + ball.body.width) {
+                } else if (ball.body.x > game.world.width + ball.body.width) {
                     scored = true;
                     if (ball.player == -1 || ball.player == 3) {
                         paddles[3].scoreLabel.text--;
-                    }
-                    else {
+                    } else {
                         paddles[ball.player].scoreLabel.text++;
                     }
                 }
@@ -405,8 +372,7 @@ function PhaserPong(socket) {
                         p.position.y -= moveFactor;
                     break;
                 }
-            }
-            else if (cursors.right.isDown || cursors.down.isDown) {
+            } else if (cursors.right.isDown || cursors.down.isDown) {
                 switch (currentPlayer) {
                     case 0:
                     case 2:
@@ -417,8 +383,7 @@ function PhaserPong(socket) {
                         p.position.y += moveFactor;
                     break;
                 }
-            }
-            else {
+            } else {
                 switch (currentPlayer) {
                     case 0: case 2:
                         if (game.input.activePointer.x >= paddles[currentPlayer].position.x + moveFactor) {
@@ -445,16 +410,14 @@ function PhaserPong(socket) {
                 case 0: case 2:
                     if (p.position.x < pW2) {
                         p.position.x = pW2;
-                    }
-                    else if (p.position.x > game.world.width - pW2) {
+                    } else if (p.position.x > game.world.width - pW2) {
                         p.position.x = game.world.width - pW2;
                     }
                 break;
                 case 1: case 3:
                     if (p.position.y < pH2) {
                         p.position.y = pH2;
-                    }
-                    else if (p.position.y > game.world.height - pH2) {
+                    } else if (p.position.y > game.world.height - pH2) {
                         p.position.y = game.world.height - pH2;
                     }
                 break;

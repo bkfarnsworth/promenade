@@ -17,12 +17,11 @@ class Pong extends React.Component  {
    }
 
    componentDidMount() {
-   	let pong = new PhaserPong(this.socket);
-   	// pong.sync({
-   	// 	hosting: this.playerType === 'host', 
-   	// 	playersCount: this.players.length
-   	// });
-   	console.log('pong: ', pong);
+   	let pong = new PhaserPong(this.socket, {
+         hosting: this.playerType === 'host', 
+         playersCount: this.players.length,
+         playerNum: this.players.indexOf(this.userName)
+      });
    }
 
    componentWillUnmount() {

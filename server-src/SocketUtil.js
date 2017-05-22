@@ -99,10 +99,7 @@ class SocketUtil {
 		this.game.start();
 	}
 
-	positionUpdate(data) {
-		data.playerId = this.userName;
-		this.emitToRoom('positionUpdate', data);
-	}
+
 
 	submitResults(data) {
 		this.game.addResult(this.userName, data.words);
@@ -116,6 +113,25 @@ class SocketUtil {
 				})
 			}
 		});
+	}
+
+
+	// PONG STUFF -----------------------------
+
+	
+	gameUpdate(data) {
+		delete data.socketId;
+		this.emitToRoom('clientUpdate', data);
+	}
+
+	gameScores(data) {
+		delete data.socketId;
+		this.emitToRoom('clientUpdateScores', data);
+	}
+
+	gameBall(data) {
+		delete data.socketId;
+		this.emitToRoom('clientUpdateBall', data);
 	}
 
 }
