@@ -3,6 +3,8 @@ import $ from 'jquery';
 import KeyCodes from './../KeyCodes'
 import SocketMixin from './SocketMixin';
 import PhaserPong from './PhaserPong';
+import './Pong.css';
+
 
 
 class Pong extends React.Component  {
@@ -29,7 +31,7 @@ class Pong extends React.Component  {
 
 	render() {
 		return (
-			<div id="container">
+			<div className="pong-container">
 				<div id="game">
 				</div>
 			</div>
