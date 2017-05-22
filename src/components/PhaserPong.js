@@ -19,7 +19,7 @@ function PhaserPong(socket) {
     var pingTime;
     var ping;
     socket.on('pong', function () {
-        latency = Date.now() - pingTime;
+        var latency = Date.now() - pingTime;
         ping = latency;
     });
 
@@ -32,7 +32,7 @@ function PhaserPong(socket) {
     }
     measurePing();
 
-    var debug = false;
+    var debug = true;
 
     var gameDiv = "game";
     var gameWidth = parseInt(document.getElementById(gameDiv).offsetWidth);
