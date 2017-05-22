@@ -32,7 +32,7 @@ function PhaserPong(socket, syncData) {
     }
     measurePing();
 
-    var debug = true;
+    var debug = false;
 
     var gameDiv = "game";
     var gameWidth = parseInt(document.getElementById(gameDiv).offsetWidth);
