@@ -241,8 +241,8 @@ function PhaserPong(socket, syncData) {
 
             //if there are less than 4, set the rest of the players to computer players
             Object.keys(this.inactivePlayers).forEach((key, ki) => {
-                var hasPlayer = ki < data.players;
-                this.inactivePlayers[ki] = hasPlayer;
+                var isActive = ki < data.players;
+                this.inactivePlayers[ki] = !isActive;
             });
 
             socket.on('clientUpdate', function(data) {
