@@ -147,6 +147,26 @@ class Results extends React.Component {
 		return _.round((allWords.length / this.getSolution().length) * 100) + '%';
 	}
 
+	getAllWordsByLength() {
+		let words = this.getSolution().map(el => el.word);
+		let groupHash = _.groupBy(words, 'length');
+		let pairsArray = _.toPairs(groupHash);//because react needs an array not a hash
+		pairsArray.reverse();//so we do the biggest words first
+		return (
+			<div>
+				{pairsArray.map(pair => {
+					let wordLength = pair[0];
+					let wordsOfLength = pair[1].sort();
+					return (
+						<div>
+							<span><b>{`${wordLength} letter words: `}</b></span>{this.getCommaSeperatedList(wordsOfLength)}
+						</div>
+					);
+				})}
+			</div>
+		);
+	}
+
 	render() {
 		return (
 			<div>
@@ -171,7 +191,7 @@ class Results extends React.Component {
 						})}
 						<div className="single-result-container">
 							<h3 className="single-result-header"><b>All Words:</b></h3>
-							{this.getCommaSeperatedList(this.getSolution().map(el => el.word))}
+							{this.getAllWordsByLength()}
 						</div>
 						<BoggleBoard boggle={this.getBoard()}/>
 					</div>

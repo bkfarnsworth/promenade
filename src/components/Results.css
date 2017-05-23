@@ -2,7 +2,7 @@
 	background-color: white;
 	box-shadow: 1px 1px 12px #888888;
 	border-radius: 2px;
-	padding: 33px 37px; 
+	padding: 33px 0px; 
 }
 
 .boggle-results-table td {
@@ -48,5 +48,5 @@
 }
 
 .single-result-container {
-	width: 76%;
+	width: 83%;
 }
