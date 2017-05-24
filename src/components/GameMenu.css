@@ -9,11 +9,14 @@
 
 .divider {
 	height: 1px;
-	width: 100%;
 	width: 86%;
 	margin: 0 auto;
 	background: #ececec;
 	margin-bottom: 41px;
+
+	/*kind of a hack to make 2 columns, see the other below*/
+	/*really I should make the top border of the game menu be this divider*/
+	max-width: 550px;
 }
 
 .game-menu-container {
