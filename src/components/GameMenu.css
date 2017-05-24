@@ -1,7 +1,24 @@
+.welcome-message {
+	text-align: center;
+	color: white;
+	font-size: 36px;
+	text-shadow: -1px 0 #888888, 0 1px #888888, 1px 0 #888888, 0 -1px #888888;
+	margin-top: 24px;
+	margin-bottom: 5px;
+}
+
+.divider {
+	height: 1px;
+	width: 100%;
+	width: 86%;
+	margin: 0 auto;
+	background: #ececec;
+	margin-bottom: 41px;
+}
+
 .game-menu-container {
 	display: flex;
 	flex-direction: column;
-	height: 100vh;
 }
 
 .game-menu {
@@ -24,10 +41,6 @@
 		font-size: 6vw;
 		margin: 16% 50px;   
 	}
-
-	.game-menu-container {
-		justify-content: flex-start;
-	}
 }
 
 /*desktop*/
@@ -37,9 +50,5 @@
 		padding: 9% 0;
 		font-size: 21px;
 		margin: 47px 50px;
-	}
-
-	.game-menu-container {
-		justify-content: center;
 	}
 }

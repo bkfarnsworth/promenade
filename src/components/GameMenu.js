@@ -24,11 +24,15 @@ const GameMenu = (props) => {
 	let games = props.games;
 
 	return (
-		<div className="game-menu-container">
-			<div className="game-menu">
-				{games.map(g => {
-					return <GameTile key={g.name} game={g}/>
-				})}
+		<div>
+			<div className="welcome-message">The Promenade</div>
+			<div className="divider"></div>
+			<div className="game-menu-container">
+				<div className="game-menu">
+					{games.map(g => {
+						return <GameTile key={g.name} game={g}/>
+					})}
+				</div>
 			</div>
 		</div>
 	);
