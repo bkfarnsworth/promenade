@@ -122,11 +122,14 @@ class Boggle extends React.Component  {
 		});
 
 		window.endGameEarly = this.submitResults.bind(this)
+		$('body').css('overflow-y', 'hidden')
+
 	}
 
 	componentWillUnmount() {
 		delete window.endGameEarly;
 		this.callOffFuncs();
+		$('body').css('overflow-y', 'visible')
 	}
 
 	addGuessToState(guess) {
@@ -250,7 +253,7 @@ class Boggle extends React.Component  {
 
 	render() {
 		return (
-			<div>
+			<div className="boggle-page">
 				<div className="time-remaining">Time Remaining: {this.state.timeRemaining}</div>
 					<Guesses guesses={this.state.guesses}/>
 					<BoggleBoard boggle={this.getBoard()} onMobileTouchMove={this.onMobileTouchMove.bind(this)} onMobileTouchEnd={this.onMobileTouchEnd.bind(this)} selectedCells={this.selectedCells}/>

@@ -96,7 +96,7 @@ class Room extends React.Component {
 	render() {
 		return (
 			<div>
-				<div className="game-logo">{this.game.name}</div>
+				<div className="game-logo">Hi Tamson</div>
 				<div className="game-config-section">
 					{this.configSection}
 				</div>
