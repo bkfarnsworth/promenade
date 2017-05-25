@@ -75,6 +75,8 @@
 	flex-direction: column;
 	flex-wrap: wrap;
 	align-content: flex-start;
+	max-width: 90%;
+	overflow: scroll;
 }
 
 .boggle-guess {
