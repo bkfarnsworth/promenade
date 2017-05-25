@@ -64,10 +64,10 @@ class Room extends React.Component {
 		if(this.state.roomOption === 'host') {
 			return (
 				<div className="room-config-section host-config-section">
-					<div className="bf-input-container">Name: <input className="bf-input" value={this.state.userName} type="text" onChange={this.onInputChange.bind(this, 'userName')}/></div>
+					<div className="bf-input-container">Username: <input className="bf-input" value={this.state.userName} type="text" onChange={this.onInputChange.bind(this, 'userName')}/></div>
 					<div className="room-section-button-row">
-						<button className="bf-button game-config-button-horizontal" onClick={this.onCreateRoomClick.bind(this)}>Create Room</button>
 						<button className="bf-button game-config-button-horizontal" onClick={() => {this.setState({roomOption: 'start'})}}>Back</button>
+						<button className="bf-button game-config-button-horizontal" onClick={this.onCreateRoomClick.bind(this)}>Create Room</button>
 					</div>
 				</div>
 			);
@@ -75,11 +75,11 @@ class Room extends React.Component {
 
 			return (
 				<div className="room-config-section">
-					<div className="bf-input-container">Name: <input className="bf-input" type="text" value={this.state.userName} onChange={this.onInputChange.bind(this, 'userName')}/></div>
-					<div className="bf-input-container">Code: <input className="bf-input" type="text" value={this.state.roomCode} onChange={this.onInputChange.bind(this, 'roomCode')}/></div>
+					<div className="bf-input-container">Username: <input className="bf-input" type="text" value={this.state.userName} onChange={this.onInputChange.bind(this, 'userName')}/></div>
+					<div className="bf-input-container">Room Code: <input className="bf-input" type="text" value={this.state.roomCode} onChange={this.onInputChange.bind(this, 'roomCode')}/></div>
 					<div className="room-section-button-row">
-						<button className="bf-button game-config-button-horizontal" onClick={this.onJoinRoomClick.bind(this)}>Join</button>
 						<button className="bf-button game-config-button-horizontal" onClick={() => {this.setState({roomOption: 'start'})}}>Back</button>
+						<button className="bf-button game-config-button-horizontal" onClick={this.onJoinRoomClick.bind(this)}>Join</button>
 					</div>
 				</div>
 			);
@@ -96,7 +96,7 @@ class Room extends React.Component {
 	render() {
 		return (
 			<div>
-				<div className="game-logo">Hi TERM</div>
+				<div className="game-logo">{_.get(this, 'game.name', 'Error')}</div>
 				<div className="game-config-section">
 					{this.configSection}
 				</div>

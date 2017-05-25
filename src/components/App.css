@@ -19,7 +19,6 @@ body {
 }
 
 .bf-input {
-	font-size: 18px;
 	font-family: 'Eczar', serif;
 	padding-top: 4px;
 	margin-left: 10px;
@@ -34,4 +33,22 @@ body {
 	justify-content: center;
 	align-items: center;
 	margin-bottom: 30px;
+}
+
+/*mobile*/
+@media (max-width: 500px) {
+	.bf-input-container {
+		font-size: 4vw;
+	}
+
+	.bf-input {
+		font-size: 4vw;
+	}
+}
+
+/*desktop*/
+@media (min-width: 500px) {
+	.bf-input {
+		font-size: 18px;
+	}
 }

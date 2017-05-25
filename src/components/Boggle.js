@@ -122,14 +122,12 @@ class Boggle extends React.Component  {
 		});
 
 		window.endGameEarly = this.submitResults.bind(this)
-		// $('body').css('overflow-y', 'hidden')
 
 	}
 
 	componentWillUnmount() {
 		delete window.endGameEarly;
 		this.callOffFuncs();
-		// $('body').css('overflow-y', 'visible')
 	}
 
 	addGuessToState(guess) {
