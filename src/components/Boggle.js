@@ -133,7 +133,7 @@ class Boggle extends React.Component  {
 	addGuessToState(guess) {
 		if(this.guessIsValid(guess)) {
 			var guesses = this.state.guesses.slice();
-			guesses.push(guess);
+			guesses.unshift(guess);
 			this.setState({
 				guesses: guesses,
 			});
