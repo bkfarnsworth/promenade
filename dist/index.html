@@ -1,12 +1,42 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width">
-    <title>The Promenade</title>
-  </head>
-  <body>
-    <div id='root'/>
-  </body>
-  <script src="/bundle.js"></script>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width">
+		<title>The Promenade</title>
+		<style>
+			@import url('https://fonts.googleapis.com/css?family=Eczar');
+
+			body {
+				background-color: #79b3e6;
+				font-family: 'Eczar', serif;
+			}
+
+			#index-page-loading-div {
+				text-align: center;
+				font-size: 20px;
+			}
+
+			#index-page-welcome-message {
+				margin-top: 25vh;
+				text-align: center;
+				color: white;
+				font-size: 51px;
+				text-shadow: -1px 0 #888888, 0 1px #888888, 1px 0 #888888, 0 -1px #888888;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="index-page-loading-container">
+			<div id="index-page-welcome-message">
+				The Promenade
+				<div id="index-page-loading-div">Loading...</div>
+			</div>
+		</div>
+		<div id='root'/>
+	</body>
+	<script src="/bundle.js"></script>
+	<script>
+		document.getElementById('index-page-loading-container').remove();
+	</script>
 </html>
