@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import GameMenu from './GameMenu';
 import Boggle from './Boggle';
 import Pong from './Pong';
+import Trivia from './Trivia';
 import _ from 'lodash';
 import Room from './Room';
 import Waiting from './Waiting';
@@ -56,7 +57,9 @@ class App extends React.Component  {
 				initialState: 'room'
 			}),
 			new Game({
-				name: 'Trivia'
+				name: 'Trivia',
+				getGameComponent: (props) => <Trivia {...props}/>,
+				initialState: 'room'
 			}),
 			new Game({
 				name: 'Hippos'
