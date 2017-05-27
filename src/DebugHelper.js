@@ -1,5 +1,40 @@
 class DebugHelper {
 
+	getTriviaProblems() {
+		return [
+			{
+				question: 'what is something cool?',
+				options: ['rock climbing','javascript','screeps','cereal'],
+				answer: 'rock climbing'
+			},
+			{
+				question: 'question',
+				options: ['1','2','3','4'],
+				answer: '2'
+			},
+			{
+				question: 'question 2',
+				options: ['1','2','3','4'],
+				answer: '2'
+			},
+			{
+				question: 'question 3',
+				options: ['1','2','3','4'],
+				answer: '2'
+			},
+			{
+				question: 'question 4',
+				options: ['1','2','3','4'],
+				answer: '2'
+			},
+			{
+				question: 'question 5',
+				options: ['1','2','3','4'],
+				answer: '2'
+			}
+		]
+	}
+
 	getArrayOfWords() {
 		//return some text, shuffled and cut down to a random length of words, so I can test different lengths of strings
 		return _.shuffle('Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries'.split(' ')).slice(0, _.random(2, 20));
