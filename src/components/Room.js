@@ -72,7 +72,6 @@ class Room extends React.Component {
 				</div>
 			);
 		} else if(this.state.roomOption === 'join') {
-
 			return (
 				<div className="room-config-section">
 					<div className="bf-input-container">Username: <input className="bf-input" type="text" value={this.state.userName} onChange={this.onInputChange.bind(this, 'userName')}/></div>
