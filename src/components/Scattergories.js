@@ -18,14 +18,18 @@ class Scattergories extends React.Component  {
          this.setState({
             timeRemaining
          });
-
-         // if(timeRemaining === 0) {
-         //    this.submitResults();
-         // }
       });
+   }
 
-
-      console.log('this: ', this);
+   onPlayAgainClick() {
+      let {userName, roomCode, playerType, game} = this;
+      let eventToEmit = playerType === 'host' ? 'hostRoom' : 'joinRoom';
+      this.socket.emit(eventToEmit, {roomCode, userName}, () => {
+         this.props.history.push({
+            pathname: '/waiting',
+            state: {playerType, roomCode, userName, game}
+         });
+      });
    }
 
    componentWillUnmount() {
@@ -40,6 +44,13 @@ class Scattergories extends React.Component  {
             <div>Letter</div>
             {this.gameProps.letter}
             <div>List</div>
+            {this.gameProps.list.map(category => {
+               return <div>{category}</div>
+            })}
+            {this.state.timeRemaining <= 0 
+               ? <button onClick={this.onPlayAgainClick.bind(this)} className="bf-button game-config-button-vertical boggle-play-again-button">Play Again</button>
+               : null
+            }
          </div>
       )
    }
