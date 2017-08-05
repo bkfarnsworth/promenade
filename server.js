@@ -46,6 +46,9 @@ io.on('connection', (socket) => {
   socket.on('gameUpdate', socketUtil.gameUpdate.bind(socketUtil));
   socket.on('gameScores', socketUtil.gameScores.bind(socketUtil));
   socket.on('gameBall', socketUtil.gameBall.bind(socketUtil));
+
+  //scattergories
+  
   
 
 });
