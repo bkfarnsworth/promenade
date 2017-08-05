@@ -1,6 +1,6 @@
 import React from 'react';
 import SocketMixin from './SocketMixin';
-// import './Trivia.css';
+import './Scattergories.css';
 import DebugHelper from './../DebugHelper';
 
 class Scattergories extends React.Component  {
@@ -38,15 +38,17 @@ class Scattergories extends React.Component  {
 
    render() {
       return (
-         <div>
-            <div>Timer</div>
+         <div className="scattergories-container">
             <div className="time-remaining">Time Remaining: {this.state.timeRemaining}</div>
-            <div>Letter</div>
-            {this.gameProps.letter}
-            <div>List</div>
+            <div className="scattergories-letter">{this.gameProps.letter}</div>
+            <br/>
+            <br/>
+            <div><b>List</b></div>
+            <ol>
             {this.gameProps.list.map(category => {
-               return <div>{category}</div>
+               return <li>{category}</li>
             })}
+            </ol>
             {this.state.timeRemaining <= 0 
                ? <button onClick={this.onPlayAgainClick.bind(this)} className="bf-button game-config-button-vertical boggle-play-again-button">Play Again</button>
                : null
