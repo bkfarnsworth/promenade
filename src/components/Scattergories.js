@@ -10,6 +10,22 @@ class Scattergories extends React.Component  {
       Object.assign(this, SocketMixin);
       Object.assign(this, props);
       Object.assign(this, _.get(props, 'location.state', {}));
+      this.state = {}
+   }
+
+   componentDidMount() {
+      this.onSocketEvent('timeRemainingUpdate', (timeRemaining) => {
+         this.setState({
+            timeRemaining
+         });
+
+         // if(timeRemaining === 0) {
+         //    this.submitResults();
+         // }
+      });
+
+
+      console.log('this: ', this);
    }
 
    componentWillUnmount() {
@@ -20,7 +36,9 @@ class Scattergories extends React.Component  {
       return (
          <div>
             <div>Timer</div>
+            <div className="time-remaining">Time Remaining: {this.state.timeRemaining}</div>
             <div>Letter</div>
+            {this.gameProps.letter}
             <div>List</div>
          </div>
       )

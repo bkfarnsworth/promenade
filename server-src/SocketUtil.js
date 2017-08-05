@@ -1,5 +1,6 @@
 const _ = require('lodash');
-const Game = require('./Game.js');
+const Boggle = require('./Boggle.js');
+const Scattergories = require('./Scattergories.js');
 const hri = require('human-readable-ids').hri
 
 class SocketUtil {
@@ -33,7 +34,8 @@ class SocketUtil {
 
 		_.defaults(opts, {
 			roomCode: hri.random(), //allow someday them to be able to type in a custom room code
-			userName: 'default userName'
+			userName: 'default userName',
+			gameName: 'required prop'
 		});
 
 		this.joinRoom(opts, cb);
@@ -43,9 +45,10 @@ class SocketUtil {
 
 		_.defaults(opts, {
 			roomCode: undefined,
-			userName: 'default userName'
+			userName: 'default userName',
+			gameName: 'required prop'
 		});
-		let {roomCode, userName} = opts;
+		let {roomCode, userName, gameName} = opts;
 
 		//process the roomCode (handle case sensitivity etc)
 		let originalRoomCode = roomCode;
@@ -58,7 +61,7 @@ class SocketUtil {
 		this.userName = userName;
 
 		//get the game
-		this.appConfig.gameMap[roomCode] = this.appConfig.gameMap[roomCode] || new Game(this.io, roomCode);
+		this.appConfig.gameMap[roomCode] = this.appConfig.gameMap[roomCode] || this.createNewGame(gameName, roomCode);
 		this.game = this.appConfig.gameMap[roomCode]
 
 		//add the username to the map
@@ -71,6 +74,14 @@ class SocketUtil {
 		this.getUsernamesForRoom((names) => {
 			this.emitToRoom('newRoomMember', {roomMembers: names})
 		})
+	}
+
+	createNewGame(gameName, roomCode) {
+		if(gameName === 'Boggle') {
+			return new Boggle(this.io, roomCode);
+		} else if(gameName === 'Scattergories') {
+			return new Scattergories(this.io, roomCode);
+		}
 	}
 
 	leaveRoom() {

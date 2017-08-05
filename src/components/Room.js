@@ -26,7 +26,8 @@ class Room extends React.Component {
 
 	onCreateRoomClick() {
 		let {userName} = this.state;
-		this.socket.emit('hostRoom', {userName}, (roomCode) => {
+		let gameName = this.game.name;
+		this.socket.emit('hostRoom', {userName, gameName}, (roomCode) => {
 			this.props.history.push({
 				pathname: '/waiting',
 				state: {
@@ -41,7 +42,8 @@ class Room extends React.Component {
 
 	onJoinRoomClick() {
 		let {userName, roomCode} = this.state;
-		this.socket.emit('joinRoom', {roomCode, userName}, () => {
+		let gameName = this.game.name;
+		this.socket.emit('joinRoom', {roomCode, userName, gameName}, () => {
 			this.props.history.push({
 				pathname: '/waiting',
 				state: {
