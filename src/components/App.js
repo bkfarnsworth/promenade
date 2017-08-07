@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import GameMenu from './GameMenu';
 import Boggle from './Boggle';
 import Pong from './Pong';
+import Yugioh from './Yugioh';
 import Scattergories from './Scattergories';
 import Trivia from './Trivia';
 import _ from 'lodash';
@@ -55,6 +56,11 @@ class App extends React.Component  {
 			new Game({
 				name: 'Scattergories',
 				getGameComponent: (props) => <Scattergories {...props}/>,
+				initialState: 'room'
+			}),
+			new Game({
+				name: 'Yugioh',
+				getGameComponent: (props) => <Yugioh {...props}/>,
 				initialState: 'room'
 			}),
 			new Game({
