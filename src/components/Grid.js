@@ -14,7 +14,7 @@ export default function Grid(props) {
    //onColumnClick
    //onCellClick  
 
-   let {grid} = props;
+   let {grid, cellContents} = props;
    let rows = grid.rows;
 
    //take colums or rows - always convert to rows
@@ -26,7 +26,7 @@ export default function Grid(props) {
       <div className=".grid-container">
          <div className="grid">
             {grid.rows.map((row, index) => {
-               return <Row row={row} rowNum={index} key={row.id || index}/>;
+               return <Row row={row} rowNum={index} cellContents={cellContents} key={row.id || index}/>;
             })}
          </div>
       </div>
@@ -34,12 +34,12 @@ export default function Grid(props) {
 }
 
 const Row = (props) => {
-   let row = props.row;
+   let {row, cellContents} = props;
    let style = {top: (props.rowNum * 25) + '%'}
    return (
       <div className="row" style={style}>
          {row.cells.map((cell, cellNum) => {
-            return <Cell key={cell.id} cell={cell} cellNum={cellNum} rowNum={props.rowNum}/>
+            return <Cell key={cell.id} cell={cell} cellNum={cellNum} cellContents={cellContents} rowNum={props.rowNum}/>
          })}
       </div>
    );
@@ -50,11 +50,7 @@ const Cell = props => {
    let style = { left: (props.cellNum * 25) + '%' }
    return (
       <div className="cell" style={style} data-cell-id={cell.id} data-cell-num={props.cellNum} data-row-num={props.rowNum} data-letter={cell.text}>
-         <div className="boggle-hit-zone">
-            <div className="boggle-letter">
-               O
-            </div>
-         </div>
+         {props.cellContents({cell})}
       </div>
    );
 }

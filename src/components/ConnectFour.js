@@ -53,11 +53,18 @@ class ConnectFour extends React.Component  {
 
       return (
          <div>
-            <Grid grid={board}/>
+            <Grid grid={board} cellContents={CellContents}/>
          </div>
       )
    }
 
 };
+
+const CellContents = props => {
+   let {cell} = props;
+   return (
+      <div>{cell.color1}</div>
+   );
+}
 
 export default ConnectFour;
