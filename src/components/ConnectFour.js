@@ -1,7 +1,8 @@
 import React from 'react';
 import SocketMixin from './SocketMixin';
-// import './Scattergories.css';
+import './ConnectFour.css';
 import DebugHelper from './../DebugHelper';
+import Grid from './Grid';
 
 
 class ConnectFour extends React.Component  {
@@ -30,9 +31,29 @@ class ConnectFour extends React.Component  {
    }
 
    render() {
+
+      let board = {
+         columns: [
+            {
+               cells: [
+                  {color1: 'blue', color2: 'yellow'},
+                  {},
+                  {},
+                  {}
+               ]
+            },
+            {cells: [{color1: 'pink'},{},{},{}]},
+            {cells: [{},{},{},{}]},
+            {cells: [{},{},{},{}]},
+            {cells: [{},{},{},{}]},
+         ]
+      }
+
+
+
       return (
          <div>
-            CONNECT FOUR
+            <Grid grid={board}/>
          </div>
       )
    }
