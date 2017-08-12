@@ -12,8 +12,12 @@ class ConnectFour extends React.Component  {
       Object.assign(this, SocketMixin);
       Object.assign(this, props);
       Object.assign(this, _.get(props, 'location.state', {}));
-      this.state = {}
+      this.state = {
+         board: DebugHelper.getConnectFourBoard()
+      }
    }
+
+
 
    onPlayAgainClick() {
       let {userName, roomCode, playerType, game} = this;
@@ -31,40 +35,19 @@ class ConnectFour extends React.Component  {
    }
 
    onCellClick(cell) {
+      let column = this.state.board.columns.find(c => c.cells.includes(cell));
+      let emptyCells = column.cells.filter(c => !c.color1);
+      let lowestEmptyCell = _.last(emptyCells);
+      lowestEmptyCell.color1 = 'brown';
 
-      console.log('ConnectFour.js::35 :: ');
-      console.log('cell: ', cell);
-
-      //find the column id
-      //add a disc to it
-
-
+      //I'm updating the model that's already being used in the render method, so no need to setState here
+      this.forceUpdate();
    }
 
    render() {
-
-      let board = {
-         columns: [
-            {
-               cells: [
-                  {color1: 'blue', color2: 'yellow'},
-                  {},
-                  {},
-                  {}
-               ]
-            },
-            {cells: [{color1: 'pink'},{},{},{}]},
-            {cells: [{},{},{},{}]},
-            {cells: [{},{},{},{}]},
-            {cells: [{},{},{},{}]},
-         ]
-      }
-
-
-
       return (
          <div>
-            <Grid grid={board} cellContents={CellContents} onCellClick={this.onCellClick.bind(this)}/>
+            <Grid grid={this.state.board} cellContents={CellContents} onCellClick={this.onCellClick.bind(this)}/>
          </div>
       )
    }
@@ -73,8 +56,11 @@ class ConnectFour extends React.Component  {
 
 const CellContents = props => {
    let {cell} = props;
+   let style = {
+      backgroundColor: cell.color1
+   }
    return (
-      <div>{cell.color1}</div>
+      <div style={style} className="connect-four-disc"></div>
    );
 }
 

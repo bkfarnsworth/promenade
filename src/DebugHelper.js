@@ -1,5 +1,28 @@
 class DebugHelper {
 
+
+	getConnectFourBoard() {
+		let board = {
+		   columns: [
+		      {
+		         cells: [
+		            {},
+		            {},
+		            {},
+		            {}
+		         ]
+		      },
+		      {cells: [{},{},{},{}]},
+		      {cells: [{},{},{},{}]},
+		      {cells: [{},{},{},{}]},
+		      {cells: [{},{},{},{}]},
+		   ]
+		}
+
+		return board;
+	}
+
+
 	getTriviaProblems() {
 		return [
 			{
