@@ -5,6 +5,7 @@ import Boggle from './Boggle';
 import Pong from './Pong';
 import Yugioh from './Yugioh';
 import Scattergories from './Scattergories';
+import ConnectFour from './ConnectFour';
 import Trivia from './Trivia';
 import _ from 'lodash';
 import Room from './Room';
@@ -51,6 +52,11 @@ class App extends React.Component  {
 			new Game({
 				name: 'Boggle',
 				getGameComponent: (props) => <Boggle {...props}/>,
+				initialState: 'room'
+			}),
+			new Game({
+				name: 'ConnectFour',
+				getGameComponent: (props) => <ConnectFour {...props}/>,
 				initialState: 'room'
 			}),
 			new Game({

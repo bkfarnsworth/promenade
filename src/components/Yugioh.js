@@ -50,6 +50,13 @@ import DebugHelper from './../DebugHelper';
 // }
 
 
+//what if each area is just a card stack zone - it can hold one more of any card, in any sideways upside down position
+
+//and then the hand is just a view of cards that are upside down to the opponent and right side up to you.  
+
+//you can do whatever you want, and then you submit your turn.  so you can draw a card, it will be visible, and you drag it to your hand.  
+
+
 
 class Yugioh extends React.Component  {
 

@@ -2,6 +2,7 @@ const _ = require('lodash');
 const Boggle = require('./Boggle.js');
 const Scattergories = require('./Scattergories.js');
 const Yugioh = require('./Yugioh.js');
+const ConnectFour = require('./ConnectFour.js');
 const hri = require('human-readable-ids').hri
 
 class SocketUtil {
@@ -84,6 +85,8 @@ class SocketUtil {
 			return new Scattergories(this.io, roomCode);
 		} else if(gameName === 'Yugioh') {
 			return new Yugioh(this.io, roomCode);
+		} else if(gameName === 'ConnectFour') {
+			return new ConnectFour(this.io, roomCode);
 		}
 	}
 
