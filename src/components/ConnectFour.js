@@ -30,6 +30,17 @@ class ConnectFour extends React.Component  {
       this.callOffFuncs();
    }
 
+   onCellClick(cell) {
+
+      console.log('ConnectFour.js::35 :: ');
+      console.log('cell: ', cell);
+
+      //find the column id
+      //add a disc to it
+
+
+   }
+
    render() {
 
       let board = {
@@ -53,7 +64,7 @@ class ConnectFour extends React.Component  {
 
       return (
          <div>
-            <Grid grid={board} cellContents={CellContents}/>
+            <Grid grid={board} cellContents={CellContents} onCellClick={this.onCellClick.bind(this)}/>
          </div>
       )
    }
