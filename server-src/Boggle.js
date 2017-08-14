@@ -39,7 +39,7 @@ class Boggle extends Game {
          })
       });
 
-      this.io.to(this.roomCode).emit('gameStarted', {
+      this.emitToRoom('gameStarted', {
          board: boardModel
       });
 
@@ -105,6 +105,19 @@ class Boggle extends Game {
       });
 
       return this.playerResults;
+   }
+
+   submitResults(data, userName) {
+      this.addResult(userName, data.words);
+      this.getSockets(sockets => {
+         if(this.playerResults.length === sockets.length) {
+            let finalResults = this.calculateFinalResults();
+            this.emitToRoom('finalResults', {
+               finalResults,
+               solution: this.solution
+            })
+         }
+      });
    }
 
 }

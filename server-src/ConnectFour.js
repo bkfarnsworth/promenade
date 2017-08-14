@@ -4,8 +4,8 @@ const Game = require('./Game.js');
 class ConnectFour extends Game {
 
    start() {
-      this.io.to(this.roomCode).emit('gameStarted', {
-         // deck: this.getRandomDeck()
+      this.emitToRoom('gameStarted', {
+         // board: boardModel
       });
    }
 

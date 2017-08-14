@@ -6,7 +6,7 @@ class Scattergories extends Game {
 
    start() {
       this.startTimer();
-      this.io.to(this.roomCode).emit('gameStarted', {
+      this.emitToRoom('gameStarted', {
          letter: this.getRandomLetter(),
          list: this.getRandomList()
       });
