@@ -10,7 +10,7 @@ class SocketServer {
    }
 
    listen() {
-      this.io.on('socketWrapper', (socket) => {
+      this.io.on('connection', (socket) => {
 
          console.log('Client connected');
 
