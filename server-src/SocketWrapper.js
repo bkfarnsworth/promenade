@@ -1,6 +1,5 @@
 const _ = require('lodash');
 
-
 class SocketWrapper {
 
 	constructor(socket, game) {
@@ -29,7 +28,8 @@ class SocketWrapper {
 		this.socket.join(roomCode);
 	}
 
-
-
 }
+
+module.exports = SocketWrapper;
+
 

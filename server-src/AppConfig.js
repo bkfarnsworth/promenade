@@ -49,3 +49,5 @@ class AppConfig {
 	}
 
 }
+
+module.exports = AppConfig;
