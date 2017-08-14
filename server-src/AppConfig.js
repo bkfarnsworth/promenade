@@ -43,7 +43,7 @@ class AppConfig {
 
 		//we are going to have a bidirectional caching thing going on
 		socketWrapper.game = game;
-		game.socketWrappers.add(socketWrapper);
+		game.socketWrappersSet.add(socketWrapper);
 
 		return game;
 	}

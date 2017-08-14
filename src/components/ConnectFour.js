@@ -47,6 +47,7 @@ class ConnectFour extends React.Component  {
    render() {
       return (
          <div>
+            {this.gameProps.startingPlayer}
             <Grid grid={this.state.board} cellContents={CellContents} onCellClick={this.onCellClick.bind(this)}/>
          </div>
       )

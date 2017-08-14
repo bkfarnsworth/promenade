@@ -5,8 +5,12 @@ class ConnectFour extends Game {
 
    start() {
       this.emitToRoom('gameStarted', {
-         // board: boardModel
+         startingPlayer: this.getRandomPlayer()
       });
+   }
+
+   getRandomPlayer() {
+      return _.sample(this.socketWrappers).userName;
    }
 
 }

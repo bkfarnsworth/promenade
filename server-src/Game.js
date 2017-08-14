@@ -6,7 +6,11 @@ class Game {
 		this.timeRemaining = undefined;
 		this.roomCode = roomCode;
 		this.io = io;
-		this.socketWrappers = new Set();
+		this.socketWrappersSet = new Set();
+	}
+
+	get socketWrappers() {
+		return Array.from(this.socketWrappersSet);
 	}
 
 	start() {
@@ -54,7 +58,7 @@ class Game {
 
 	getUsernamesForRoom(cb) {
 		//using the callback because I keep switching between cached and lookup
-		cb(Array.from(this.socketWrappers).map(s => s.userName));
+		cb(this.socketWrappers.map(s => s.userName));
 	}
 
 	// PONG STUFF -----------------------------
