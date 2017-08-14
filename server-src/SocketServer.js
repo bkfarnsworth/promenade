@@ -25,6 +25,9 @@ class SocketServer {
          //boggle
          socket.on('submitResults',  (data) => this.submitResults(socketWrapper, data));
 
+         //connectFour
+         socket.on('finishedTurn', (board) => this.finishedTurn(socketWrapper, board));
+
          //pong
          // socket.on('gameUpdate', socketWrapper.gameUpdate.bind(socketWrapper));
          // socket.on('gameScores', socketWrapper.gameScores.bind(socketWrapper));
@@ -85,6 +88,10 @@ class SocketServer {
       socketWrapper.game.getUsernamesForRoom((names) => {
          cb({roomMembers: names});
       });
+   }
+
+   finishedTurn(socketWrapper, board) {
+      socketWrapper.game.finishedTurn(board, socketWrapper.userName);
    }
 
    submitResults(socketWrapper, data) {

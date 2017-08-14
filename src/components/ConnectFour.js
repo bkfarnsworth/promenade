@@ -13,8 +13,19 @@ class ConnectFour extends React.Component  {
       Object.assign(this, props);
       Object.assign(this, _.get(props, 'location.state', {}));
       this.state = {
-         board: DebugHelper.getConnectFourBoard()
+         board: DebugHelper.getConnectFourBoard(),
+         activePlayer: this.gameProps.firstPlayer
       }
+   }
+
+   componentDidMount() {
+
+      this.onSocketEvent('newTurn', (data) => {
+         this.setState({
+            activePlayer: data.activePlayer,
+            board: data.board
+         })
+      });
    }
 
 
@@ -40,15 +51,22 @@ class ConnectFour extends React.Component  {
       let lowestEmptyCell = _.last(emptyCells);
       lowestEmptyCell.color1 = 'brown';
 
-      //I'm updating the model that's already being used in the render method, so no need to setState here
-      this.forceUpdate();
+      this.setState({
+         activePlayer: null
+      });
+
+      //send it to the server
+      this.socket.emit('finishedTurn', this.state.board);
    }
 
    render() {
       return (
          <div>
-            {this.gameProps.startingPlayer}
-            <Grid grid={this.state.board} cellContents={CellContents} onCellClick={this.onCellClick.bind(this)}/>
+            {this.state.activePlayer}
+            { this.userName === this.state.activePlayer
+              ? <Grid grid={this.state.board} cellContents={CellContents} onCellClick={this.onCellClick.bind(this)}/>
+              : <Grid grid={this.state.board} cellContents={CellContents} />
+            }
          </div>
       )
    }
