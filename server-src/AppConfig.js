@@ -2,6 +2,7 @@ const Boggle = require('./Boggle.js');
 const Scattergories = require('./Scattergories.js');
 const Yugioh = require('./Yugioh.js');
 const ConnectFour = require('./ConnectFour.js');
+const CodeNames = require('./CodeNames.js');
 const _ = require('lodash');
 
 class AppConfig {
@@ -22,6 +23,8 @@ class AppConfig {
 			game = new Yugioh(io, roomCode);
 		} else if(gameName === 'ConnectFour') {
 			game = new ConnectFour(io, roomCode);
+		} else if(gameName === 'CodeNames') {
+			game = new CodeNames(io, roomCode);
 		}
 
 		return game;
