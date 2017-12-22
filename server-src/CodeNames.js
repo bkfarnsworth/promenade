@@ -6,11 +6,8 @@ class CodeNames extends Game {
 
    start() {
       this.startTimer();
-      this.emitToRoom('gameStarted', {
-         letter: this.getRandomLetter(),
-         list: this.getRandomList()
-      });
+      this.emitToRoom('gameStarted', {});
    }
-
 }
 
+module.exports = CodeNames;

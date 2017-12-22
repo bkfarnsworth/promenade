@@ -4,7 +4,7 @@ import AppConfig from './../AppConfig';
 import SocketMixin from './SocketMixin';
 import DebugHelper from './../DebugHelper';
 // import './Boggle.css';
-// import _ from 'lodash';
+import _ from 'lodash';
 // import $ from 'jquery';
 
 class CodeNames extends React.Component  {
