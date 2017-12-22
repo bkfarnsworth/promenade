@@ -21,7 +21,7 @@ export default function Grid(props) {
    }
 
    return (
-      <div className=".grid-container">
+      <div className="grid-container">
          <div className="grid">
             {grid.rows.map((row, rowNum) => {
                let cellProps = {row, rowNum, key: row.id || rowNum}

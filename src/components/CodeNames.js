@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import AppConfig from './../AppConfig';
 import SocketMixin from './SocketMixin';
 import DebugHelper from './../DebugHelper';
-// import './Boggle.css';
+import './CodeNames.css';
 import _ from 'lodash';
 // import $ from 'jquery';
 import Grid from './Grid';
@@ -45,33 +45,72 @@ class CodeNames extends React.Component  {
 
        // {hintGiver ? <BoardMap/> : null}
 
+
+
+       let board = {
+          rows: [
+             {cells: [{name: 'noun', team:'red'}, {name: 'noun', team:'red'}, {name: 'noun', team:'red'}, {name: 'noun', team:'red'}, {name: 'noun', team:'red'}]},
+             {cells: [{name: 'noun', team:'red'}, {name: 'noun', team:'red'}, {name: 'noun', team:'red'}, {name: 'noun', team:'neutral'}, {name: 'noun', team:'neutral'}]},
+             {cells: [{name: 'noun', team:'neutral'}, {name: 'noun', team:'neutral'}, {name: 'noun', team:'neutral'}, {name: 'noun', team:'neutral'}, {name: 'noun', team:'neutral'}]},
+             {cells: [{name: 'noun', team:'blue'}, {name: 'noun', team:'blue'}, {name: 'noun', team:'blue'}, {name: 'noun', team:'blue'}, {name: 'noun', team:'blue'}]},
+             {cells: [{name: 'noun', team:'blue'}, {name: 'noun', team:'blue'}, {name: 'noun', team:'blue'}, {name: 'noun', team:'blue'}, {name: 'noun', team:'assassin'}]},
+          ]
+       }
+
+
+       let hintGiver = true;
+
          return (
-            <div>
-               <Board/>
+            <div className="code-names">
+               <Board board={board}/>
+               {hintGiver ? <BoardMap board={board}/> : null}
             </div>
          )
       // }
    }
 };
 
-const CellContents = (props) => {
-   let {cell} = props;
-   return <div>{cell.name}</div>;
+function generateBoard() {
+
+   //so it gets the 25 nouns
+
+   //makes 5 by 5 thing
+
+   //decides random if red or blue goes first
+
+   // picks 9 random cells for first team, 8 for second team
+
+   //picks 1 of remaining cells for assassin
+
+   //the rest are marked as nuetral
+
+}
+
+const BoardMap = (props) => {
+   let {board} = props;
+
+   let cellContents = (cellContentProps) => {
+      let {cell} = cellContentProps;
+      return (
+         <div> 
+            {cell.team}
+         </div>
+      );
+   }
+
+   return <Grid grid={board} cellContents={cellContents}/>
 }
 
 const Board = (props) => {
+   let {board} = props;
 
-   let board = {
-      rows: [
-         {cells: [{name: 'noun'}, {name: 'noun'}, {name: 'noun'}, {name: 'noun'}]},
-         {cells: [{name: 'noun'}, {name: 'noun'}, {name: 'noun'}, {name: 'noun'}]},
-         {cells: [{name: 'noun'}, {name: 'noun'}, {name: 'noun'}, {name: 'noun'}]},
-         {cells: [{name: 'noun'}, {name: 'noun'}, {name: 'noun'}, {name: 'noun'}]},
-         {cells: [{name: 'noun'}, {name: 'noun'}, {name: 'noun'}, {name: 'noun'}]},
-      ]
+
+   let cellContents = (cellContentProps) => {
+      let {cell} = cellContentProps;
+      return <div>{cell.name}</div>;
    }
 
-   return <Grid grid={board} cellContents={CellContents}/>
+   return <Grid grid={board} cellContents={cellContents}/>
 }
 
 export default CodeNames;
