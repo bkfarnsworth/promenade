@@ -35,8 +35,17 @@ class CodeNames extends React.Component  {
 
       //start off in config state
       this.state = {
-         needsConfig: true
+         needsConfig: true,
+         board: this.board
       }
+   }
+
+   componentDidMount() {
+      this.onSocketEvent('boardChanged', (data) => {
+         this.setState({
+            board: data.board
+         });
+      });
    }
 
    componentWillUnmount() {
@@ -50,14 +59,14 @@ class CodeNames extends React.Component  {
    }
 
    onCellClick(cell) {
-   	cell.discovered = true;
-   	this.setState({});
+      cell.discovered = true;
+      this.socket.emit('boardChanged', this.state.board);
+      this.setState({});
    }
 
    render() {
 
-		let {board} = this;
-		let {needsConfig} = this.state;
+		let {needsConfig, board} = this.state;
 
 		if(needsConfig) {
 		   return <ConfigView players={this.codeNamesPlayers} onFinish={this.onConfigFinish.bind(this)}/>

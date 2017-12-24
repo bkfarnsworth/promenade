@@ -28,6 +28,9 @@ class SocketServer {
          //connectFour
          socket.on('finishedTurn', (board) => this.finishedTurn(socketWrapper, board));
 
+         //codeNames
+         socket.on('boardChanged', (board) => this.onBoardChanged(socketWrapper, board));
+
          //pong
          // socket.on('gameUpdate', socketWrapper.gameUpdate.bind(socketWrapper));
          // socket.on('gameScores', socketWrapper.gameScores.bind(socketWrapper));
@@ -92,6 +95,10 @@ class SocketServer {
 
    finishedTurn(socketWrapper, board) {
       socketWrapper.game.finishedTurn(board, socketWrapper.userName);
+   }
+
+   onBoardChanged(socketWrapper, board) {
+      socketWrapper.game.onBoardChanged(board);
    }
 
    submitResults(socketWrapper, data) {

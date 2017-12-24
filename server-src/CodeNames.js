@@ -12,6 +12,12 @@ class CodeNames extends Game {
       });
    }
 
+   onBoardChanged(board) {
+      this.emitToRoom('boardChanged', {
+         board: board
+      });
+   }
+
    generateBoard() {
 
       //decides random if red or blue goes first
