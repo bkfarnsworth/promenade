@@ -18,8 +18,8 @@ class CodeNames extends React.Component  {
       Object.assign(this, _.get(props, 'location.state.gameProps', {}));
 
       //TODO: just for debugging
-      this.userName = 'rose'
-      this.players = ['brian', 'rose', 'tam']
+      // this.userName = 'rose'
+      // this.players = ['brian', 'rose', 'tam']
 
       //map the strings to objects to store more data
       this.codeNamesPlayers = this.players.map(p => {
@@ -43,19 +43,6 @@ class CodeNames extends React.Component  {
       this.callOffFuncs();
    }
 
-   getBoard() {
-    let board = {
-       rows: [
-          {cells: [{name: 'noun', team:'red'}, {name: 'noun', team:'red'}, {name: 'noun', team:'red'}, {name: 'noun', team:'red'}, {name: 'noun', team:'red'}]},
-          {cells: [{name: 'noun', team:'red'}, {name: 'noun', team:'red'}, {name: 'noun', team:'red'}, {name: 'noun', team:'neutral'}, {name: 'noun', team:'neutral'}]},
-          {cells: [{name: 'noun', team:'neutral'}, {name: 'noun', team:'neutral'}, {name: 'noun', team:'neutral'}, {name: 'noun', team:'neutral'}, {name: 'noun', team:'neutral'}]},
-          {cells: [{name: 'noun', team:'blue'}, {name: 'noun', team:'blue'}, {name: 'noun', team:'blue'}, {name: 'noun', team:'blue'}, {name: 'noun', team:'blue'}]},
-          {cells: [{name: 'noun', team:'blue'}, {name: 'noun', team:'blue'}, {name: 'noun', team:'blue'}, {name: 'noun', team:'blue'}, {name: 'noun', team:'assassin'}]},
-       ]
-    }
-    return board;
-   }
-
    onConfigFinish() {
    	this.setState({
    		needsConfig: false
@@ -64,11 +51,8 @@ class CodeNames extends React.Component  {
 
    render() {
 
-		let {
-			needsConfig
-		} = this.state;
-
-		let board = this.getBoard();
+		let {board} = this;
+		let {needsConfig} = this.state;
 
 		if(needsConfig) {
 		   return <ConfigView players={this.codeNamesPlayers} onFinish={this.onConfigFinish.bind(this)}/>
@@ -129,7 +113,7 @@ const Board = (props) => {
 
    let cellContents = (cellContentProps) => {
       let {cell} = cellContentProps;
-      return <div>{cell.name}</div>;
+      return <div>{cell.word}</div>;
    }
 
    return <Grid grid={board} cellContents={cellContents}/>
