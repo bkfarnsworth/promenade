@@ -49,6 +49,11 @@ class CodeNames extends React.Component  {
    	});
    }
 
+   onCellClick(cell) {
+   	cell.discovered = true;
+   	this.setState({});
+   }
+
    render() {
 
 		let {board} = this;
@@ -62,7 +67,7 @@ class CodeNames extends React.Component  {
 					{this.codeNamesPlayers.map(p => {
 						return <div>{p.name} {p.isSpyMaster? 'true' : 'false'}</div>
 					})}
-					<Board board={board}/>
+					<Board board={board} onCellClick={this.onCellClick.bind(this)}/>
 					{this.codeNamePlayer.isSpyMaster ? <BoardMap board={board}/> : null}
 				</div>
 			)
@@ -113,10 +118,15 @@ const Board = (props) => {
 
    let cellContents = (cellContentProps) => {
       let {cell} = cellContentProps;
-      return <div>{cell.word}</div>;
+      return (
+      	<div>
+      		{cell.word}
+      		{cell.discovered ? 'CHECKED' : null}
+      	</div>
+      );
    }
 
-   return <Grid grid={board} cellContents={cellContents}/>
+   return <Grid grid={board} cellContents={cellContents} onCellClick={props.onCellClick}/>
 }
 
 export default CodeNames;

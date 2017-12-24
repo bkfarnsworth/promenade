@@ -38,7 +38,8 @@ class CodeNames extends Game {
       let cells = nouns.map((noun, index) => {
          return {
             word: noun,
-            team: teamSpots[index]
+            team: teamSpots[index],
+            discovered: false
          }
       }) 
 
