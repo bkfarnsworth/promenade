@@ -86,21 +86,6 @@ class CodeNames extends React.Component  {
 	}
 };
 
-function generateBoard() {
-
-   //so it gets the 25 nouns
-
-   //makes 5 by 5 thing
-
-   //decides random if red or blue goes first
-
-   // picks 9 random cells for first team, 8 for second team
-
-   //picks 1 of remaining cells for assassin
-
-   //the rest are marked as nuetral
-
-}
 
 const ConfigView = (props) => {
 
