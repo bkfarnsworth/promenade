@@ -16,6 +16,24 @@ class CodeNames extends React.Component  {
       Object.assign(this, props);
       Object.assign(this, _.get(props, 'location.state', {}));
       Object.assign(this, _.get(props, 'location.state.gameProps', {}));
+
+      //TODO: just for debugging
+      this.userName = 'rose'
+      this.players = ['brian', 'rose', 'tam']
+
+      //map the strings to objects to store more data
+      this.codeNamesPlayers = this.players.map(p => {
+      	return {
+      		name: p,
+      		isSpyMaster: false,
+      		team: ''
+      	}
+      });
+
+      //find the player for this user's client
+      this.codeNamePlayer = this.codeNamesPlayers.find(p => p.name === this.userName);
+
+      //start off in config state
       this.state = {
          needsConfig: true
       }
@@ -25,49 +43,47 @@ class CodeNames extends React.Component  {
       this.callOffFuncs();
    }
 
-   // getConfigComponent() {
-   //    return () => <div>config</div>;      
-   // }
+   getBoard() {
+    let board = {
+       rows: [
+          {cells: [{name: 'noun', team:'red'}, {name: 'noun', team:'red'}, {name: 'noun', team:'red'}, {name: 'noun', team:'red'}, {name: 'noun', team:'red'}]},
+          {cells: [{name: 'noun', team:'red'}, {name: 'noun', team:'red'}, {name: 'noun', team:'red'}, {name: 'noun', team:'neutral'}, {name: 'noun', team:'neutral'}]},
+          {cells: [{name: 'noun', team:'neutral'}, {name: 'noun', team:'neutral'}, {name: 'noun', team:'neutral'}, {name: 'noun', team:'neutral'}, {name: 'noun', team:'neutral'}]},
+          {cells: [{name: 'noun', team:'blue'}, {name: 'noun', team:'blue'}, {name: 'noun', team:'blue'}, {name: 'noun', team:'blue'}, {name: 'noun', team:'blue'}]},
+          {cells: [{name: 'noun', team:'blue'}, {name: 'noun', team:'blue'}, {name: 'noun', team:'blue'}, {name: 'noun', team:'blue'}, {name: 'noun', team:'assassin'}]},
+       ]
+    }
+    return board;
+   }
+
+   onConfigFinish() {
+   	this.setState({
+   		needsConfig: false
+   	});
+   }
 
    render() {
 
-      // let {
-      //    needsConfig
-      // } = this.state;
+		let {
+			needsConfig
+		} = this.state;
 
-      // let Config = this.getConfigComponent();
-      // let Board = this.getBoardComponent();
-      // let BoardMap = this.getBoardMapComponent();
+		let board = this.getBoard();
 
-      // if(needsConfig) {
-      //    return <Config playerType={this.playerType}/>
-      // } else {
-
-       // {hintGiver ? <BoardMap/> : null}
-
-
-
-       let board = {
-          rows: [
-             {cells: [{name: 'noun', team:'red'}, {name: 'noun', team:'red'}, {name: 'noun', team:'red'}, {name: 'noun', team:'red'}, {name: 'noun', team:'red'}]},
-             {cells: [{name: 'noun', team:'red'}, {name: 'noun', team:'red'}, {name: 'noun', team:'red'}, {name: 'noun', team:'neutral'}, {name: 'noun', team:'neutral'}]},
-             {cells: [{name: 'noun', team:'neutral'}, {name: 'noun', team:'neutral'}, {name: 'noun', team:'neutral'}, {name: 'noun', team:'neutral'}, {name: 'noun', team:'neutral'}]},
-             {cells: [{name: 'noun', team:'blue'}, {name: 'noun', team:'blue'}, {name: 'noun', team:'blue'}, {name: 'noun', team:'blue'}, {name: 'noun', team:'blue'}]},
-             {cells: [{name: 'noun', team:'blue'}, {name: 'noun', team:'blue'}, {name: 'noun', team:'blue'}, {name: 'noun', team:'blue'}, {name: 'noun', team:'assassin'}]},
-          ]
-       }
-
-
-       let hintGiver = true;
-
-         return (
-            <div className="code-names">
-               <Board board={board}/>
-               {hintGiver ? <BoardMap board={board}/> : null}
-            </div>
-         )
-      // }
-   }
+		if(needsConfig) {
+		   return <ConfigView players={this.codeNamesPlayers} onFinish={this.onConfigFinish.bind(this)}/>
+		} else {
+			return (
+				<div className="code-names">
+					{this.codeNamesPlayers.map(p => {
+						return <div>{p.name} {p.isSpyMaster? 'true' : 'false'}</div>
+					})}
+					<Board board={board}/>
+					{this.codeNamePlayer.isSpyMaster ? <BoardMap board={board}/> : null}
+				</div>
+			)
+		}
+	}
 };
 
 function generateBoard() {
@@ -84,6 +100,27 @@ function generateBoard() {
 
    //the rest are marked as nuetral
 
+}
+
+const ConfigView = (props) => {
+
+	let {
+		players
+	} = props;
+
+	return (
+		<div>
+			{players.map(p => {
+				return (
+					<div>
+						{p.name}
+						Spymaster: <input type="checkbox" onChange={(e) => p.isSpyMaster = e.target.checked}/>
+					</div>
+				)
+			})}
+			<button onClick={() => props.onFinish()}>Done</button>
+		</div>
+	)
 }
 
 const BoardMap = (props) => {
