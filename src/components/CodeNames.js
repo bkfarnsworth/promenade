@@ -22,18 +22,6 @@ class CodeNames extends React.Component  {
       // this.players = ['brian', 'rose', 'tam'];
       // this.board = DebugHelper.getCodeNamesBoard();
 
-      //map the strings to objects to store more data
-      this.codeNamesPlayers = this.players.map(p => {
-      	return {
-      		name: p,
-      		isSpyMaster: false,
-      		team: ''
-      	}
-      });
-
-      //find the player for this user's client
-      this.codeNamePlayer = this.codeNamesPlayers.find(p => p.name === this.userName);
-
       //start off in config state
       this.state = {
          needsConfig: true,
@@ -47,13 +35,30 @@ class CodeNames extends React.Component  {
             board: data.board
          });
       });
+
+      this.onSocketEvent('configFinished', (data) => {
+
+         this.codeNamesPlayers = data.codeNamesPlayers;
+         this.setState({
+            needsConfig: false
+         });
+      })
    }
 
    componentWillUnmount() {
       this.callOffFuncs();
    }
 
-   onConfigFinish() {
+   get codeNamesPlayer() {
+      if(!this._codeNamesPlayer) {
+         this._codeNamesPlayer = this.codeNamesPlayers.find(p => p.name === this.userName);
+      }
+      return this._codeNamesPlayer;
+   }  
+
+   onConfigFinish(codeNamesPlayers) {
+      this.codeNamesPlayers = codeNamesPlayers;
+      this.socket.emit('configFinished', codeNamesPlayers);
    	this.setState({
    		needsConfig: false
    	});
@@ -70,14 +75,19 @@ class CodeNames extends React.Component  {
 		let {needsConfig, board} = this.state;
 
 		if(needsConfig) {
-		   return <ConfigView players={this.codeNamesPlayers} onFinish={this.onConfigFinish.bind(this)}/>
+         if(this.playerType === 'host') {
+            return <ConfigView players={this.players} onFinish={this.onConfigFinish.bind(this)}/>
+         } else {
+            return <div>Waiting for config</div>
+         }
 		} else {
 			return (
 				<div className="code-names">
-					{this.codeNamesPlayers.map(p => {
-						return <div>{p.name} {p.isSpyMaster? 'true' : 'false'}</div>
-					})}
-					<Board board={board} isSpyMaster={this.codeNamePlayer.isSpyMaster} onCellClick={this.onCellClick.bind(this)}/>
+					<Board 
+                  board={board} 
+                  isSpyMaster={this.codeNamesPlayer.isSpyMaster} 
+                  onCellClick={this.onCellClick.bind(this)}
+               />
 				</div>
 			)
 		}
@@ -91,9 +101,17 @@ const ConfigView = (props) => {
 		players
 	} = props;
 
+   let codeNamesPlayers = players.map(p => {
+      return {
+         name: p,
+         isSpyMaster: false,
+         team: ''
+      }
+   });
+
 	return (
 		<div>
-			{players.map(p => {
+			{codeNamesPlayers.map(p => {
 				return (
 					<div>
 						{p.name}
@@ -101,7 +119,7 @@ const ConfigView = (props) => {
 					</div>
 				)
 			})}
-			<button onClick={() => props.onFinish()}>Done</button>
+			<button onClick={() => props.onFinish(codeNamesPlayers)}>Done</button>
 		</div>
 	)
 }

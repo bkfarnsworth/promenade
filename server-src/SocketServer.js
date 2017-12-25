@@ -30,6 +30,7 @@ class SocketServer {
 
          //codeNames
          socket.on('boardChanged', (board) => this.onBoardChanged(socketWrapper, board));
+         socket.on('configFinished', (codeNamesPlayers) => this.onConfigFinished(socketWrapper, codeNamesPlayers));
 
          //pong
          // socket.on('gameUpdate', socketWrapper.gameUpdate.bind(socketWrapper));
@@ -99,6 +100,10 @@ class SocketServer {
 
    onBoardChanged(socketWrapper, board) {
       socketWrapper.game.onBoardChanged(board);
+   }
+
+   onConfigFinished(socketWrapper, codeNamesPlayers) {
+      socketWrapper.game.onConfigFinished(codeNamesPlayers);
    }
 
    submitResults(socketWrapper, data) {

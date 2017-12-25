@@ -18,6 +18,12 @@ class CodeNames extends Game {
       });
    }
 
+   onConfigFinished(codeNamesPlayers) {
+      this.emitToRoom('configFinished', {
+         codeNamesPlayers
+      });
+   }
+
    generateBoard() {
 
       //decides random if red or blue goes first
