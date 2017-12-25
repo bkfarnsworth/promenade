@@ -49,7 +49,7 @@ const Cell = props => {
    let cell = props.cell;
    let style = { left: (props.cellNum * 25) + '%' }
    return (
-      <div className="cell" onClick={() => props.onCellClick(cell)} style={style} data-cell-id={cell.id} data-cell-num={props.cellNum} data-row-num={props.rowNum}>
+      <div className="cell" onTouchEnd={() => props.onCellClick(cell)} onClick={() => props.onCellClick(cell)} style={style} data-cell-id={cell.id} data-cell-num={props.cellNum} data-row-num={props.rowNum}>
          {props.cellContents({cell})}
       </div>
    );
