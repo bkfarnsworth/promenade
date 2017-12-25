@@ -147,8 +147,8 @@ const Board = (props) => {
       let {cell} = cellContentProps;
 
       let colorMap = {
-         red: 'red',
-         blue: 'blue',
+         red: '#ff5f3f',
+         blue: '#0095ff9e',
          neutral: 'tan',
          assassin: 'black'
       }
@@ -158,12 +158,16 @@ const Board = (props) => {
          backgroundColor: shouldDisplayBackgroundColor ? colorMap[cell.team] : 'initial'
       }
 
+      let wordStyle = {
+         color: (isSpyMaster && cell.team === 'assassin') ? 'white' : 'black'
+      }
+
       return (
       	<div className="cell-contents" style={style}>
             {
                cell.discovered 
                ? <div></div>
-               : <div>{cell.word}</div>
+               : <div style={wordStyle}>{cell.word}</div>
             }
       	</div>
       );
