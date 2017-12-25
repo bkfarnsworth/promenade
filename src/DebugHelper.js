@@ -22,6 +22,18 @@ class DebugHelper {
 		return board;
 	}
 
+	getCodeNamesBoard() {
+		let board = {
+		   rows: [
+		      {cells: [{word: 'noun', discovered: false, team:'red'}, {word: 'noun', discovered: false, team:'red'}, {word: 'noun', discovered: false, team:'red'}, {word: 'noun', discovered: false, team:'red'}, {word: 'noun', discovered: false, team:'red'}]},
+		      {cells: [{word: 'noun', discovered: false, team:'red'}, {word: 'noun', discovered: false, team:'red'}, {word: 'noun', discovered: false, team:'red'}, {word: 'noun', discovered: false, team:'neutral'}, {word: 'noun', discovered: false, team:'neutral'}]},
+		      {cells: [{word: 'noun', discovered: false, team:'neutral'}, {word: 'noun', discovered: false, team:'neutral'}, {word: 'noun', discovered: false, team:'neutral'}, {word: 'noun', discovered: false, team:'neutral'}, {word: 'noun', discovered: false, team:'neutral'}]},
+		      {cells: [{word: 'noun', discovered: false, team:'blue'}, {word: 'noun', discovered: false, team:'blue'}, {word: 'noun', discovered: false, team:'blue'}, {word: 'noun', discovered: false, team:'blue'}, {word: 'noun', discovered: false, team:'blue'}]},
+		      {cells: [{word: 'noun', discovered: false, team:'blue'}, {word: 'noun', discovered: false, team:'blue'}, {word: 'noun', discovered: false, team:'blue'}, {word: 'noun', discovered: false, team:'blue'}, {word: 'noun', discovered: false, team:'assassin'}]},
+		   ]
+		}
+		return board;
+	}
 
 	getTriviaProblems() {
 		return [

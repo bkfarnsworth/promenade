@@ -19,7 +19,8 @@ class CodeNames extends React.Component  {
 
       //TODO: just for debugging
       // this.userName = 'rose'
-      // this.players = ['brian', 'rose', 'tam']
+      // this.players = ['brian', 'rose', 'tam'];
+      // this.board = DebugHelper.getCodeNamesBoard();
 
       //map the strings to objects to store more data
       this.codeNamesPlayers = this.players.map(p => {
@@ -76,8 +77,7 @@ class CodeNames extends React.Component  {
 					{this.codeNamesPlayers.map(p => {
 						return <div>{p.name} {p.isSpyMaster? 'true' : 'false'}</div>
 					})}
-					<Board board={board} onCellClick={this.onCellClick.bind(this)}/>
-					{this.codeNamePlayer.isSpyMaster ? <BoardMap board={board}/> : null}
+					<Board board={board} isSpyMaster={this.codeNamePlayer.isSpyMaster} onCellClick={this.onCellClick.bind(this)}/>
 				</div>
 			)
 		}
@@ -122,15 +122,31 @@ const BoardMap = (props) => {
 }
 
 const Board = (props) => {
-   let {board} = props;
+   let {board, isSpyMaster} = props;
 
 
    let cellContents = (cellContentProps) => {
       let {cell} = cellContentProps;
+
+      let colorMap = {
+         red: 'red',
+         blue: 'blue',
+         neutral: 'tan',
+         assassin: 'black'
+      }
+
+      let shouldDisplayBackgroundColor = isSpyMaster || cell.discovered;
+      let style = {
+         backgroundColor: shouldDisplayBackgroundColor ? colorMap[cell.team] : 'initial'
+      }
+
       return (
-      	<div>
-      		{cell.word}
-      		{cell.discovered ? 'CHECKED' : null}
+      	<div className="cell-contents" style={style}>
+            {
+               cell.discovered 
+               ? <div></div>
+               : <div>{cell.word}</div>
+            }
       	</div>
       );
    }
