@@ -1,0 +1,9 @@
+{
+	"folders":
+	[
+		{
+         "path": "/Users/farnswor/life/Side-Projects/team-farnsworth",
+         "file_exclude_patterns": ["dist/bundle.js"]
+		}
+	]
+}

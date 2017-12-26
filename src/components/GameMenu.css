@@ -1,18 +1,35 @@
 img {
-
+	max-width: 100%;
+	margin: 0 auto;
+	margin-top: 96px;
+	display: block;
+	opacity: 1;
 }
 
 img:after {
 	box-shadow: inset 0 0 40px 16px;
 }
 
+#welcome-to {
+	margin-top: 111px;
+	font-size: 23px;
+}
 
-.welcome-message {
+#the-promenade {
+	font-size: 47px;
+}
+
+.words-of-interest {
+	/*position: absolute;*/
 	text-align: center;
-	color: white;
-	font-size: 36px;
-	text-shadow: -1px 0 #888888, 0 1px #888888, 1px 0 #888888, 0 -1px #888888;
-	margin-top: 24px;
+}
+
+
+.nav-bar {
+	text-align: left;
+	color: black;
+	font-size: 22px;
+	margin-top: 21px;
 	margin-bottom: 5px;
 }
 
