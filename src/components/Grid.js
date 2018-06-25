@@ -80,26 +80,3 @@ function convertColumnsToRows(grid) {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
